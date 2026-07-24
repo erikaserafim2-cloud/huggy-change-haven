@@ -244,17 +244,14 @@ function Header({ babyName }: { babyName: string }) {
 // Step: Setup
 // -----------------------------
 function SetupStep({
-  babyName, setBabyName, birthDate, setBirthDate, gender, setGender, onContinue,
+  babyName, setBabyName, gender, setGender, onContinue,
 }: {
   babyName: string;
   setBabyName: (s: string) => void;
-  birthDate: string;
-  setBirthDate: (s: string) => void;
   gender: Gender;
   setGender: (g: Gender) => void;
   onContinue: () => void;
 }) {
-  const today = new Date().toISOString().slice(0, 10);
   const canContinue = gender !== "";
   return (
     <div className="space-y-8">
@@ -280,22 +277,6 @@ function SetupStep({
         />
       </div>
 
-      <div>
-        <label htmlFor="baby-birth" className="mb-2 block text-sm font-semibold">
-          Data de nascimento <span className="font-normal text-muted-foreground">(para o guia da fase)</span>
-        </label>
-        <input
-          id="baby-birth"
-          type="date"
-          value={birthDate}
-          max={today}
-          onChange={(e) => setBirthDate(e.target.value)}
-          className="w-full rounded-2xl border border-border bg-background px-5 py-4 text-lg outline-none transition focus:border-primary focus:ring-4 focus:ring-ring"
-        />
-        <p className="mt-2 text-xs text-muted-foreground">
-          Usamos essa data para gerar tópicos do <strong>Universo da Maternidade</strong> conforme a idade do bebê.
-        </p>
-      </div>
 
       <div>
         <p className="mb-2 block text-sm font-semibold">É menino ou menina?</p>
