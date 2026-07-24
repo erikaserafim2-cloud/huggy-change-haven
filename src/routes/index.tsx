@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export const Route = createFileRoute("/")({
@@ -111,6 +111,7 @@ function App() {
   const [hydrated, setHydrated] = useState(false);
   const [step, setStep] = useState<Step>("setup");
   const [babyName, setBabyName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [participants, setParticipants] = useState<Participant[]>(DEFAULT_PARTICIPANTS);
   const [scoreboard, setScoreboard] = useState<Record<string, number>>({});
   const [tipIndex, setTipIndex] = useState(0);
@@ -118,6 +119,7 @@ function App() {
 
   useEffect(() => {
     setBabyName(loadLS("babyName", ""));
+    setBirthDate(loadLS("babyBirthDate", ""));
     setParticipants(loadLS("participants_v2", DEFAULT_PARTICIPANTS));
     setScoreboard(loadLS("scoreboard_v2", {}));
     setTipIndex(Math.floor(Math.random() * BABY_TIPS.length));
@@ -125,6 +127,7 @@ function App() {
   }, []);
 
   useEffect(() => { if (hydrated) saveLS("babyName", babyName); }, [babyName, hydrated]);
+  useEffect(() => { if (hydrated) saveLS("babyBirthDate", birthDate); }, [birthDate, hydrated]);
   useEffect(() => { if (hydrated) saveLS("participants_v2", participants); }, [participants, hydrated]);
   useEffect(() => { if (hydrated) saveLS("scoreboard_v2", scoreboard); }, [scoreboard, hydrated]);
 
@@ -135,6 +138,18 @@ function App() {
       {/* Ambient decorations */}
       <Decorations />
 
+      {/* Floating side button — Universo da Maternidade */}
+      <Link
+        to="/maternidade"
+        className="group fixed left-3 top-1/2 z-40 -translate-y-1/2 sm:left-5"
+        aria-label="Abrir Universo da Maternidade"
+      >
+        <div className="flex items-center gap-2 rounded-full bg-[var(--gradient-primary)] py-3 pl-3 pr-4 text-primary-foreground shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)]">
+          <span className="text-2xl">🌷</span>
+          <span className="hidden text-sm font-semibold sm:inline">Universo da Maternidade</span>
+        </div>
+      </Link>
+
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4 py-8 sm:py-12">
         <Header babyName={babyName} />
 
@@ -143,6 +158,8 @@ function App() {
             <SetupStep
               babyName={babyName}
               setBabyName={setBabyName}
+              birthDate={birthDate}
+              setBirthDate={setBirthDate}
               onContinue={() => setStep("participants")}
             />
           )}
@@ -216,8 +233,15 @@ function Header({ babyName }: { babyName: string }) {
 // Step: Setup
 // -----------------------------
 function SetupStep({
-  babyName, setBabyName, onContinue,
-}: { babyName: string; setBabyName: (s: string) => void; onContinue: () => void }) {
+  babyName, setBabyName, birthDate, setBirthDate, onContinue,
+}: {
+  babyName: string;
+  setBabyName: (s: string) => void;
+  birthDate: string;
+  setBirthDate: (s: string) => void;
+  onContinue: () => void;
+}) {
+  const today = new Date().toISOString().slice(0, 10);
   return (
     <div className="space-y-8">
       <div className="text-center">
@@ -240,6 +264,23 @@ function SetupStep({
           placeholder="Ex: Lucas, Sofia, Bento…"
           className="w-full rounded-2xl border border-border bg-background px-5 py-4 text-lg outline-none transition focus:border-primary focus:ring-4 focus:ring-ring"
         />
+      </div>
+
+      <div>
+        <label htmlFor="baby-birth" className="mb-2 block text-sm font-semibold">
+          Data de nascimento <span className="font-normal text-muted-foreground">(para o guia da fase)</span>
+        </label>
+        <input
+          id="baby-birth"
+          type="date"
+          value={birthDate}
+          max={today}
+          onChange={(e) => setBirthDate(e.target.value)}
+          className="w-full rounded-2xl border border-border bg-background px-5 py-4 text-lg outline-none transition focus:border-primary focus:ring-4 focus:ring-ring"
+        />
+        <p className="mt-2 text-xs text-muted-foreground">
+          Usamos essa data para gerar tópicos do <strong>Universo da Maternidade</strong> conforme a idade do bebê.
+        </p>
       </div>
 
       <div className="rounded-2xl bg-muted/60 p-5 text-sm text-muted-foreground">
