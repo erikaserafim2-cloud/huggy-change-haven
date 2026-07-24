@@ -185,10 +185,23 @@ function App() {
           )}
         </main>
 
+        <Link
+          to="/maternidade"
+          className="mt-8 flex items-center gap-3 rounded-2xl bg-[var(--gradient-primary)] p-4 text-primary-foreground shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)] sm:p-5"
+        >
+          <span className="text-2xl">🌷</span>
+          <div className="flex-1">
+            <p className="text-xs font-bold uppercase tracking-widest opacity-90">Universo da Maternidade</p>
+            <p className="mt-0.5 text-sm font-semibold sm:text-base">Acompanhe o desenvolvimento dessa idade</p>
+          </div>
+          <span aria-hidden className="text-xl">→</span>
+        </Link>
+
         <TipFooter
           tip={BABY_TIPS[tipIndex]}
           onNext={() => setTipIndex(i => (i + 1) % BABY_TIPS.length)}
         />
+
       </div>
     </div>
   );
