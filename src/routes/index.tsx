@@ -112,7 +112,7 @@ function App() {
   const [hydrated, setHydrated] = useState(false);
   const [step, setStep] = useState<Step>("setup");
   const [babyName, setBabyName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  
   const [gender, setGender] = useState<Gender>("");
   const [participants, setParticipants] = useState<Participant[]>(DEFAULT_PARTICIPANTS);
   const [scoreboard, setScoreboard] = useState<Record<string, number>>({});
