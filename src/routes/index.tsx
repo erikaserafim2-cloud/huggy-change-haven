@@ -121,7 +121,7 @@ function App() {
 
   useEffect(() => {
     setBabyName(loadLS("babyName", ""));
-    setBirthDate(loadLS("babyBirthDate", ""));
+    
     setGender(loadLS<Gender>("babyGender", ""));
     setParticipants(loadLS("participants_v2", DEFAULT_PARTICIPANTS));
     setScoreboard(loadLS("scoreboard_v2", {}));
