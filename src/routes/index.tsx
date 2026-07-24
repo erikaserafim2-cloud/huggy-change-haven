@@ -153,13 +153,12 @@ function App() {
             <SetupStep
               babyName={babyName}
               setBabyName={setBabyName}
-              birthDate={birthDate}
-              setBirthDate={setBirthDate}
               gender={gender}
               setGender={setGender}
               onContinue={() => setStep("participants")}
             />
           )}
+
           {step === "participants" && (
             <ParticipantsStep
               participants={participants}
