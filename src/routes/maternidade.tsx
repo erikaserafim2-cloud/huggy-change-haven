@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { getMaternityGuide, type MaternityGuide } from "../lib/maternity.functions";
 
@@ -29,13 +29,43 @@ function saveLS(key: string, v: unknown) {
   try { window.localStorage.setItem(key, JSON.stringify(v)); } catch { /* */ }
 }
 
+// Convert age (months + optional days for <1mo) → synthetic ISO birthDate
+function ageToBirthDate(months: number, days: number): string {
+  const now = new Date();
+  const target = new Date(now);
+  if (months === 0) {
+    target.setDate(now.getDate() - Math.max(0, days));
+  } else {
+    target.setMonth(now.getMonth() - months);
+  }
+  return target.toISOString().slice(0, 10);
+}
+
+function ageLabel(months: number, days: number): string {
+  if (months === 0) return `${days} dia(s)`;
+  if (months < 12) return `${months} mês(es)`;
+  const y = Math.floor(months / 12);
+  const m = months % 12;
+  return m === 0 ? `${y} ano(s)` : `${y} ano(s) e ${m} mês(es)`;
+}
+
 function MaternityPage() {
   const router = useRouter();
   const [hydrated, setHydrated] = useState(false);
   const [babyName, setBabyName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  const [ageMonths, setAgeMonths] = useState<number | null>(null);
+  const [ageDays, setAgeDays] = useState<number>(15);
   const [guide, setGuide] = useState<MaternityGuide | null>(null);
   const [cachedFor, setCachedFor] = useState<string>("");
+
+  // Form-only state (before saving)
+  const [formMonths, setFormMonths] = useState<number | "">("");
+  const [formDays, setFormDays] = useState<number>(15);
+
+  const birthDate = useMemo(
+    () => (ageMonths === null ? "" : ageToBirthDate(ageMonths, ageDays)),
+    [ageMonths, ageDays]
+  );
 
   const mutation = useMutation({
     mutationFn: async (input: { birthDate: string; babyName: string }) =>
@@ -49,12 +79,18 @@ function MaternityPage() {
   });
 
   useEffect(() => {
-    const name = loadLS("babyName", "");
-    const bd = loadLS("babyBirthDate", "");
-    setBabyName(name);
-    setBirthDate(bd);
+    setBabyName(loadLS("babyName", ""));
+    const m = loadLS<number | null>("babyAgeMonths", null);
+    const d = loadLS<number>("babyAgeDays", 15);
+    setAgeMonths(m);
+    setAgeDays(d);
+    if (m !== null) {
+      setFormMonths(m);
+      setFormDays(d);
+    }
     const cached = loadLS<{ key: string; data: MaternityGuide } | null>("maternity_guide", null);
-    if (cached && bd) {
+    if (cached && m !== null) {
+      const bd = ageToBirthDate(m, d);
       const todayKey = `${bd}|${new Date().toDateString()}`;
       if (cached.key === todayKey) {
         setGuide(cached.data);
@@ -66,6 +102,7 @@ function MaternityPage() {
 
   useEffect(() => {
     if (!hydrated) return;
+    if (ageMonths === null) return;
     if (!birthDate) return;
     const todayKey = `${birthDate}|${new Date().toDateString()}`;
     if (cachedFor === todayKey) return;
@@ -74,17 +111,18 @@ function MaternityPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hydrated, birthDate]);
 
-  const handleSaveDate = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSaveAge = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const bd = String(form.get("birthDate") || "");
-    const bn = String(form.get("babyName") || "");
-    if (!bd) return;
-    saveLS("babyBirthDate", bd);
-    saveLS("babyName", bn);
-    setBirthDate(bd);
-    setBabyName(bn);
+    if (formMonths === "") return;
+    const m = Number(formMonths);
+    const d = m === 0 ? Math.min(30, Math.max(1, Number(formDays) || 1)) : 15;
+    saveLS("babyAgeMonths", m);
+    saveLS("babyAgeDays", d);
+    setAgeMonths(m);
+    setAgeDays(d);
   };
+
+  const hasAge = ageMonths !== null;
 
   return (
     <div className="relative min-h-screen">
@@ -110,60 +148,76 @@ function MaternityPage() {
           </p>
         </header>
 
-        {!birthDate && (
-          <form onSubmit={handleSaveDate} className="card-soft mt-8 space-y-5 p-6 sm:p-8 animate-pop">
+        {!hasAge && (
+          <form onSubmit={handleSaveAge} className="card-soft mt-8 space-y-5 p-6 sm:p-8 animate-pop">
             <div>
-              <h2 className="font-display text-2xl font-semibold">Vamos começar 💛</h2>
+              <h2 className="font-display text-2xl font-semibold">Qual a idade do bebê? 💛</h2>
               <p className="mt-1 text-muted-foreground text-sm">
-                Informe a data de nascimento do bebê para gerar um guia da fase.
+                Não pedimos data de nascimento por segurança — só a idade nos ajuda a gerar o guia da fase.
               </p>
             </div>
+
             <div>
-              <label className="mb-2 block text-sm font-semibold">Nome do bebê (opcional)</label>
-              <input
-                name="babyName"
-                defaultValue={babyName}
-                placeholder="Ex: Lucas"
-                maxLength={20}
-                className="w-full rounded-2xl border border-border bg-background px-5 py-3 outline-none focus:border-primary focus:ring-4 focus:ring-ring"
-              />
-            </div>
-            <div>
-              <label className="mb-2 block text-sm font-semibold">Data de nascimento</label>
-              <input
-                type="date"
-                name="birthDate"
+              <label htmlFor="age-months" className="mb-2 block text-sm font-semibold">Idade do bebê</label>
+              <select
+                id="age-months"
+                value={formMonths}
+                onChange={(e) => setFormMonths(e.target.value === "" ? "" : Number(e.target.value))}
                 required
-                max={new Date().toISOString().slice(0, 10)}
                 className="w-full rounded-2xl border border-border bg-background px-5 py-3 outline-none focus:border-primary focus:ring-4 focus:ring-ring"
-              />
+              >
+                <option value="" disabled>Selecione…</option>
+                <option value={0}>Menos de 1 mês</option>
+                {Array.from({ length: 24 }, (_, i) => i + 1).map((m) => (
+                  <option key={m} value={m}>{m} {m === 1 ? "mês" : "meses"}</option>
+                ))}
+              </select>
             </div>
+
+            {formMonths === 0 && (
+              <div className="animate-pop">
+                <label htmlFor="age-days" className="mb-2 block text-sm font-semibold">Quantos dias?</label>
+                <input
+                  id="age-days"
+                  type="number"
+                  min={1}
+                  max={30}
+                  value={formDays}
+                  onChange={(e) => setFormDays(Number(e.target.value))}
+                  className="w-full rounded-2xl border border-border bg-background px-5 py-3 outline-none focus:border-primary focus:ring-4 focus:ring-ring"
+                />
+                <p className="mt-1 text-xs text-muted-foreground">Entre 1 e 30 dias.</p>
+              </div>
+            )}
+
             <div className="flex justify-end">
-              <button type="submit" className="btn-primary">Gerar guia</button>
+              <button type="submit" className="btn-primary" disabled={formMonths === ""}>
+                Gerar guia
+              </button>
             </div>
           </form>
         )}
 
-        {birthDate && (
+        {hasAge && (
           <div className="mt-8 space-y-6">
             <div className="card-soft flex flex-wrap items-center justify-between gap-3 p-5 animate-pop">
               <div className="text-sm">
                 <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Idade atual</div>
                 <div className="font-display text-lg font-semibold">
-                  {guide?.ageLabel || "Calculando…"}
+                  {guide?.ageLabel || ageLabel(ageMonths!, ageDays)}
                 </div>
-                <div className="text-xs text-muted-foreground">Nascimento: {new Date(birthDate).toLocaleDateString("pt-BR")}</div>
               </div>
               <div className="flex gap-2">
                 <button
                   onClick={() => {
-                    saveLS("babyBirthDate", "");
-                    setBirthDate("");
+                    saveLS("babyAgeMonths", null);
+                    setAgeMonths(null);
                     setGuide(null);
+                    setFormMonths("");
                   }}
                   className="btn-ghost text-sm"
                 >
-                  Alterar data
+                  Alterar idade
                 </button>
                 <button
                   onClick={() => {

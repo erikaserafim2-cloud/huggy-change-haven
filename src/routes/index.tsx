@@ -112,7 +112,7 @@ function App() {
   const [hydrated, setHydrated] = useState(false);
   const [step, setStep] = useState<Step>("setup");
   const [babyName, setBabyName] = useState("");
-  const [birthDate, setBirthDate] = useState("");
+  
   const [gender, setGender] = useState<Gender>("");
   const [participants, setParticipants] = useState<Participant[]>(DEFAULT_PARTICIPANTS);
   const [scoreboard, setScoreboard] = useState<Record<string, number>>({});
@@ -121,7 +121,7 @@ function App() {
 
   useEffect(() => {
     setBabyName(loadLS("babyName", ""));
-    setBirthDate(loadLS("babyBirthDate", ""));
+    
     setGender(loadLS<Gender>("babyGender", ""));
     setParticipants(loadLS("participants_v2", DEFAULT_PARTICIPANTS));
     setScoreboard(loadLS("scoreboard_v2", {}));
@@ -130,7 +130,7 @@ function App() {
   }, []);
 
   useEffect(() => { if (hydrated) saveLS("babyName", babyName); }, [babyName, hydrated]);
-  useEffect(() => { if (hydrated) saveLS("babyBirthDate", birthDate); }, [birthDate, hydrated]);
+
   useEffect(() => { if (hydrated) saveLS("babyGender", gender); }, [gender, hydrated]);
   useEffect(() => { if (hydrated) saveLS("participants_v2", participants); }, [participants, hydrated]);
   useEffect(() => { if (hydrated) saveLS("scoreboard_v2", scoreboard); }, [scoreboard, hydrated]);
@@ -142,17 +142,8 @@ function App() {
       {/* Ambient decorations */}
       <Decorations />
 
-      {/* Floating side button — Universo da Maternidade */}
-      <Link
-        to="/maternidade"
-        className="group fixed left-3 top-1/2 z-40 -translate-y-1/2 sm:left-5"
-        aria-label="Abrir Universo da Maternidade"
-      >
-        <div className="flex items-center gap-2 rounded-full bg-[var(--gradient-primary)] py-3 pl-3 pr-4 text-primary-foreground shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)]">
-          <span className="text-2xl">🌷</span>
-          <span className="hidden text-sm font-semibold sm:inline">Universo da Maternidade</span>
-        </div>
-      </Link>
+
+
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4 py-8 sm:py-12">
         <Header babyName={babyName} />
@@ -162,13 +153,12 @@ function App() {
             <SetupStep
               babyName={babyName}
               setBabyName={setBabyName}
-              birthDate={birthDate}
-              setBirthDate={setBirthDate}
               gender={gender}
               setGender={setGender}
               onContinue={() => setStep("participants")}
             />
           )}
+
           {step === "participants" && (
             <ParticipantsStep
               participants={participants}
@@ -195,10 +185,23 @@ function App() {
           )}
         </main>
 
+        <Link
+          to="/maternidade"
+          className="mt-8 flex items-center gap-3 rounded-2xl bg-[var(--gradient-primary)] p-4 text-primary-foreground shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)] sm:p-5"
+        >
+          <span className="text-2xl">🌷</span>
+          <div className="flex-1">
+            <p className="text-xs font-bold uppercase tracking-widest opacity-90">Universo da Maternidade</p>
+            <p className="mt-0.5 text-sm font-semibold sm:text-base">Acompanhe o desenvolvimento dessa idade</p>
+          </div>
+          <span aria-hidden className="text-xl">→</span>
+        </Link>
+
         <TipFooter
           tip={BABY_TIPS[tipIndex]}
           onNext={() => setTipIndex(i => (i + 1) % BABY_TIPS.length)}
         />
+
       </div>
     </div>
   );
@@ -241,17 +244,14 @@ function Header({ babyName }: { babyName: string }) {
 // Step: Setup
 // -----------------------------
 function SetupStep({
-  babyName, setBabyName, birthDate, setBirthDate, gender, setGender, onContinue,
+  babyName, setBabyName, gender, setGender, onContinue,
 }: {
   babyName: string;
   setBabyName: (s: string) => void;
-  birthDate: string;
-  setBirthDate: (s: string) => void;
   gender: Gender;
   setGender: (g: Gender) => void;
   onContinue: () => void;
 }) {
-  const today = new Date().toISOString().slice(0, 10);
   const canContinue = gender !== "";
   return (
     <div className="space-y-8">
@@ -277,22 +277,6 @@ function SetupStep({
         />
       </div>
 
-      <div>
-        <label htmlFor="baby-birth" className="mb-2 block text-sm font-semibold">
-          Data de nascimento <span className="font-normal text-muted-foreground">(para o guia da fase)</span>
-        </label>
-        <input
-          id="baby-birth"
-          type="date"
-          value={birthDate}
-          max={today}
-          onChange={(e) => setBirthDate(e.target.value)}
-          className="w-full rounded-2xl border border-border bg-background px-5 py-4 text-lg outline-none transition focus:border-primary focus:ring-4 focus:ring-ring"
-        />
-        <p className="mt-2 text-xs text-muted-foreground">
-          Usamos essa data para gerar tópicos do <strong>Universo da Maternidade</strong> conforme a idade do bebê.
-        </p>
-      </div>
 
       <div>
         <p className="mb-2 block text-sm font-semibold">É menino ou menina?</p>
