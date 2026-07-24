@@ -130,7 +130,7 @@ function App() {
   }, []);
 
   useEffect(() => { if (hydrated) saveLS("babyName", babyName); }, [babyName, hydrated]);
-  useEffect(() => { if (hydrated) saveLS("babyBirthDate", birthDate); }, [birthDate, hydrated]);
+
   useEffect(() => { if (hydrated) saveLS("babyGender", gender); }, [gender, hydrated]);
   useEffect(() => { if (hydrated) saveLS("participants_v2", participants); }, [participants, hydrated]);
   useEffect(() => { if (hydrated) saveLS("scoreboard_v2", scoreboard); }, [scoreboard, hydrated]);
