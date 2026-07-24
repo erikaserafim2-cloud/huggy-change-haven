@@ -106,12 +106,14 @@ function saveLS(key: string, value: unknown) {
 // App
 // -----------------------------
 type Step = "setup" | "participants" | "game";
+type Gender = "" | "menino" | "menina";
 
 function App() {
   const [hydrated, setHydrated] = useState(false);
   const [step, setStep] = useState<Step>("setup");
   const [babyName, setBabyName] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [gender, setGender] = useState<Gender>("");
   const [participants, setParticipants] = useState<Participant[]>(DEFAULT_PARTICIPANTS);
   const [scoreboard, setScoreboard] = useState<Record<string, number>>({});
   const [tipIndex, setTipIndex] = useState(0);
@@ -120,6 +122,7 @@ function App() {
   useEffect(() => {
     setBabyName(loadLS("babyName", ""));
     setBirthDate(loadLS("babyBirthDate", ""));
+    setGender(loadLS<Gender>("babyGender", ""));
     setParticipants(loadLS("participants_v2", DEFAULT_PARTICIPANTS));
     setScoreboard(loadLS("scoreboard_v2", {}));
     setTipIndex(Math.floor(Math.random() * BABY_TIPS.length));
@@ -128,6 +131,7 @@ function App() {
 
   useEffect(() => { if (hydrated) saveLS("babyName", babyName); }, [babyName, hydrated]);
   useEffect(() => { if (hydrated) saveLS("babyBirthDate", birthDate); }, [birthDate, hydrated]);
+  useEffect(() => { if (hydrated) saveLS("babyGender", gender); }, [gender, hydrated]);
   useEffect(() => { if (hydrated) saveLS("participants_v2", participants); }, [participants, hydrated]);
   useEffect(() => { if (hydrated) saveLS("scoreboard_v2", scoreboard); }, [scoreboard, hydrated]);
 
@@ -160,6 +164,8 @@ function App() {
               setBabyName={setBabyName}
               birthDate={birthDate}
               setBirthDate={setBirthDate}
+              gender={gender}
+              setGender={setGender}
               onContinue={() => setStep("participants")}
             />
           )}
@@ -178,6 +184,7 @@ function App() {
           {step === "game" && (
             <GameStep
               babyName={babyName}
+              gender={gender}
               participants={activeParticipants}
               scoreboard={scoreboard}
               setScoreboard={setScoreboard}
@@ -196,6 +203,7 @@ function App() {
     </div>
   );
 }
+
 
 // -----------------------------
 // Decorations
