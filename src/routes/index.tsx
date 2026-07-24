@@ -106,12 +106,14 @@ function saveLS(key: string, value: unknown) {
 // App
 // -----------------------------
 type Step = "setup" | "participants" | "game";
+type Gender = "" | "menino" | "menina";
 
 function App() {
   const [hydrated, setHydrated] = useState(false);
   const [step, setStep] = useState<Step>("setup");
   const [babyName, setBabyName] = useState("");
   const [birthDate, setBirthDate] = useState("");
+  const [gender, setGender] = useState<Gender>("");
   const [participants, setParticipants] = useState<Participant[]>(DEFAULT_PARTICIPANTS);
   const [scoreboard, setScoreboard] = useState<Record<string, number>>({});
   const [tipIndex, setTipIndex] = useState(0);
@@ -120,6 +122,7 @@ function App() {
   useEffect(() => {
     setBabyName(loadLS("babyName", ""));
     setBirthDate(loadLS("babyBirthDate", ""));
+    setGender(loadLS<Gender>("babyGender", ""));
     setParticipants(loadLS("participants_v2", DEFAULT_PARTICIPANTS));
     setScoreboard(loadLS("scoreboard_v2", {}));
     setTipIndex(Math.floor(Math.random() * BABY_TIPS.length));
@@ -128,6 +131,7 @@ function App() {
 
   useEffect(() => { if (hydrated) saveLS("babyName", babyName); }, [babyName, hydrated]);
   useEffect(() => { if (hydrated) saveLS("babyBirthDate", birthDate); }, [birthDate, hydrated]);
+  useEffect(() => { if (hydrated) saveLS("babyGender", gender); }, [gender, hydrated]);
   useEffect(() => { if (hydrated) saveLS("participants_v2", participants); }, [participants, hydrated]);
   useEffect(() => { if (hydrated) saveLS("scoreboard_v2", scoreboard); }, [scoreboard, hydrated]);
 
@@ -160,6 +164,8 @@ function App() {
               setBabyName={setBabyName}
               birthDate={birthDate}
               setBirthDate={setBirthDate}
+              gender={gender}
+              setGender={setGender}
               onContinue={() => setStep("participants")}
             />
           )}
@@ -178,6 +184,7 @@ function App() {
           {step === "game" && (
             <GameStep
               babyName={babyName}
+              gender={gender}
               participants={activeParticipants}
               scoreboard={scoreboard}
               setScoreboard={setScoreboard}
@@ -196,6 +203,7 @@ function App() {
     </div>
   );
 }
+
 
 // -----------------------------
 // Decorations
@@ -233,15 +241,18 @@ function Header({ babyName }: { babyName: string }) {
 // Step: Setup
 // -----------------------------
 function SetupStep({
-  babyName, setBabyName, birthDate, setBirthDate, onContinue,
+  babyName, setBabyName, birthDate, setBirthDate, gender, setGender, onContinue,
 }: {
   babyName: string;
   setBabyName: (s: string) => void;
   birthDate: string;
   setBirthDate: (s: string) => void;
+  gender: Gender;
+  setGender: (g: Gender) => void;
   onContinue: () => void;
 }) {
   const today = new Date().toISOString().slice(0, 10);
+  const canContinue = gender !== "";
   return (
     <div className="space-y-8">
       <div className="text-center">
@@ -283,6 +294,41 @@ function SetupStep({
         </p>
       </div>
 
+      <div>
+        <p className="mb-2 block text-sm font-semibold">É menino ou menina?</p>
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            onClick={() => setGender("menino")}
+            aria-pressed={gender === "menino"}
+            className={`flex items-center justify-center gap-2 rounded-2xl border-2 px-4 py-4 text-lg font-semibold transition ${
+              gender === "menino"
+                ? "border-transparent text-white shadow-[var(--shadow-soft)]"
+                : "border-border bg-card text-foreground hover:border-[#9ecbe8]"
+            }`}
+            style={gender === "menino" ? { background: "linear-gradient(135deg,#B7DCF2,#7FB8DF)" } : undefined}
+          >
+            <span className="text-2xl">👦</span> Menino
+          </button>
+          <button
+            type="button"
+            onClick={() => setGender("menina")}
+            aria-pressed={gender === "menina"}
+            className={`flex items-center justify-center gap-2 rounded-2xl border-2 px-4 py-4 text-lg font-semibold transition ${
+              gender === "menina"
+                ? "border-transparent text-white shadow-[var(--shadow-soft)]"
+                : "border-border bg-card text-foreground hover:border-[#f3b8c8]"
+            }`}
+            style={gender === "menina" ? { background: "linear-gradient(135deg,#F8CFDD,#EE9FB8)" } : undefined}
+          >
+            <span className="text-2xl">👧</span> Menina
+          </button>
+        </div>
+        {!canContinue && (
+          <p className="mt-2 text-xs text-muted-foreground">Escolha uma opção para colorir a roleta.</p>
+        )}
+      </div>
+
       <div className="rounded-2xl bg-muted/60 p-5 text-sm text-muted-foreground">
         <p>
           <span className="mr-1">💡</span>
@@ -291,7 +337,11 @@ function SetupStep({
       </div>
 
       <div className="flex justify-end">
-        <button className="btn-primary inline-flex items-center gap-2" onClick={onContinue}>
+        <button
+          className="btn-primary inline-flex items-center gap-2 disabled:cursor-not-allowed"
+          disabled={!canContinue}
+          onClick={onContinue}
+        >
           Continuar
           <span aria-hidden>→</span>
         </button>
@@ -299,6 +349,7 @@ function SetupStep({
     </div>
   );
 }
+
 
 // -----------------------------
 // Step: Participants
@@ -485,9 +536,10 @@ function StepHeader({ onBack, title, subtitle }: { onBack: () => void; title: st
 // Step: Game (Wheel)
 // -----------------------------
 function GameStep({
-  babyName, participants, scoreboard, setScoreboard, onBack, synth, allParticipants,
+  babyName, gender, participants, scoreboard, setScoreboard, onBack, synth, allParticipants,
 }: {
   babyName: string;
+  gender: Gender;
   participants: Participant[];
   scoreboard: Record<string, number>;
   setScoreboard: React.Dispatch<React.SetStateAction<Record<string, number>>>;
@@ -502,10 +554,26 @@ function GameStep({
   const [winner, setWinner] = useState<Participant | null>(null);
   const [winnerMsg, setWinnerMsg] = useState("");
 
-  const sliceColors = [
-    "#F4C7A9", "#F0B49A", "#E9D6B8", "#D9E7CB",
-    "#C9DDE6", "#DDD1EA", "#F2C4C4", "#EED9BB",
-  ];
+  const sliceColors = gender === "menino"
+    ? ["#DCEEFB", "#B7DCF2", "#95C8E8", "#7FB8DF", "#B7DCF2", "#DCEEFB", "#95C8E8", "#A8D0EC"]
+    : gender === "menina"
+    ? ["#FDE4EC", "#F8CFDD", "#F3B4C8", "#EE9FB8", "#F8CFDD", "#FDE4EC", "#F3B4C8", "#F5C1D2"]
+    : ["#F4C7A9", "#F0B49A", "#E9D6B8", "#D9E7CB", "#C9DDE6", "#DDD1EA", "#F2C4C4", "#EED9BB"];
+
+  const themeStyle = gender === "menino"
+    ? ({
+        "--primary": "oklch(0.72 0.09 235)",
+        "--ring": "oklch(0.72 0.09 235 / 40%)",
+        "--gradient-primary": "linear-gradient(135deg, oklch(0.82 0.08 230), oklch(0.66 0.11 245))",
+      } as React.CSSProperties)
+    : gender === "menina"
+    ? ({
+        "--primary": "oklch(0.74 0.11 12)",
+        "--ring": "oklch(0.74 0.11 12 / 40%)",
+        "--gradient-primary": "linear-gradient(135deg, oklch(0.86 0.07 15), oklch(0.70 0.13 8))",
+      } as React.CSSProperties)
+    : ({} as React.CSSProperties);
+
 
   const draw = () => {
     const canvas = canvasRef.current;
@@ -618,7 +686,8 @@ function GameStep({
   const respin = () => { setWinner(null); setTimeout(spin, 200); };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" style={themeStyle}>
+
       <StepHeader
         onBack={onBack}
         title={babyName ? `A hora da verdade para ${babyName}` : "A hora da verdade"}
