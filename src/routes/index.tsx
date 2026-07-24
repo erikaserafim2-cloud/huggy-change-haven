@@ -142,17 +142,8 @@ function App() {
       {/* Ambient decorations */}
       <Decorations />
 
-      {/* Floating side button — Universo da Maternidade */}
-      <Link
-        to="/maternidade"
-        className="group fixed left-3 top-1/2 z-40 -translate-y-1/2 sm:left-5"
-        aria-label="Abrir Universo da Maternidade"
-      >
-        <div className="flex items-center gap-2 rounded-full bg-[var(--gradient-primary)] py-3 pl-3 pr-4 text-primary-foreground shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)]">
-          <span className="text-2xl">🌷</span>
-          <span className="hidden text-sm font-semibold sm:inline">Universo da Maternidade</span>
-        </div>
-      </Link>
+
+
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4 py-8 sm:py-12">
         <Header babyName={babyName} />
