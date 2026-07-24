@@ -536,9 +536,10 @@ function StepHeader({ onBack, title, subtitle }: { onBack: () => void; title: st
 // Step: Game (Wheel)
 // -----------------------------
 function GameStep({
-  babyName, participants, scoreboard, setScoreboard, onBack, synth, allParticipants,
+  babyName, gender, participants, scoreboard, setScoreboard, onBack, synth, allParticipants,
 }: {
   babyName: string;
+  gender: Gender;
   participants: Participant[];
   scoreboard: Record<string, number>;
   setScoreboard: React.Dispatch<React.SetStateAction<Record<string, number>>>;
@@ -553,10 +554,26 @@ function GameStep({
   const [winner, setWinner] = useState<Participant | null>(null);
   const [winnerMsg, setWinnerMsg] = useState("");
 
-  const sliceColors = [
-    "#F4C7A9", "#F0B49A", "#E9D6B8", "#D9E7CB",
-    "#C9DDE6", "#DDD1EA", "#F2C4C4", "#EED9BB",
-  ];
+  const sliceColors = gender === "menino"
+    ? ["#DCEEFB", "#B7DCF2", "#95C8E8", "#7FB8DF", "#B7DCF2", "#DCEEFB", "#95C8E8", "#A8D0EC"]
+    : gender === "menina"
+    ? ["#FDE4EC", "#F8CFDD", "#F3B4C8", "#EE9FB8", "#F8CFDD", "#FDE4EC", "#F3B4C8", "#F5C1D2"]
+    : ["#F4C7A9", "#F0B49A", "#E9D6B8", "#D9E7CB", "#C9DDE6", "#DDD1EA", "#F2C4C4", "#EED9BB"];
+
+  const themeStyle = gender === "menino"
+    ? ({
+        "--primary": "oklch(0.72 0.09 235)",
+        "--ring": "oklch(0.72 0.09 235 / 40%)",
+        "--gradient-primary": "linear-gradient(135deg, oklch(0.82 0.08 230), oklch(0.66 0.11 245))",
+      } as React.CSSProperties)
+    : gender === "menina"
+    ? ({
+        "--primary": "oklch(0.74 0.11 12)",
+        "--ring": "oklch(0.74 0.11 12 / 40%)",
+        "--gradient-primary": "linear-gradient(135deg, oklch(0.86 0.07 15), oklch(0.70 0.13 8))",
+      } as React.CSSProperties)
+    : ({} as React.CSSProperties);
+
 
   const draw = () => {
     const canvas = canvasRef.current;
