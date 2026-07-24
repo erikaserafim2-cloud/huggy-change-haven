@@ -686,7 +686,8 @@ function GameStep({
   const respin = () => { setWinner(null); setTimeout(spin, 200); };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" style={themeStyle}>
+
       <StepHeader
         onBack={onBack}
         title={babyName ? `A hora da verdade para ${babyName}` : "A hora da verdade"}
