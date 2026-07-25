@@ -487,12 +487,8 @@ function MemberCard({
       </button>
       <div className="flex-1">
         <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{p.role}</div>
-        <input
-          type="text"
-          value={p.name}
-          onChange={(e) => onRename(e.target.value)}
-          className="w-full bg-transparent text-base font-semibold outline-none"
-        />
+        <div className="w-full text-base font-semibold">{p.name}</div>
+
       </div>
       {onDelete && (
         <button
