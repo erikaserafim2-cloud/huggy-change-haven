@@ -133,12 +133,8 @@ function ChaRifaPage() {
   const theme = THEMES[state.theme];
   const font = TITLE_FONTS.find(f => f.key === state.fontKey) ?? TITLE_FONTS[0];
 
-  const onPhoto = (file: File | null) => {
-    if (!file) return update("photoUrl", "");
-    const reader = new FileReader();
-    reader.onload = () => update("photoUrl", String(reader.result));
-    reader.readAsDataURL(file);
-  };
+
+
 
   const download = async () => {
     if (!previewRef.current) return;
