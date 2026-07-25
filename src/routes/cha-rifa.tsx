@@ -339,31 +339,8 @@ function ChaRifaPage() {
               {exporting ? "Gerando..." : "Baixar como PNG"}
             </button>
           </aside>
-
-          {/* Preview */}
-          <div className="flex justify-center">
-            <div className="w-full max-w-[640px]">
-              <div className="mb-2 text-center text-xs uppercase tracking-widest text-muted-foreground">
-                Prévia
-              </div>
-              <div
-                ref={previewRef}
-                className="mx-auto overflow-hidden rounded-3xl shadow-[var(--shadow-lift)]"
-                style={{ background: palette.bg, color: palette.text, width: "100%", maxWidth: 640 }}
-              >
-                <RifaArt
-                  state={state}
-                  palette={palette}
-                  theme={theme}
-                  fontCss={font.css}
-                />
-              </div>
-              <p className="mt-3 text-center text-xs text-muted-foreground">
-                A imagem será exportada em alta resolução (2x).
-              </p>
-            </div>
-          </div>
         </div>
+
       </div>
     </div>
   );
