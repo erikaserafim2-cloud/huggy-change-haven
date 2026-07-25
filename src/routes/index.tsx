@@ -188,8 +188,20 @@ function App() {
         </main>
 
         <Link
-          to="/maternidade"
+          to="/cha-rifa"
           className="mt-8 flex items-center gap-3 rounded-2xl bg-card/70 p-4 backdrop-blur transition hover:bg-card sm:p-5"
+        >
+          <span className="text-2xl">🎟️</span>
+          <div className="flex-1">
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Criador de Chá-Rifa</p>
+            <p className="mt-1 text-sm text-foreground/80">Monte a arte da sua rifa em minutos</p>
+          </div>
+          <span aria-hidden className="shrink-0 rounded-full bg-muted p-2 text-muted-foreground">→</span>
+        </Link>
+
+        <Link
+          to="/maternidade"
+          className="mt-3 flex items-center gap-3 rounded-2xl bg-card/70 p-4 backdrop-blur transition hover:bg-card sm:p-5"
         >
           <span className="text-2xl">🌷</span>
           <div className="flex-1">
@@ -198,6 +210,7 @@ function App() {
           </div>
           <span aria-hidden className="shrink-0 rounded-full bg-muted p-2 text-muted-foreground">→</span>
         </Link>
+
 
 
 
