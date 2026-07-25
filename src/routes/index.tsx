@@ -187,23 +187,16 @@ function App() {
 
         <Link
           to="/maternidade"
-          style={{
-            background:
-              gender === "menino"
-                ? "linear-gradient(135deg,#B7DCF2,#7FB8DF)"
-                : gender === "menina"
-                ? "linear-gradient(135deg,#F8CFDD,#EE9FB8)"
-                : "var(--gradient-primary)",
-          }}
-          className="mt-8 flex items-center gap-3 rounded-2xl p-4 text-primary-foreground shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)] sm:p-5"
+          className="mt-8 flex items-center gap-3 rounded-2xl bg-card/70 p-4 backdrop-blur transition hover:bg-card sm:p-5"
         >
           <span className="text-2xl">🌷</span>
           <div className="flex-1">
-            <p className="text-xs font-bold uppercase tracking-widest opacity-90">Universo da Maternidade</p>
-            <p className="mt-0.5 text-sm font-semibold sm:text-base">Acompanhe o desenvolvimento dessa idade</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-primary">Universo da Maternidade</p>
+            <p className="mt-1 text-sm text-foreground/80">Acompanhe o desenvolvimento dessa idade</p>
           </div>
-          <span aria-hidden className="text-xl">→</span>
+          <span aria-hidden className="shrink-0 rounded-full bg-muted p-2 text-muted-foreground">→</span>
         </Link>
+
 
 
         <TipFooter
