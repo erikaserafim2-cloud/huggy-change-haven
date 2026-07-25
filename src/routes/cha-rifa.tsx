@@ -176,9 +176,29 @@ function ChaRifaPage() {
           </p>
         </header>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-[360px,1fr]">
-          {/* Painel lateral */}
-          <aside className="card-soft space-y-5 self-start p-5 sm:p-6 lg:sticky lg:top-4">
+        <div className="mt-6 grid gap-6 lg:grid-cols-[1fr,360px] lg:items-start">
+          {/* Preview */}
+          <div className="order-2 flex justify-center lg:order-1">
+            <div className="w-full max-w-[640px]">
+              <div className="mb-2 text-center text-xs uppercase tracking-widest text-muted-foreground">
+                Prévia
+              </div>
+              <div
+                ref={previewRef}
+                className="mx-auto overflow-hidden rounded-3xl shadow-[var(--shadow-lift)]"
+                style={{ background: palette.bg, color: palette.text, width: "100%", maxWidth: 640 }}
+              >
+                <RifaArt state={state} palette={palette} theme={theme} fontCss={font.css} />
+              </div>
+              <p className="mt-3 text-center text-xs text-muted-foreground">
+                A imagem será exportada em alta resolução (2x).
+              </p>
+            </div>
+          </div>
+
+          {/* Painel lateral (direita) */}
+          <aside className="card-soft order-1 space-y-5 self-start p-5 sm:p-6 lg:order-2 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
+
             <Field label="Nome do bebê">
               <input
                 className="input-soft"
@@ -308,22 +328,8 @@ function ChaRifaPage() {
               </Field>
             </div>
 
-            <Field label="Foto do bebê (opcional)">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={e => onPhoto(e.target.files?.[0] ?? null)}
-                className="block w-full text-sm text-muted-foreground file:mr-3 file:rounded-full file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-primary-foreground"
-              />
-              {state.photoUrl && (
-                <button
-                  onClick={() => update("photoUrl", "")}
-                  className="mt-2 text-xs text-muted-foreground underline"
-                >
-                  Remover foto
-                </button>
-              )}
-            </Field>
+
+
 
             <button
               onClick={download}
@@ -432,15 +438,8 @@ function RifaArt({
           {state.babyName || "do Bebê"}
         </h2>
 
-        {/* Foto opcional */}
-        {state.photoUrl && (
-          <div
-            className="mx-auto mt-3 h-24 w-24 overflow-hidden rounded-full ring-4"
-            style={{ borderColor: palette.accent, boxShadow: `0 0 0 4px ${palette.soft}` }}
-          >
-            <img src={state.photoUrl} alt="" className="h-full w-full object-cover" />
-          </div>
-        )}
+
+
 
         {/* Prêmio */}
         <div
