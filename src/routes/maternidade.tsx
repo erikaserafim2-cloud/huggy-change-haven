@@ -2,6 +2,8 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { getMaternityGuide, type MaternityGuide } from "../lib/maternity.functions";
+import logoAsset from "@/assets/logo.png.asset.json";
+
 
 export const Route = createFileRoute("/maternidade")({
   head: () => ({
