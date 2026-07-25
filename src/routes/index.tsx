@@ -187,7 +187,15 @@ function App() {
 
         <Link
           to="/maternidade"
-          className="mt-8 flex items-center gap-3 rounded-2xl bg-[var(--gradient-primary)] p-4 text-primary-foreground shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)] sm:p-5"
+          style={{
+            background:
+              gender === "menino"
+                ? "linear-gradient(135deg,#B7DCF2,#7FB8DF)"
+                : gender === "menina"
+                ? "linear-gradient(135deg,#F8CFDD,#EE9FB8)"
+                : "var(--gradient-primary)",
+          }}
+          className="mt-8 flex items-center gap-3 rounded-2xl p-4 text-primary-foreground shadow-[var(--shadow-soft)] transition hover:shadow-[var(--shadow-lift)] sm:p-5"
         >
           <span className="text-2xl">🌷</span>
           <div className="flex-1">
@@ -196,6 +204,7 @@ function App() {
           </div>
           <span aria-hidden className="text-xl">→</span>
         </Link>
+
 
         <TipFooter
           tip={BABY_TIPS[tipIndex]}
