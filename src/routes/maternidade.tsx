@@ -129,28 +129,22 @@ function MaternityPage() {
   return (
     <div className="relative min-h-screen">
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-4xl flex-col px-4 py-8 sm:py-12">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="btn-ghost inline-flex items-center gap-2 text-sm">
+        <div className="relative flex items-center justify-center">
+          <Link to="/" className="btn-ghost absolute left-0 inline-flex items-center gap-2 text-sm">
             <span aria-hidden>←</span> Roleta
           </Link>
           <Link
             to="/"
             aria-label="Voltar para a tela inicial"
-            className="flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-[color-mix(in_oklab,var(--primary)_10%,transparent)]"
+            className="flex items-center justify-center rounded-full p-1 transition hover:bg-[color-mix(in_oklab,var(--primary)_10%,transparent)]"
           >
-            <span className="flex h-16 w-16 overflow-hidden rounded-full bg-card ring-2 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)] sm:h-20 sm:w-20">
+            <span className="flex h-32 w-32 overflow-hidden rounded-full bg-card ring-4 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)] shadow-[var(--shadow-soft)] sm:h-40 sm:w-40">
               <img src={logoAsset.url} alt="Quem vai trocar?" className="h-full w-full object-cover scale-110" />
             </span>
           </Link>
-          <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Universo da Maternidade
-          </span>
         </div>
 
         <header className="mt-6 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] text-3xl animate-bounce-soft">
-            🌷
-          </div>
           <h1 className="mt-4 font-display text-4xl font-semibold sm:text-5xl">
             {babyName ? <>Guia da fase de <span className="text-primary">{babyName}</span></> : "Guia da fase do bebê"}
           </h1>
@@ -158,6 +152,7 @@ function MaternityPage() {
             Tópicos personalizados para a idade atual — feitos com carinho, sem substituir o pediatra.
           </p>
         </header>
+
 
 
         {!hasAge && (
