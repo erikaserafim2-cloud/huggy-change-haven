@@ -44,20 +44,23 @@ export const getMaternityGuide = createServerFn({ method: "POST" })
 
     const systemPrompt = `Você é uma consultora carinhosa em maternidade, pediatria comportamental e desenvolvimento infantil, escrevendo em português brasileiro. Seu tom é acolhedor, humano, informativo e sem julgamentos. Você NÃO substitui um pediatra — sempre recomende consultar profissionais em casos específicos.`;
 
-    const userPrompt = `Gere um guia personalizado para uma mãe/pai cujo bebê ${babyName} tem exatamente ${age.label} (${age.days} dias / ${age.months} meses). 
+    const userPrompt = `Gere um guia curto e personalizado para uma mãe/pai cujo bebê ${babyName} tem exatamente ${age.label} (${age.days} dias / ${age.months} meses).
 
-Retorne 8 tópicos RELEVANTES e ESPECÍFICOS para essa idade, cobrindo áreas como: desenvolvimento motor, cognitivo e emocional dessa fase; marcos esperados; alimentação apropriada (leite materno, introdução alimentar, refeições, conforme a idade); sono típico da idade; brincadeiras e estímulos ideais; saúde e vacinação; segurança em casa; autocuidado da mãe/pai e saúde mental parental.
+Retorne EXATAMENTE 4 tópicos ESSENCIAIS e específicos para essa idade, escolhidos entre: desenvolvimento (motor/cognitivo/emocional), sono, alimentação apropriada, brincadeiras/estímulos, saúde, segurança, vínculo, autocuidado parental.
 
 Cada tópico deve ter:
 - title: título curto e caloroso
 - category: uma categoria (ex: "Desenvolvimento", "Sono", "Alimentação", "Brincadeiras", "Saúde", "Autocuidado", "Segurança", "Vínculo")
 - emoji: 1 emoji representativo
-- description: 2 a 4 frases explicativas e acolhedoras
-- tips: 3 dicas práticas curtas
+- description: 2 frases curtas, acolhedoras
+- tips: exatamente 2 dicas práticas bem curtas
 
 Também retorne:
 - ageLabel: "${age.label}"
-- intro: 1 parágrafo curto e afetuoso sobre essa fase específica da criança.`;
+- intro: 1 frase curta e afetuosa sobre essa fase.
+
+Seja conciso. Respostas curtas.`;
+
 
     const schema = {
       type: "object",
