@@ -23,63 +23,68 @@ export const Route = createFileRoute("/cha-rifa")({
 type ThemeKey = "ursinho" | "safari" | "elefante" | "balao" | "estrela" | "nuvem";
 type ColorKey = "rosa" | "azul" | "neutro" | "verde" | "lilas";
 
-const THEMES: Record<ThemeKey, { label: string; emoji: string; decor: string[] }> = {
-  ursinho: { label: "Ursinho", emoji: "🧸", decor: ["🧸", "🎀", "🍼", "⭐"] },
-  safari: { label: "Safári", emoji: "🦁", decor: ["🦒", "🦁", "🐘", "🌿"] },
-  elefante: { label: "Elefantinho", emoji: "🐘", decor: ["🐘", "🎈", "☁️", "💙"] },
-  balao: { label: "Balão", emoji: "🎈", decor: ["🎈", "🎀", "✨", "☁️"] },
-  estrela: { label: "Estrelinha", emoji: "⭐", decor: ["⭐", "🌙", "✨", "☁️"] },
-  nuvem: { label: "Nuvenzinha", emoji: "☁️", decor: ["☁️", "🌈", "⭐", "💧"] },
+const THEMES: Record<ThemeKey, { label: string }> = {
+  ursinho: { label: "Ursinho" },
+  safari: { label: "Safári" },
+  elefante: { label: "Elefantinho" },
+  balao: { label: "Balão" },
+  estrela: { label: "Estrelinha" },
+  nuvem: { label: "Nuvenzinha" },
 };
 
 const COLORS: Record<
   ColorKey,
-  { label: string; bg: string; card: string; accent: string; text: string; soft: string; ring: string }
+  { label: string; bg: string; card: string; accent: string; text: string; soft: string; ring: string; deep: string }
 > = {
   rosa: {
     label: "Rosa Bebê",
-    bg: "linear-gradient(160deg, #FFE4EC 0%, #FFF5F7 60%, #FFE9D6 100%)",
+    bg: "linear-gradient(160deg, #FFE4EC 0%, #FFF5F7 55%, #FFE9D6 100%)",
     card: "#ffffff",
     accent: "#E27196",
     text: "#7A3B54",
     soft: "#FBD5E0",
     ring: "#F1A4BC",
+    deep: "#B24F73",
   },
   azul: {
     label: "Azul Bebê",
-    bg: "linear-gradient(160deg, #DDEBFF 0%, #F1F7FF 60%, #E4F1FF 100%)",
+    bg: "linear-gradient(160deg, #DDEBFF 0%, #F1F7FF 55%, #E4F1FF 100%)",
     card: "#ffffff",
     accent: "#4E86C6",
     text: "#2F4C77",
     soft: "#CFE0F6",
     ring: "#9BBEE6",
+    deep: "#345F92",
   },
   neutro: {
     label: "Neutro",
-    bg: "linear-gradient(160deg, #F7EFE3 0%, #FBF6EE 60%, #F0E4D3 100%)",
+    bg: "linear-gradient(160deg, #F7EFE3 0%, #FBF6EE 55%, #F0E4D3 100%)",
     card: "#ffffff",
     accent: "#B98C63",
     text: "#5A4530",
     soft: "#EEDDC5",
     ring: "#D4B896",
+    deep: "#8A6540",
   },
   verde: {
     label: "Verde Sálvia",
-    bg: "linear-gradient(160deg, #E2EEDF 0%, #F1F7EF 60%, #E9F1E1 100%)",
+    bg: "linear-gradient(160deg, #E2EEDF 0%, #F1F7EF 55%, #E9F1E1 100%)",
     card: "#ffffff",
     accent: "#6B9970",
     text: "#3C5C40",
     soft: "#D3E5CE",
     ring: "#A9C7A7",
+    deep: "#4E7452",
   },
   lilas: {
     label: "Lilás",
-    bg: "linear-gradient(160deg, #ECE1F3 0%, #F6EFFB 60%, #E3D6EE 100%)",
+    bg: "linear-gradient(160deg, #ECE1F3 0%, #F6EFFB 55%, #E3D6EE 100%)",
     card: "#ffffff",
     accent: "#8B6DAE",
     text: "#4E3968",
     soft: "#DDCCE9",
     ring: "#B79CD1",
+    deep: "#664B87",
   },
 };
 
@@ -133,9 +138,6 @@ function ChaRifaPage() {
   const theme = THEMES[state.theme];
   const font = TITLE_FONTS.find(f => f.key === state.fontKey) ?? TITLE_FONTS[0];
 
-
-
-
   const download = async () => {
     if (!previewRef.current) return;
     setExporting(true);
@@ -188,7 +190,7 @@ function ChaRifaPage() {
                 className="mx-auto overflow-hidden rounded-3xl shadow-[var(--shadow-lift)]"
                 style={{ background: palette.bg, color: palette.text, width: "100%", maxWidth: 640 }}
               >
-                <RifaArt state={state} palette={palette} theme={theme} fontCss={font.css} />
+                <RifaArt state={state} palette={palette} fontCss={font.css} />
               </div>
               <p className="mt-3 text-center text-xs text-muted-foreground">
                 A imagem será exportada em alta resolução (2x).
@@ -210,15 +212,20 @@ function ChaRifaPage() {
             </Field>
 
             <Field label="Tema">
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {(Object.keys(THEMES) as ThemeKey[]).map(k => (
-                  <ChipButton
+                  <button
                     key={k}
-                    active={state.theme === k}
                     onClick={() => update("theme", k)}
-                    label={THEMES[k].label}
-                    icon={THEMES[k].emoji}
-                  />
+                    className={`flex items-center gap-2 rounded-xl border p-2 text-left text-sm transition ${
+                      state.theme === k ? "border-primary ring-2 ring-primary/30" : "border-border hover:bg-muted"
+                    }`}
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted">
+                      <ThemeIllustration theme={k} palette={COLORS[state.color]} size={26} />
+                    </span>
+                    <span className="truncate font-medium">{THEMES[k].label}</span>
+                  </button>
                 ))}
               </div>
             </Field>
@@ -258,12 +265,17 @@ function ChaRifaPage() {
             <Field label="Quantidade de números">
               <div className="grid grid-cols-4 gap-2">
                 {NUMBER_COUNTS.map(n => (
-                  <ChipButton
+                  <button
                     key={n}
-                    active={state.count === n}
                     onClick={() => update("count", n)}
-                    label={String(n)}
-                  />
+                    className={`rounded-xl border px-2 py-2 text-xs font-semibold transition ${
+                      state.count === n
+                        ? "border-primary bg-primary text-primary-foreground shadow"
+                        : "border-border bg-card hover:bg-muted"
+                    }`}
+                  >
+                    {n}
+                  </button>
                 ))}
               </div>
             </Field>
@@ -328,9 +340,6 @@ function ChaRifaPage() {
               </Field>
             </div>
 
-
-
-
             <button
               onClick={download}
               disabled={exporting}
@@ -360,30 +369,180 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function ChipButton({
-  active, onClick, label, icon,
-}: { active: boolean; onClick: () => void; label: string; icon?: string }) {
+// -----------------------------
+// Ilustrações SVG por tema
+// -----------------------------
+function ThemeIllustration({
+  theme, palette, size = 200,
+}: { theme: ThemeKey; palette: (typeof COLORS)[ColorKey]; size?: number }) {
+  const a = palette.accent;
+  const d = palette.deep;
+  const s = palette.soft;
+  const r = palette.ring;
+  const common = { width: size, height: size, viewBox: "0 0 200 200" } as const;
+
+  switch (theme) {
+    case "ursinho":
+      return (
+        <svg {...common} xmlns="http://www.w3.org/2000/svg">
+          {/* orelhas */}
+          <circle cx="65" cy="70" r="22" fill={d} />
+          <circle cx="135" cy="70" r="22" fill={d} />
+          <circle cx="65" cy="70" r="11" fill={s} />
+          <circle cx="135" cy="70" r="11" fill={s} />
+          {/* cabeça */}
+          <circle cx="100" cy="110" r="55" fill={a} />
+          {/* focinho */}
+          <ellipse cx="100" cy="128" rx="26" ry="20" fill={s} />
+          <ellipse cx="100" cy="120" rx="6" ry="4.5" fill={d} />
+          {/* olhos */}
+          <circle cx="82" cy="105" r="4.5" fill={d} />
+          <circle cx="118" cy="105" r="4.5" fill={d} />
+          {/* bochechas */}
+          <circle cx="70" cy="122" r="6" fill={r} opacity="0.6" />
+          <circle cx="130" cy="122" r="6" fill={r} opacity="0.6" />
+          {/* boca */}
+          <path d="M92 134 Q100 140 108 134" stroke={d} strokeWidth="2.5" fill="none" strokeLinecap="round" />
+          {/* laço */}
+          <path d="M80 60 L100 72 L120 60 L115 80 L85 80 Z" fill={d} opacity="0.7" />
+        </svg>
+      );
+    case "elefante":
+      return (
+        <svg {...common} xmlns="http://www.w3.org/2000/svg">
+          {/* orelhas */}
+          <ellipse cx="55" cy="105" rx="26" ry="32" fill={d} />
+          <ellipse cx="145" cy="105" rx="26" ry="32" fill={d} />
+          {/* corpo/cabeça */}
+          <circle cx="100" cy="105" r="50" fill={a} />
+          {/* tromba */}
+          <path d="M100 140 Q100 175 130 170 Q140 168 138 158" stroke={a} strokeWidth="20" fill="none" strokeLinecap="round" />
+          {/* olhos */}
+          <circle cx="85" cy="100" r="4.5" fill={d} />
+          <circle cx="115" cy="100" r="4.5" fill={d} />
+          {/* bochechas */}
+          <circle cx="78" cy="118" r="5" fill={r} opacity="0.6" />
+          <circle cx="122" cy="118" r="5" fill={r} opacity="0.6" />
+          {/* topete */}
+          <path d="M90 55 Q100 40 110 55" stroke={d} strokeWidth="4" fill="none" strokeLinecap="round" />
+        </svg>
+      );
+    case "balao":
+      return (
+        <svg {...common} xmlns="http://www.w3.org/2000/svg">
+          {/* balão */}
+          <ellipse cx="100" cy="75" rx="50" ry="58" fill={a} />
+          <ellipse cx="85" cy="55" rx="12" ry="18" fill={s} opacity="0.7" />
+          <path d="M60 118 L100 138 L140 118 L120 128 L100 138 L80 128 Z" fill={d} opacity="0.5" />
+          {/* cordas */}
+          <line x1="85" y1="130" x2="90" y2="155" stroke={d} strokeWidth="1.5" />
+          <line x1="115" y1="130" x2="110" y2="155" stroke={d} strokeWidth="1.5" />
+          <line x1="100" y1="132" x2="100" y2="155" stroke={d} strokeWidth="1.5" />
+          {/* cesto */}
+          <rect x="82" y="155" width="36" height="24" rx="4" fill={d} />
+          <line x1="88" y1="155" x2="88" y2="179" stroke={s} strokeWidth="1" />
+          <line x1="100" y1="155" x2="100" y2="179" stroke={s} strokeWidth="1" />
+          <line x1="112" y1="155" x2="112" y2="179" stroke={s} strokeWidth="1" />
+          {/* nuvens */}
+          <circle cx="30" cy="150" r="10" fill="#ffffff" opacity="0.8" />
+          <circle cx="42" cy="150" r="8" fill="#ffffff" opacity="0.8" />
+          <circle cx="165" cy="160" r="10" fill="#ffffff" opacity="0.8" />
+          <circle cx="175" cy="160" r="7" fill="#ffffff" opacity="0.8" />
+        </svg>
+      );
+    case "estrela":
+      return (
+        <svg {...common} xmlns="http://www.w3.org/2000/svg">
+          {/* lua */}
+          <path d="M120 40 A55 55 0 1 0 165 130 A45 45 0 1 1 120 40 Z" fill={a} />
+          <circle cx="140" cy="70" r="3" fill={s} opacity="0.7" />
+          <circle cx="150" cy="95" r="2.5" fill={s} opacity="0.7" />
+          {/* estrelas */}
+          <path d="M50 60 l4 10 l10 2 l-8 6 l3 10 l-9 -6 l-9 6 l3 -10 l-8 -6 l10 -2 z" fill={d} />
+          <path d="M40 140 l3 7 l7 1 l-5 4 l2 7 l-7 -4 l-7 4 l2 -7 l-5 -4 l7 -1 z" fill={d} opacity="0.7" />
+          <path d="M170 40 l2 5 l5 1 l-4 3 l1 5 l-4 -3 l-5 3 l2 -5 l-4 -3 l5 -1 z" fill={d} opacity="0.6" />
+        </svg>
+      );
+    case "nuvem":
+      return (
+        <svg {...common} xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="110" rx="70" ry="35" fill={s} />
+          <circle cx="65" cy="95" r="25" fill={s} />
+          <circle cx="100" cy="80" r="30" fill={s} />
+          <circle cx="135" cy="95" r="25" fill={s} />
+          {/* rosto */}
+          <circle cx="88" cy="105" r="4" fill={d} />
+          <circle cx="112" cy="105" r="4" fill={d} />
+          <circle cx="80" cy="115" r="5" fill={r} opacity="0.7" />
+          <circle cx="120" cy="115" r="5" fill={r} opacity="0.7" />
+          <path d="M92 120 Q100 128 108 120" stroke={d} strokeWidth="2.5" fill="none" strokeLinecap="round" />
+          {/* gotas */}
+          <path d="M70 155 Q66 168 74 168 Q78 168 74 155 Z" fill={a} />
+          <path d="M100 165 Q96 178 104 178 Q108 178 104 165 Z" fill={a} />
+          <path d="M130 155 Q126 168 134 168 Q138 168 134 155 Z" fill={a} />
+        </svg>
+      );
+    case "safari":
+      return (
+        <svg {...common} xmlns="http://www.w3.org/2000/svg">
+          {/* girafa */}
+          <rect x="95" y="55" width="16" height="70" rx="6" fill={a} />
+          <circle cx="103" cy="50" r="18" fill={a} />
+          <circle cx="115" cy="45" r="3" fill={d} />
+          <line x1="98" y1="35" x2="96" y2="28" stroke={d} strokeWidth="2" />
+          <line x1="108" y1="35" x2="110" y2="28" stroke={d} strokeWidth="2" />
+          <circle cx="96" cy="28" r="2.5" fill={d} />
+          <circle cx="110" cy="28" r="2.5" fill={d} />
+          {/* corpo */}
+          <ellipse cx="103" cy="140" rx="45" ry="25" fill={a} />
+          <rect x="70" y="150" width="8" height="25" rx="3" fill={a} />
+          <rect x="128" y="150" width="8" height="25" rx="3" fill={a} />
+          {/* manchas */}
+          <circle cx="90" cy="135" r="5" fill={d} opacity="0.6" />
+          <circle cx="110" cy="145" r="6" fill={d} opacity="0.6" />
+          <circle cx="125" cy="132" r="4" fill={d} opacity="0.6" />
+          <circle cx="103" cy="70" r="3" fill={d} opacity="0.6" />
+          <circle cx="105" cy="90" r="3" fill={d} opacity="0.6" />
+          {/* grama */}
+          <path d="M30 175 Q35 165 40 175 Q45 165 50 175 Z" fill={d} opacity="0.5" />
+          <path d="M150 175 Q155 165 160 175 Q165 165 170 175 Z" fill={d} opacity="0.5" />
+        </svg>
+      );
+  }
+}
+
+function BackgroundPattern({ palette }: { palette: (typeof COLORS)[ColorKey] }) {
+  // padrão suave e universal: pontinhos + curvas orgânicas
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'>
+    <g fill='${palette.accent}' opacity='0.08'>
+      <circle cx='20' cy='20' r='2.5'/>
+      <circle cx='70' cy='40' r='1.8'/>
+      <circle cx='110' cy='25' r='2.2'/>
+      <circle cx='40' cy='80' r='2'/>
+      <circle cx='95' cy='95' r='2.6'/>
+      <circle cx='125' cy='115' r='1.8'/>
+      <circle cx='15' cy='120' r='2.2'/>
+    </g>
+    <g stroke='${palette.accent}' stroke-width='1.2' fill='none' opacity='0.09' stroke-linecap='round'>
+      <path d='M0 60 Q35 45 70 60 T140 60'/>
+      <path d='M0 110 Q35 95 70 110 T140 110'/>
+    </g>
+  </svg>`;
+  const url = `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
   return (
-    <button
-      onClick={onClick}
-      className={`flex items-center justify-center gap-1 rounded-xl border px-2 py-2 text-xs font-semibold transition ${
-        active
-          ? "border-primary bg-primary text-primary-foreground shadow"
-          : "border-border bg-card hover:bg-muted"
-      }`}
-    >
-      {icon && <span className="text-base leading-none">{icon}</span>}
-      <span className="truncate">{label}</span>
-    </button>
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0"
+      style={{ backgroundImage: url, backgroundRepeat: "repeat", backgroundSize: "140px 140px" }}
+    />
   );
 }
 
 function RifaArt({
-  state, palette, theme, fontCss,
+  state, palette, fontCss,
 }: {
   state: typeof DEFAULT_STATE;
   palette: (typeof COLORS)[ColorKey];
-  theme: (typeof THEMES)[ThemeKey];
   fontCss: string;
 }) {
   const numbers = useMemo(() => Array.from({ length: state.count }, (_, i) => i + 1), [state.count]);
@@ -393,48 +552,26 @@ function RifaArt({
     ? new Date(state.drawDate + "T00:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })
     : "";
 
-  // Padrão de fundo temático: emojis do tema espalhados em SVG
-  const patternUrl = useMemo(() => {
-    const decor = theme.decor;
-    const size = 220;
-    const spots = [
-      { x: 30, y: 40, s: 28, r: -12, i: 0 },
-      { x: 150, y: 25, s: 22, r: 15, i: 1 },
-      { x: 95, y: 110, s: 32, r: -6, i: 2 },
-      { x: 190, y: 150, s: 24, r: 20, i: 3 },
-      { x: 40, y: 175, s: 26, r: 8, i: 1 },
-      { x: 175, y: 90, s: 20, r: -18, i: 0 },
-    ];
-    const items = spots
-      .map(
-        s =>
-          `<text x="${s.x}" y="${s.y}" font-size="${s.s}" transform="rotate(${s.r} ${s.x} ${s.y})">${decor[s.i]}</text>`,
-      )
-      .join("");
-    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}' viewBox='0 0 ${size} ${size}'><g opacity='0.18'>${items}</g></svg>`;
-    return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
-  }, [theme]);
-
   return (
     <div className="relative p-6 sm:p-8">
-      {/* Padrão de fundo temático */}
+      {/* Padrão de fundo delicado */}
+      <BackgroundPattern palette={palette} />
+
+      {/* Halo suave atrás da ilustração */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 select-none"
-        style={{ backgroundImage: patternUrl, backgroundRepeat: "repeat", backgroundSize: "220px 220px" }}
+        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 rounded-full blur-2xl"
+        style={{ width: 260, height: 260, background: palette.soft, opacity: 0.7 }}
       />
-      {/* Decor cantos */}
-      <div className="pointer-events-none absolute inset-0 select-none">
-        <div className="absolute left-3 top-3 text-3xl opacity-70">{theme.decor[0]}</div>
-        <div className="absolute right-3 top-3 text-3xl opacity-70">{theme.decor[1]}</div>
-        <div className="absolute left-3 bottom-3 text-3xl opacity-70">{theme.decor[2]}</div>
-        <div className="absolute right-3 bottom-3 text-3xl opacity-70">{theme.decor[3]}</div>
+
+      {/* Ilustração grande do tema */}
+      <div className="relative flex justify-center">
+        <ThemeIllustration theme={state.theme} palette={palette} size={200} />
       </div>
 
-
       {/* Título */}
-      <div className="relative text-center">
-        <div className="text-xs font-semibold uppercase tracking-[0.3em]" style={{ color: palette.accent }}>
+      <div className="relative -mt-2 text-center">
+        <div className="text-[11px] font-semibold uppercase tracking-[0.35em]" style={{ color: palette.accent }}>
           Chá Rifa
         </div>
         <h2
@@ -444,12 +581,16 @@ function RifaArt({
           {state.babyName || "do Bebê"}
         </h2>
 
-
-
+        {/* linha decorativa */}
+        <div className="mx-auto mt-3 flex items-center justify-center gap-2" aria-hidden>
+          <span className="h-px w-10" style={{ background: palette.ring }} />
+          <span className="h-1.5 w-1.5 rounded-full" style={{ background: palette.accent }} />
+          <span className="h-px w-10" style={{ background: palette.ring }} />
+        </div>
 
         {/* Prêmio */}
         <div
-          className="mx-auto mt-4 inline-flex flex-col items-center rounded-2xl px-5 py-2"
+          className="mx-auto mt-4 inline-flex flex-col items-center rounded-2xl px-6 py-2.5"
           style={{ background: palette.accent, color: "white" }}
         >
           <span className="text-[10px] font-bold uppercase tracking-widest opacity-90">Prêmio</span>
@@ -508,7 +649,7 @@ function RifaArt({
           )}
           {state.contact && (
             <span className="rounded-full px-3 py-1" style={{ background: palette.soft }}>
-              📱 {state.contact}
+              {state.contact}
             </span>
           )}
         </div>
