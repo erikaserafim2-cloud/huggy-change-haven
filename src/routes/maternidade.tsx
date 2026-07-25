@@ -131,6 +131,16 @@ function MaternityPage() {
           <Link to="/" className="btn-ghost inline-flex items-center gap-2 text-sm">
             <span aria-hidden>←</span> Roleta
           </Link>
+          <Link
+            to="/"
+            aria-label="Voltar para a tela inicial"
+            className="flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-[color-mix(in_oklab,var(--primary)_10%,transparent)]"
+          >
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] text-xl">
+              👶
+            </span>
+            <span className="font-display text-base font-semibold hidden sm:inline">Troca da Fralda</span>
+          </Link>
           <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Universo da Maternidade
           </span>
@@ -147,6 +157,7 @@ function MaternityPage() {
             Tópicos personalizados para a idade atual — feitos com carinho, sem substituir o pediatra.
           </p>
         </header>
+
 
         {!hasAge && (
           <form onSubmit={handleSaveAge} className="card-soft mt-8 space-y-5 p-6 sm:p-8 animate-pop">
