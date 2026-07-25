@@ -125,7 +125,7 @@ function App() {
     setBabyName(loadLS("babyName", ""));
     
     setGender(loadLS<Gender>("babyGender", ""));
-    setParticipants(loadLS("participants_v2", DEFAULT_PARTICIPANTS));
+    setParticipants(loadLS("participants_v3", DEFAULT_PARTICIPANTS));
     setScoreboard(loadLS("scoreboard_v2", {}));
     setTipIndex(Math.floor(Math.random() * BABY_TIPS.length));
     setHydrated(true);
@@ -134,7 +134,7 @@ function App() {
   useEffect(() => { if (hydrated) saveLS("babyName", babyName); }, [babyName, hydrated]);
 
   useEffect(() => { if (hydrated) saveLS("babyGender", gender); }, [gender, hydrated]);
-  useEffect(() => { if (hydrated) saveLS("participants_v2", participants); }, [participants, hydrated]);
+  useEffect(() => { if (hydrated) saveLS("participants_v3", participants); }, [participants, hydrated]);
   useEffect(() => { if (hydrated) saveLS("scoreboard_v2", scoreboard); }, [scoreboard, hydrated]);
 
   const activeParticipants = useMemo(() => participants.filter(p => p.active), [participants]);
