@@ -104,7 +104,6 @@ const DEFAULT_STATE = {
   howItWorks: "Cada número da rifa custa R$ 5. Escolha o seu, faça o PIX e boa sorte! O sorteio acontece pela Loteria Federal.",
   pix: "",
   contact: "",
-  photoUrl: "",
 };
 
 const LS_KEY = "cha_rifa_state_v1";
