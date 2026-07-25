@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import logoAsset from "@/assets/logo.png.asset.json";
+
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -231,8 +233,8 @@ function Decorations() {
 function Header({ babyName }: { babyName: string }) {
   return (
     <header className="text-center">
-      <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] text-3xl animate-bounce-soft">
-        👶
+      <div className="mx-auto h-20 w-20 overflow-hidden rounded-full bg-card ring-4 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)] shadow-[var(--shadow-soft)] animate-bounce-soft">
+        <img src={logoAsset.url} alt="Quem vai trocar?" className="h-full w-full object-cover scale-110" />
       </div>
       <h1 className="mt-4 font-display text-4xl font-semibold text-foreground sm:text-5xl">
         Quem vai trocar {babyName ? <span className="text-primary">{babyName}</span> : "a fralda"}?
@@ -241,6 +243,7 @@ function Header({ babyName }: { babyName: string }) {
     </header>
   );
 }
+
 
 // -----------------------------
 // Step: Setup

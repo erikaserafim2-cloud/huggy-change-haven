@@ -2,6 +2,8 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { getMaternityGuide, type MaternityGuide } from "../lib/maternity.functions";
+import logoAsset from "@/assets/logo.png.asset.json";
+
 
 export const Route = createFileRoute("/maternidade")({
   head: () => ({
@@ -136,9 +138,10 @@ function MaternityPage() {
             aria-label="Voltar para a tela inicial"
             className="flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-[color-mix(in_oklab,var(--primary)_10%,transparent)]"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] text-xl">
-              👶
+            <span className="flex h-10 w-10 overflow-hidden rounded-full bg-card ring-2 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)]">
+              <img src={logoAsset.url} alt="Quem vai trocar?" className="h-full w-full object-cover scale-110" />
             </span>
+
             <span className="font-display text-base font-semibold hidden sm:inline">Troca da Fralda</span>
           </Link>
           <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
