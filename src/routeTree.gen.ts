@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as MaternidadeRouteImport } from './routes/maternidade'
+import { Route as ChaRifaRouteImport } from './routes/cha-rifa'
 import { Route as IndexRouteImport } from './routes/index'
 
 const MaternidadeRoute = MaternidadeRouteImport.update({
   id: '/maternidade',
   path: '/maternidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChaRifaRoute = ChaRifaRouteImport.update({
+  id: '/cha-rifa',
+  path: '/cha-rifa',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,27 +31,31 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cha-rifa': typeof ChaRifaRoute
   '/maternidade': typeof MaternidadeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cha-rifa': typeof ChaRifaRoute
   '/maternidade': typeof MaternidadeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cha-rifa': typeof ChaRifaRoute
   '/maternidade': typeof MaternidadeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/maternidade'
+  fullPaths: '/' | '/cha-rifa' | '/maternidade'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/maternidade'
-  id: '__root__' | '/' | '/maternidade'
+  to: '/' | '/cha-rifa' | '/maternidade'
+  id: '__root__' | '/' | '/cha-rifa' | '/maternidade'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChaRifaRoute: typeof ChaRifaRoute
   MaternidadeRoute: typeof MaternidadeRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/maternidade'
       fullPath: '/maternidade'
       preLoaderRoute: typeof MaternidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cha-rifa': {
+      id: '/cha-rifa'
+      path: '/cha-rifa'
+      fullPath: '/cha-rifa'
+      preLoaderRoute: typeof ChaRifaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChaRifaRoute: ChaRifaRoute,
   MaternidadeRoute: MaternidadeRoute,
 }
 export const routeTree = rootRouteImport
