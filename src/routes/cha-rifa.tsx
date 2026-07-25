@@ -393,15 +393,44 @@ function RifaArt({
     ? new Date(state.drawDate + "T00:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })
     : "";
 
+  // Padrão de fundo temático: emojis do tema espalhados em SVG
+  const patternUrl = useMemo(() => {
+    const decor = theme.decor;
+    const size = 220;
+    const spots = [
+      { x: 30, y: 40, s: 28, r: -12, i: 0 },
+      { x: 150, y: 25, s: 22, r: 15, i: 1 },
+      { x: 95, y: 110, s: 32, r: -6, i: 2 },
+      { x: 190, y: 150, s: 24, r: 20, i: 3 },
+      { x: 40, y: 175, s: 26, r: 8, i: 1 },
+      { x: 175, y: 90, s: 20, r: -18, i: 0 },
+    ];
+    const items = spots
+      .map(
+        s =>
+          `<text x="${s.x}" y="${s.y}" font-size="${s.s}" transform="rotate(${s.r} ${s.x} ${s.y})">${decor[s.i]}</text>`,
+      )
+      .join("");
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}' viewBox='0 0 ${size} ${size}'><g opacity='0.18'>${items}</g></svg>`;
+    return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+  }, [theme]);
+
   return (
     <div className="relative p-6 sm:p-8">
+      {/* Padrão de fundo temático */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 select-none"
+        style={{ backgroundImage: patternUrl, backgroundRepeat: "repeat", backgroundSize: "220px 220px" }}
+      />
       {/* Decor cantos */}
       <div className="pointer-events-none absolute inset-0 select-none">
-        <div className="absolute left-3 top-3 text-3xl opacity-60">{theme.decor[0]}</div>
-        <div className="absolute right-3 top-3 text-3xl opacity-60">{theme.decor[1]}</div>
-        <div className="absolute left-3 bottom-3 text-3xl opacity-60">{theme.decor[2]}</div>
-        <div className="absolute right-3 bottom-3 text-3xl opacity-60">{theme.decor[3]}</div>
+        <div className="absolute left-3 top-3 text-3xl opacity-70">{theme.decor[0]}</div>
+        <div className="absolute right-3 top-3 text-3xl opacity-70">{theme.decor[1]}</div>
+        <div className="absolute left-3 bottom-3 text-3xl opacity-70">{theme.decor[2]}</div>
+        <div className="absolute right-3 bottom-3 text-3xl opacity-70">{theme.decor[3]}</div>
       </div>
+
 
       {/* Título */}
       <div className="relative text-center">
