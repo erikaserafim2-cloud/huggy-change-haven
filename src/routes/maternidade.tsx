@@ -138,11 +138,9 @@ function MaternityPage() {
             aria-label="Voltar para a tela inicial"
             className="flex items-center gap-2 rounded-full px-3 py-1.5 transition hover:bg-[color-mix(in_oklab,var(--primary)_10%,transparent)]"
           >
-            <span className="flex h-10 w-10 overflow-hidden rounded-full bg-card ring-2 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)]">
+            <span className="flex h-16 w-16 overflow-hidden rounded-full bg-card ring-2 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)] sm:h-20 sm:w-20">
               <img src={logoAsset.url} alt="Quem vai trocar?" className="h-full w-full object-cover scale-110" />
             </span>
-
-            <span className="font-display text-base font-semibold hidden sm:inline">Troca da Fralda</span>
           </Link>
           <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Universo da Maternidade

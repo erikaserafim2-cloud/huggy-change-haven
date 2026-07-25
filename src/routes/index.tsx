@@ -233,7 +233,7 @@ function Decorations() {
 function Header({ babyName }: { babyName: string }) {
   return (
     <header className="text-center">
-      <div className="mx-auto h-20 w-20 overflow-hidden rounded-full bg-card ring-4 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)] shadow-[var(--shadow-soft)] animate-bounce-soft">
+      <div className="mx-auto h-40 w-40 overflow-hidden rounded-full bg-card ring-4 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)] shadow-[var(--shadow-soft)] animate-bounce-soft sm:h-48 sm:w-48">
         <img src={logoAsset.url} alt="Quem vai trocar?" className="h-full w-full object-cover scale-110" />
       </div>
       <h1 className="mt-4 font-display text-4xl font-semibold text-foreground sm:text-5xl">
