@@ -2,6 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState, useEffect } from "react";
 import { toPng } from "html-to-image";
 import logoAsset from "@/assets/logo.png.asset.json";
+import ursinhoAsset from "@/assets/temas/ursinho.png.asset.json";
+import safariAsset from "@/assets/temas/safari.png.asset.json";
+import elefanteAsset from "@/assets/temas/elefante.png.asset.json";
+import balaoAsset from "@/assets/temas/balao.png.asset.json";
+import estrelaAsset from "@/assets/temas/estrela.png.asset.json";
+import nuvemAsset from "@/assets/temas/nuvem.png.asset.json";
+
+const THEME_IMAGES: Record<"ursinho" | "safari" | "elefante" | "balao" | "estrela" | "nuvem", string> = {
+  ursinho: ursinhoAsset.url,
+  safari: safariAsset.url,
+  elefante: elefanteAsset.url,
+  balao: balaoAsset.url,
+  estrela: estrelaAsset.url,
+  nuvem: nuvemAsset.url,
+};
 
 export const Route = createFileRoute("/cha-rifa")({
   head: () => ({
@@ -373,142 +388,20 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 // Ilustrações SVG por tema
 // -----------------------------
 function ThemeIllustration({
-  theme, palette, size = 200,
-}: { theme: ThemeKey; palette: (typeof COLORS)[ColorKey]; size?: number }) {
-  const a = palette.accent;
-  const d = palette.deep;
-  const s = palette.soft;
-  const r = palette.ring;
-  const common = { width: size, height: size, viewBox: "0 0 200 200" } as const;
-
-  switch (theme) {
-    case "ursinho":
-      return (
-        <svg {...common} xmlns="http://www.w3.org/2000/svg">
-          {/* orelhas */}
-          <circle cx="65" cy="70" r="22" fill={d} />
-          <circle cx="135" cy="70" r="22" fill={d} />
-          <circle cx="65" cy="70" r="11" fill={s} />
-          <circle cx="135" cy="70" r="11" fill={s} />
-          {/* cabeça */}
-          <circle cx="100" cy="110" r="55" fill={a} />
-          {/* focinho */}
-          <ellipse cx="100" cy="128" rx="26" ry="20" fill={s} />
-          <ellipse cx="100" cy="120" rx="6" ry="4.5" fill={d} />
-          {/* olhos */}
-          <circle cx="82" cy="105" r="4.5" fill={d} />
-          <circle cx="118" cy="105" r="4.5" fill={d} />
-          {/* bochechas */}
-          <circle cx="70" cy="122" r="6" fill={r} opacity="0.6" />
-          <circle cx="130" cy="122" r="6" fill={r} opacity="0.6" />
-          {/* boca */}
-          <path d="M92 134 Q100 140 108 134" stroke={d} strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          {/* laço */}
-          <path d="M80 60 L100 72 L120 60 L115 80 L85 80 Z" fill={d} opacity="0.7" />
-        </svg>
-      );
-    case "elefante":
-      return (
-        <svg {...common} xmlns="http://www.w3.org/2000/svg">
-          {/* orelhas */}
-          <ellipse cx="55" cy="105" rx="26" ry="32" fill={d} />
-          <ellipse cx="145" cy="105" rx="26" ry="32" fill={d} />
-          {/* corpo/cabeça */}
-          <circle cx="100" cy="105" r="50" fill={a} />
-          {/* tromba */}
-          <path d="M100 140 Q100 175 130 170 Q140 168 138 158" stroke={a} strokeWidth="20" fill="none" strokeLinecap="round" />
-          {/* olhos */}
-          <circle cx="85" cy="100" r="4.5" fill={d} />
-          <circle cx="115" cy="100" r="4.5" fill={d} />
-          {/* bochechas */}
-          <circle cx="78" cy="118" r="5" fill={r} opacity="0.6" />
-          <circle cx="122" cy="118" r="5" fill={r} opacity="0.6" />
-          {/* topete */}
-          <path d="M90 55 Q100 40 110 55" stroke={d} strokeWidth="4" fill="none" strokeLinecap="round" />
-        </svg>
-      );
-    case "balao":
-      return (
-        <svg {...common} xmlns="http://www.w3.org/2000/svg">
-          {/* balão */}
-          <ellipse cx="100" cy="75" rx="50" ry="58" fill={a} />
-          <ellipse cx="85" cy="55" rx="12" ry="18" fill={s} opacity="0.7" />
-          <path d="M60 118 L100 138 L140 118 L120 128 L100 138 L80 128 Z" fill={d} opacity="0.5" />
-          {/* cordas */}
-          <line x1="85" y1="130" x2="90" y2="155" stroke={d} strokeWidth="1.5" />
-          <line x1="115" y1="130" x2="110" y2="155" stroke={d} strokeWidth="1.5" />
-          <line x1="100" y1="132" x2="100" y2="155" stroke={d} strokeWidth="1.5" />
-          {/* cesto */}
-          <rect x="82" y="155" width="36" height="24" rx="4" fill={d} />
-          <line x1="88" y1="155" x2="88" y2="179" stroke={s} strokeWidth="1" />
-          <line x1="100" y1="155" x2="100" y2="179" stroke={s} strokeWidth="1" />
-          <line x1="112" y1="155" x2="112" y2="179" stroke={s} strokeWidth="1" />
-          {/* nuvens */}
-          <circle cx="30" cy="150" r="10" fill="#ffffff" opacity="0.8" />
-          <circle cx="42" cy="150" r="8" fill="#ffffff" opacity="0.8" />
-          <circle cx="165" cy="160" r="10" fill="#ffffff" opacity="0.8" />
-          <circle cx="175" cy="160" r="7" fill="#ffffff" opacity="0.8" />
-        </svg>
-      );
-    case "estrela":
-      return (
-        <svg {...common} xmlns="http://www.w3.org/2000/svg">
-          {/* lua */}
-          <path d="M120 40 A55 55 0 1 0 165 130 A45 45 0 1 1 120 40 Z" fill={a} />
-          <circle cx="140" cy="70" r="3" fill={s} opacity="0.7" />
-          <circle cx="150" cy="95" r="2.5" fill={s} opacity="0.7" />
-          {/* estrelas */}
-          <path d="M50 60 l4 10 l10 2 l-8 6 l3 10 l-9 -6 l-9 6 l3 -10 l-8 -6 l10 -2 z" fill={d} />
-          <path d="M40 140 l3 7 l7 1 l-5 4 l2 7 l-7 -4 l-7 4 l2 -7 l-5 -4 l7 -1 z" fill={d} opacity="0.7" />
-          <path d="M170 40 l2 5 l5 1 l-4 3 l1 5 l-4 -3 l-5 3 l2 -5 l-4 -3 l5 -1 z" fill={d} opacity="0.6" />
-        </svg>
-      );
-    case "nuvem":
-      return (
-        <svg {...common} xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="100" cy="110" rx="70" ry="35" fill={s} />
-          <circle cx="65" cy="95" r="25" fill={s} />
-          <circle cx="100" cy="80" r="30" fill={s} />
-          <circle cx="135" cy="95" r="25" fill={s} />
-          {/* rosto */}
-          <circle cx="88" cy="105" r="4" fill={d} />
-          <circle cx="112" cy="105" r="4" fill={d} />
-          <circle cx="80" cy="115" r="5" fill={r} opacity="0.7" />
-          <circle cx="120" cy="115" r="5" fill={r} opacity="0.7" />
-          <path d="M92 120 Q100 128 108 120" stroke={d} strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          {/* gotas */}
-          <path d="M70 155 Q66 168 74 168 Q78 168 74 155 Z" fill={a} />
-          <path d="M100 165 Q96 178 104 178 Q108 178 104 165 Z" fill={a} />
-          <path d="M130 155 Q126 168 134 168 Q138 168 134 155 Z" fill={a} />
-        </svg>
-      );
-    case "safari":
-      return (
-        <svg {...common} xmlns="http://www.w3.org/2000/svg">
-          {/* girafa */}
-          <rect x="95" y="55" width="16" height="70" rx="6" fill={a} />
-          <circle cx="103" cy="50" r="18" fill={a} />
-          <circle cx="115" cy="45" r="3" fill={d} />
-          <line x1="98" y1="35" x2="96" y2="28" stroke={d} strokeWidth="2" />
-          <line x1="108" y1="35" x2="110" y2="28" stroke={d} strokeWidth="2" />
-          <circle cx="96" cy="28" r="2.5" fill={d} />
-          <circle cx="110" cy="28" r="2.5" fill={d} />
-          {/* corpo */}
-          <ellipse cx="103" cy="140" rx="45" ry="25" fill={a} />
-          <rect x="70" y="150" width="8" height="25" rx="3" fill={a} />
-          <rect x="128" y="150" width="8" height="25" rx="3" fill={a} />
-          {/* manchas */}
-          <circle cx="90" cy="135" r="5" fill={d} opacity="0.6" />
-          <circle cx="110" cy="145" r="6" fill={d} opacity="0.6" />
-          <circle cx="125" cy="132" r="4" fill={d} opacity="0.6" />
-          <circle cx="103" cy="70" r="3" fill={d} opacity="0.6" />
-          <circle cx="105" cy="90" r="3" fill={d} opacity="0.6" />
-          {/* grama */}
-          <path d="M30 175 Q35 165 40 175 Q45 165 50 175 Z" fill={d} opacity="0.5" />
-          <path d="M150 175 Q155 165 160 175 Q165 165 170 175 Z" fill={d} opacity="0.5" />
-        </svg>
-      );
-  }
+  theme, size = 200,
+}: { theme: ThemeKey; palette?: (typeof COLORS)[ColorKey]; size?: number }) {
+  return (
+    <img
+      src={THEME_IMAGES[theme]}
+      alt={THEMES[theme].label}
+      width={size}
+      height={size}
+      loading="lazy"
+      crossOrigin="anonymous"
+      style={{ width: size, height: size, objectFit: "contain", display: "block" }}
+      draggable={false}
+    />
+  );
 }
 
 function BackgroundPattern({ palette }: { palette: (typeof COLORS)[ColorKey] }) {
