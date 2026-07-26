@@ -9,10 +9,40 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as MaternidadeRouteImport } from './routes/maternidade'
 import { Route as ChaRifaRouteImport } from './routes/cha-rifa'
+import { Route as Bebe9MesesRouteImport } from './routes/bebe-9-meses'
+import { Route as Bebe8MesesRouteImport } from './routes/bebe-8-meses'
+import { Route as Bebe7MesesRouteImport } from './routes/bebe-7-meses'
+import { Route as Bebe6MesesRouteImport } from './routes/bebe-6-meses'
+import { Route as Bebe5MesesRouteImport } from './routes/bebe-5-meses'
+import { Route as Bebe4MesesRouteImport } from './routes/bebe-4-meses'
+import { Route as Bebe3MesesRouteImport } from './routes/bebe-3-meses'
+import { Route as Bebe24MesesRouteImport } from './routes/bebe-24-meses'
+import { Route as Bebe23MesesRouteImport } from './routes/bebe-23-meses'
+import { Route as Bebe22MesesRouteImport } from './routes/bebe-22-meses'
+import { Route as Bebe21MesesRouteImport } from './routes/bebe-21-meses'
+import { Route as Bebe20MesesRouteImport } from './routes/bebe-20-meses'
+import { Route as Bebe2MesesRouteImport } from './routes/bebe-2-meses'
+import { Route as Bebe19MesesRouteImport } from './routes/bebe-19-meses'
+import { Route as Bebe18MesesRouteImport } from './routes/bebe-18-meses'
+import { Route as Bebe17MesesRouteImport } from './routes/bebe-17-meses'
+import { Route as Bebe16MesesRouteImport } from './routes/bebe-16-meses'
+import { Route as Bebe15MesesRouteImport } from './routes/bebe-15-meses'
+import { Route as Bebe14MesesRouteImport } from './routes/bebe-14-meses'
+import { Route as Bebe13MesesRouteImport } from './routes/bebe-13-meses'
+import { Route as Bebe12MesesRouteImport } from './routes/bebe-12-meses'
+import { Route as Bebe11MesesRouteImport } from './routes/bebe-11-meses'
+import { Route as Bebe10MesesRouteImport } from './routes/bebe-10-meses'
+import { Route as Bebe1MesRouteImport } from './routes/bebe-1-mes'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MaternidadeRoute = MaternidadeRouteImport.update({
   id: '/maternidade',
   path: '/maternidade',
@@ -23,6 +53,126 @@ const ChaRifaRoute = ChaRifaRouteImport.update({
   path: '/cha-rifa',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Bebe9MesesRoute = Bebe9MesesRouteImport.update({
+  id: '/bebe-9-meses',
+  path: '/bebe-9-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe8MesesRoute = Bebe8MesesRouteImport.update({
+  id: '/bebe-8-meses',
+  path: '/bebe-8-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe7MesesRoute = Bebe7MesesRouteImport.update({
+  id: '/bebe-7-meses',
+  path: '/bebe-7-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe6MesesRoute = Bebe6MesesRouteImport.update({
+  id: '/bebe-6-meses',
+  path: '/bebe-6-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe5MesesRoute = Bebe5MesesRouteImport.update({
+  id: '/bebe-5-meses',
+  path: '/bebe-5-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe4MesesRoute = Bebe4MesesRouteImport.update({
+  id: '/bebe-4-meses',
+  path: '/bebe-4-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe3MesesRoute = Bebe3MesesRouteImport.update({
+  id: '/bebe-3-meses',
+  path: '/bebe-3-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe24MesesRoute = Bebe24MesesRouteImport.update({
+  id: '/bebe-24-meses',
+  path: '/bebe-24-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe23MesesRoute = Bebe23MesesRouteImport.update({
+  id: '/bebe-23-meses',
+  path: '/bebe-23-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe22MesesRoute = Bebe22MesesRouteImport.update({
+  id: '/bebe-22-meses',
+  path: '/bebe-22-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe21MesesRoute = Bebe21MesesRouteImport.update({
+  id: '/bebe-21-meses',
+  path: '/bebe-21-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe20MesesRoute = Bebe20MesesRouteImport.update({
+  id: '/bebe-20-meses',
+  path: '/bebe-20-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe2MesesRoute = Bebe2MesesRouteImport.update({
+  id: '/bebe-2-meses',
+  path: '/bebe-2-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe19MesesRoute = Bebe19MesesRouteImport.update({
+  id: '/bebe-19-meses',
+  path: '/bebe-19-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe18MesesRoute = Bebe18MesesRouteImport.update({
+  id: '/bebe-18-meses',
+  path: '/bebe-18-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe17MesesRoute = Bebe17MesesRouteImport.update({
+  id: '/bebe-17-meses',
+  path: '/bebe-17-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe16MesesRoute = Bebe16MesesRouteImport.update({
+  id: '/bebe-16-meses',
+  path: '/bebe-16-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe15MesesRoute = Bebe15MesesRouteImport.update({
+  id: '/bebe-15-meses',
+  path: '/bebe-15-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe14MesesRoute = Bebe14MesesRouteImport.update({
+  id: '/bebe-14-meses',
+  path: '/bebe-14-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe13MesesRoute = Bebe13MesesRouteImport.update({
+  id: '/bebe-13-meses',
+  path: '/bebe-13-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe12MesesRoute = Bebe12MesesRouteImport.update({
+  id: '/bebe-12-meses',
+  path: '/bebe-12-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe11MesesRoute = Bebe11MesesRouteImport.update({
+  id: '/bebe-11-meses',
+  path: '/bebe-11-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe10MesesRoute = Bebe10MesesRouteImport.update({
+  id: '/bebe-10-meses',
+  path: '/bebe-10-meses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const Bebe1MesRoute = Bebe1MesRouteImport.update({
+  id: '/bebe-1-mes',
+  path: '/bebe-1-mes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +181,228 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bebe-1-mes': typeof Bebe1MesRoute
+  '/bebe-10-meses': typeof Bebe10MesesRoute
+  '/bebe-11-meses': typeof Bebe11MesesRoute
+  '/bebe-12-meses': typeof Bebe12MesesRoute
+  '/bebe-13-meses': typeof Bebe13MesesRoute
+  '/bebe-14-meses': typeof Bebe14MesesRoute
+  '/bebe-15-meses': typeof Bebe15MesesRoute
+  '/bebe-16-meses': typeof Bebe16MesesRoute
+  '/bebe-17-meses': typeof Bebe17MesesRoute
+  '/bebe-18-meses': typeof Bebe18MesesRoute
+  '/bebe-19-meses': typeof Bebe19MesesRoute
+  '/bebe-2-meses': typeof Bebe2MesesRoute
+  '/bebe-20-meses': typeof Bebe20MesesRoute
+  '/bebe-21-meses': typeof Bebe21MesesRoute
+  '/bebe-22-meses': typeof Bebe22MesesRoute
+  '/bebe-23-meses': typeof Bebe23MesesRoute
+  '/bebe-24-meses': typeof Bebe24MesesRoute
+  '/bebe-3-meses': typeof Bebe3MesesRoute
+  '/bebe-4-meses': typeof Bebe4MesesRoute
+  '/bebe-5-meses': typeof Bebe5MesesRoute
+  '/bebe-6-meses': typeof Bebe6MesesRoute
+  '/bebe-7-meses': typeof Bebe7MesesRoute
+  '/bebe-8-meses': typeof Bebe8MesesRoute
+  '/bebe-9-meses': typeof Bebe9MesesRoute
   '/cha-rifa': typeof ChaRifaRoute
   '/maternidade': typeof MaternidadeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bebe-1-mes': typeof Bebe1MesRoute
+  '/bebe-10-meses': typeof Bebe10MesesRoute
+  '/bebe-11-meses': typeof Bebe11MesesRoute
+  '/bebe-12-meses': typeof Bebe12MesesRoute
+  '/bebe-13-meses': typeof Bebe13MesesRoute
+  '/bebe-14-meses': typeof Bebe14MesesRoute
+  '/bebe-15-meses': typeof Bebe15MesesRoute
+  '/bebe-16-meses': typeof Bebe16MesesRoute
+  '/bebe-17-meses': typeof Bebe17MesesRoute
+  '/bebe-18-meses': typeof Bebe18MesesRoute
+  '/bebe-19-meses': typeof Bebe19MesesRoute
+  '/bebe-2-meses': typeof Bebe2MesesRoute
+  '/bebe-20-meses': typeof Bebe20MesesRoute
+  '/bebe-21-meses': typeof Bebe21MesesRoute
+  '/bebe-22-meses': typeof Bebe22MesesRoute
+  '/bebe-23-meses': typeof Bebe23MesesRoute
+  '/bebe-24-meses': typeof Bebe24MesesRoute
+  '/bebe-3-meses': typeof Bebe3MesesRoute
+  '/bebe-4-meses': typeof Bebe4MesesRoute
+  '/bebe-5-meses': typeof Bebe5MesesRoute
+  '/bebe-6-meses': typeof Bebe6MesesRoute
+  '/bebe-7-meses': typeof Bebe7MesesRoute
+  '/bebe-8-meses': typeof Bebe8MesesRoute
+  '/bebe-9-meses': typeof Bebe9MesesRoute
   '/cha-rifa': typeof ChaRifaRoute
   '/maternidade': typeof MaternidadeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bebe-1-mes': typeof Bebe1MesRoute
+  '/bebe-10-meses': typeof Bebe10MesesRoute
+  '/bebe-11-meses': typeof Bebe11MesesRoute
+  '/bebe-12-meses': typeof Bebe12MesesRoute
+  '/bebe-13-meses': typeof Bebe13MesesRoute
+  '/bebe-14-meses': typeof Bebe14MesesRoute
+  '/bebe-15-meses': typeof Bebe15MesesRoute
+  '/bebe-16-meses': typeof Bebe16MesesRoute
+  '/bebe-17-meses': typeof Bebe17MesesRoute
+  '/bebe-18-meses': typeof Bebe18MesesRoute
+  '/bebe-19-meses': typeof Bebe19MesesRoute
+  '/bebe-2-meses': typeof Bebe2MesesRoute
+  '/bebe-20-meses': typeof Bebe20MesesRoute
+  '/bebe-21-meses': typeof Bebe21MesesRoute
+  '/bebe-22-meses': typeof Bebe22MesesRoute
+  '/bebe-23-meses': typeof Bebe23MesesRoute
+  '/bebe-24-meses': typeof Bebe24MesesRoute
+  '/bebe-3-meses': typeof Bebe3MesesRoute
+  '/bebe-4-meses': typeof Bebe4MesesRoute
+  '/bebe-5-meses': typeof Bebe5MesesRoute
+  '/bebe-6-meses': typeof Bebe6MesesRoute
+  '/bebe-7-meses': typeof Bebe7MesesRoute
+  '/bebe-8-meses': typeof Bebe8MesesRoute
+  '/bebe-9-meses': typeof Bebe9MesesRoute
   '/cha-rifa': typeof ChaRifaRoute
   '/maternidade': typeof MaternidadeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cha-rifa' | '/maternidade'
+  fullPaths:
+    | '/'
+    | '/bebe-1-mes'
+    | '/bebe-10-meses'
+    | '/bebe-11-meses'
+    | '/bebe-12-meses'
+    | '/bebe-13-meses'
+    | '/bebe-14-meses'
+    | '/bebe-15-meses'
+    | '/bebe-16-meses'
+    | '/bebe-17-meses'
+    | '/bebe-18-meses'
+    | '/bebe-19-meses'
+    | '/bebe-2-meses'
+    | '/bebe-20-meses'
+    | '/bebe-21-meses'
+    | '/bebe-22-meses'
+    | '/bebe-23-meses'
+    | '/bebe-24-meses'
+    | '/bebe-3-meses'
+    | '/bebe-4-meses'
+    | '/bebe-5-meses'
+    | '/bebe-6-meses'
+    | '/bebe-7-meses'
+    | '/bebe-8-meses'
+    | '/bebe-9-meses'
+    | '/cha-rifa'
+    | '/maternidade'
+    | '/sitemap.xml'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cha-rifa' | '/maternidade'
-  id: '__root__' | '/' | '/cha-rifa' | '/maternidade'
+  to:
+    | '/'
+    | '/bebe-1-mes'
+    | '/bebe-10-meses'
+    | '/bebe-11-meses'
+    | '/bebe-12-meses'
+    | '/bebe-13-meses'
+    | '/bebe-14-meses'
+    | '/bebe-15-meses'
+    | '/bebe-16-meses'
+    | '/bebe-17-meses'
+    | '/bebe-18-meses'
+    | '/bebe-19-meses'
+    | '/bebe-2-meses'
+    | '/bebe-20-meses'
+    | '/bebe-21-meses'
+    | '/bebe-22-meses'
+    | '/bebe-23-meses'
+    | '/bebe-24-meses'
+    | '/bebe-3-meses'
+    | '/bebe-4-meses'
+    | '/bebe-5-meses'
+    | '/bebe-6-meses'
+    | '/bebe-7-meses'
+    | '/bebe-8-meses'
+    | '/bebe-9-meses'
+    | '/cha-rifa'
+    | '/maternidade'
+    | '/sitemap.xml'
+  id:
+    | '__root__'
+    | '/'
+    | '/bebe-1-mes'
+    | '/bebe-10-meses'
+    | '/bebe-11-meses'
+    | '/bebe-12-meses'
+    | '/bebe-13-meses'
+    | '/bebe-14-meses'
+    | '/bebe-15-meses'
+    | '/bebe-16-meses'
+    | '/bebe-17-meses'
+    | '/bebe-18-meses'
+    | '/bebe-19-meses'
+    | '/bebe-2-meses'
+    | '/bebe-20-meses'
+    | '/bebe-21-meses'
+    | '/bebe-22-meses'
+    | '/bebe-23-meses'
+    | '/bebe-24-meses'
+    | '/bebe-3-meses'
+    | '/bebe-4-meses'
+    | '/bebe-5-meses'
+    | '/bebe-6-meses'
+    | '/bebe-7-meses'
+    | '/bebe-8-meses'
+    | '/bebe-9-meses'
+    | '/cha-rifa'
+    | '/maternidade'
+    | '/sitemap.xml'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  Bebe1MesRoute: typeof Bebe1MesRoute
+  Bebe10MesesRoute: typeof Bebe10MesesRoute
+  Bebe11MesesRoute: typeof Bebe11MesesRoute
+  Bebe12MesesRoute: typeof Bebe12MesesRoute
+  Bebe13MesesRoute: typeof Bebe13MesesRoute
+  Bebe14MesesRoute: typeof Bebe14MesesRoute
+  Bebe15MesesRoute: typeof Bebe15MesesRoute
+  Bebe16MesesRoute: typeof Bebe16MesesRoute
+  Bebe17MesesRoute: typeof Bebe17MesesRoute
+  Bebe18MesesRoute: typeof Bebe18MesesRoute
+  Bebe19MesesRoute: typeof Bebe19MesesRoute
+  Bebe2MesesRoute: typeof Bebe2MesesRoute
+  Bebe20MesesRoute: typeof Bebe20MesesRoute
+  Bebe21MesesRoute: typeof Bebe21MesesRoute
+  Bebe22MesesRoute: typeof Bebe22MesesRoute
+  Bebe23MesesRoute: typeof Bebe23MesesRoute
+  Bebe24MesesRoute: typeof Bebe24MesesRoute
+  Bebe3MesesRoute: typeof Bebe3MesesRoute
+  Bebe4MesesRoute: typeof Bebe4MesesRoute
+  Bebe5MesesRoute: typeof Bebe5MesesRoute
+  Bebe6MesesRoute: typeof Bebe6MesesRoute
+  Bebe7MesesRoute: typeof Bebe7MesesRoute
+  Bebe8MesesRoute: typeof Bebe8MesesRoute
+  Bebe9MesesRoute: typeof Bebe9MesesRoute
   ChaRifaRoute: typeof ChaRifaRoute
   MaternidadeRoute: typeof MaternidadeRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/maternidade': {
       id: '/maternidade'
       path: '/maternidade'
@@ -75,6 +417,174 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChaRifaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bebe-9-meses': {
+      id: '/bebe-9-meses'
+      path: '/bebe-9-meses'
+      fullPath: '/bebe-9-meses'
+      preLoaderRoute: typeof Bebe9MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-8-meses': {
+      id: '/bebe-8-meses'
+      path: '/bebe-8-meses'
+      fullPath: '/bebe-8-meses'
+      preLoaderRoute: typeof Bebe8MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-7-meses': {
+      id: '/bebe-7-meses'
+      path: '/bebe-7-meses'
+      fullPath: '/bebe-7-meses'
+      preLoaderRoute: typeof Bebe7MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-6-meses': {
+      id: '/bebe-6-meses'
+      path: '/bebe-6-meses'
+      fullPath: '/bebe-6-meses'
+      preLoaderRoute: typeof Bebe6MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-5-meses': {
+      id: '/bebe-5-meses'
+      path: '/bebe-5-meses'
+      fullPath: '/bebe-5-meses'
+      preLoaderRoute: typeof Bebe5MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-4-meses': {
+      id: '/bebe-4-meses'
+      path: '/bebe-4-meses'
+      fullPath: '/bebe-4-meses'
+      preLoaderRoute: typeof Bebe4MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-3-meses': {
+      id: '/bebe-3-meses'
+      path: '/bebe-3-meses'
+      fullPath: '/bebe-3-meses'
+      preLoaderRoute: typeof Bebe3MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-24-meses': {
+      id: '/bebe-24-meses'
+      path: '/bebe-24-meses'
+      fullPath: '/bebe-24-meses'
+      preLoaderRoute: typeof Bebe24MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-23-meses': {
+      id: '/bebe-23-meses'
+      path: '/bebe-23-meses'
+      fullPath: '/bebe-23-meses'
+      preLoaderRoute: typeof Bebe23MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-22-meses': {
+      id: '/bebe-22-meses'
+      path: '/bebe-22-meses'
+      fullPath: '/bebe-22-meses'
+      preLoaderRoute: typeof Bebe22MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-21-meses': {
+      id: '/bebe-21-meses'
+      path: '/bebe-21-meses'
+      fullPath: '/bebe-21-meses'
+      preLoaderRoute: typeof Bebe21MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-20-meses': {
+      id: '/bebe-20-meses'
+      path: '/bebe-20-meses'
+      fullPath: '/bebe-20-meses'
+      preLoaderRoute: typeof Bebe20MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-2-meses': {
+      id: '/bebe-2-meses'
+      path: '/bebe-2-meses'
+      fullPath: '/bebe-2-meses'
+      preLoaderRoute: typeof Bebe2MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-19-meses': {
+      id: '/bebe-19-meses'
+      path: '/bebe-19-meses'
+      fullPath: '/bebe-19-meses'
+      preLoaderRoute: typeof Bebe19MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-18-meses': {
+      id: '/bebe-18-meses'
+      path: '/bebe-18-meses'
+      fullPath: '/bebe-18-meses'
+      preLoaderRoute: typeof Bebe18MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-17-meses': {
+      id: '/bebe-17-meses'
+      path: '/bebe-17-meses'
+      fullPath: '/bebe-17-meses'
+      preLoaderRoute: typeof Bebe17MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-16-meses': {
+      id: '/bebe-16-meses'
+      path: '/bebe-16-meses'
+      fullPath: '/bebe-16-meses'
+      preLoaderRoute: typeof Bebe16MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-15-meses': {
+      id: '/bebe-15-meses'
+      path: '/bebe-15-meses'
+      fullPath: '/bebe-15-meses'
+      preLoaderRoute: typeof Bebe15MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-14-meses': {
+      id: '/bebe-14-meses'
+      path: '/bebe-14-meses'
+      fullPath: '/bebe-14-meses'
+      preLoaderRoute: typeof Bebe14MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-13-meses': {
+      id: '/bebe-13-meses'
+      path: '/bebe-13-meses'
+      fullPath: '/bebe-13-meses'
+      preLoaderRoute: typeof Bebe13MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-12-meses': {
+      id: '/bebe-12-meses'
+      path: '/bebe-12-meses'
+      fullPath: '/bebe-12-meses'
+      preLoaderRoute: typeof Bebe12MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-11-meses': {
+      id: '/bebe-11-meses'
+      path: '/bebe-11-meses'
+      fullPath: '/bebe-11-meses'
+      preLoaderRoute: typeof Bebe11MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-10-meses': {
+      id: '/bebe-10-meses'
+      path: '/bebe-10-meses'
+      fullPath: '/bebe-10-meses'
+      preLoaderRoute: typeof Bebe10MesesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bebe-1-mes': {
+      id: '/bebe-1-mes'
+      path: '/bebe-1-mes'
+      fullPath: '/bebe-1-mes'
+      preLoaderRoute: typeof Bebe1MesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,8 +597,33 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  Bebe1MesRoute: Bebe1MesRoute,
+  Bebe10MesesRoute: Bebe10MesesRoute,
+  Bebe11MesesRoute: Bebe11MesesRoute,
+  Bebe12MesesRoute: Bebe12MesesRoute,
+  Bebe13MesesRoute: Bebe13MesesRoute,
+  Bebe14MesesRoute: Bebe14MesesRoute,
+  Bebe15MesesRoute: Bebe15MesesRoute,
+  Bebe16MesesRoute: Bebe16MesesRoute,
+  Bebe17MesesRoute: Bebe17MesesRoute,
+  Bebe18MesesRoute: Bebe18MesesRoute,
+  Bebe19MesesRoute: Bebe19MesesRoute,
+  Bebe2MesesRoute: Bebe2MesesRoute,
+  Bebe20MesesRoute: Bebe20MesesRoute,
+  Bebe21MesesRoute: Bebe21MesesRoute,
+  Bebe22MesesRoute: Bebe22MesesRoute,
+  Bebe23MesesRoute: Bebe23MesesRoute,
+  Bebe24MesesRoute: Bebe24MesesRoute,
+  Bebe3MesesRoute: Bebe3MesesRoute,
+  Bebe4MesesRoute: Bebe4MesesRoute,
+  Bebe5MesesRoute: Bebe5MesesRoute,
+  Bebe6MesesRoute: Bebe6MesesRoute,
+  Bebe7MesesRoute: Bebe7MesesRoute,
+  Bebe8MesesRoute: Bebe8MesesRoute,
+  Bebe9MesesRoute: Bebe9MesesRoute,
   ChaRifaRoute: ChaRifaRoute,
   MaternidadeRoute: MaternidadeRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
