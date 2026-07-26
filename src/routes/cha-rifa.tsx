@@ -2,6 +2,21 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState, useEffect } from "react";
 import { toPng } from "html-to-image";
 import logoAsset from "@/assets/logo.png.asset.json";
+import ursinhoAsset from "@/assets/temas/ursinho.png.asset.json";
+import safariAsset from "@/assets/temas/safari.png.asset.json";
+import elefanteAsset from "@/assets/temas/elefante.png.asset.json";
+import balaoAsset from "@/assets/temas/balao.png.asset.json";
+import estrelaAsset from "@/assets/temas/estrela.png.asset.json";
+import nuvemAsset from "@/assets/temas/nuvem.png.asset.json";
+
+const THEME_IMAGES: Record<"ursinho" | "safari" | "elefante" | "balao" | "estrela" | "nuvem", string> = {
+  ursinho: ursinhoAsset.url,
+  safari: safariAsset.url,
+  elefante: elefanteAsset.url,
+  balao: balaoAsset.url,
+  estrela: estrelaAsset.url,
+  nuvem: nuvemAsset.url,
+};
 
 export const Route = createFileRoute("/cha-rifa")({
   head: () => ({
