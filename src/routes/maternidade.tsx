@@ -307,10 +307,23 @@ function MaternityPage() {
                   ))}
                 </div>
 
+                {ageMonths !== null && ageMonths >= 1 && ageMonths <= 24 && (
+                  <div className="card-soft p-6 text-center">
+                    <p className="text-sm text-muted-foreground">Veja também o guia completo desta idade:</p>
+                    <a
+                      href={`/bebe-${ageMonths}-${ageMonths === 1 ? "mes" : "meses"}`}
+                      className="btn-primary mt-3 inline-flex text-sm"
+                    >
+                      Guia do bebê de {ageMonths} {ageMonths === 1 ? "mês" : "meses"}
+                    </a>
+                  </div>
+                )}
+
                 <p className="pb-4 text-center text-xs text-muted-foreground">
                   ✨ Este guia é informativo e feito com carinho. Sempre consulte o pediatra para orientações específicas.
                 </p>
               </>
+
             )}
           </div>
         )}
