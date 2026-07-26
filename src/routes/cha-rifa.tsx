@@ -328,12 +328,31 @@ function ChaRifaPage() {
               />
             </Field>
 
-            <Field label="Como funciona">
-              <textarea
-                className="input-soft min-h-[80px] resize-none"
-                value={state.howItWorks}
-                maxLength={280}
-                onChange={e => update("howItWorks", e.target.value)}
+            <Field label="Regras — Como funciona">
+              <div className="space-y-2">
+                {(["rule1", "rule2", "rule3"] as const).map((k, i) => (
+                  <div key={k} className="flex items-start gap-2">
+                    <span
+                      className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground"
+                    >{i + 1}</span>
+                    <textarea
+                      className="input-soft min-h-[52px] resize-none text-sm"
+                      value={state[k]}
+                      maxLength={140}
+                      onChange={e => update(k, e.target.value)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </Field>
+
+            <Field label="Mensagem de agradecimento">
+              <input
+                className="input-soft"
+                value={state.thanks}
+                maxLength={120}
+                onChange={e => update("thanks", e.target.value)}
+                placeholder="Ex: Agradeço por sua participação"
               />
             </Field>
 
