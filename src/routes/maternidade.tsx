@@ -332,3 +332,121 @@ function MaternityPage() {
     </div>
   );
 }
+
+// -----------------------------
+// Loading skeleton with soft breathing effect
+// -----------------------------
+function LoadingGuide({ babyName }: { babyName: string }) {
+  const messages = [
+    "Preparando dicas com carinho…",
+    "Consultando o universo da maternidade…",
+    "Organizando conteúdos para a fase…",
+    "Quase pronto! 💛",
+  ];
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setIdx((i) => (i + 1) % messages.length), 1800);
+    return () => clearInterval(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <div className="card-soft p-6 sm:p-8 animate-pop" role="status" aria-live="polite">
+      <div className="flex items-center gap-3">
+        <span className="relative flex h-10 w-10 items-center justify-center">
+          <span className="absolute inset-0 rounded-full bg-[color-mix(in_oklab,var(--primary)_22%,transparent)] animate-ping" />
+          <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-[color-mix(in_oklab,var(--primary)_16%,transparent)] text-xl">
+            💛
+          </span>
+        </span>
+        <div>
+          <p className="font-display text-lg font-semibold">
+            {babyName ? `Montando o guia para ${babyName}` : "Montando o guia"}
+          </p>
+          <p key={idx} className="text-sm text-muted-foreground animate-pop">{messages[idx]}</p>
+        </div>
+      </div>
+
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        {[0, 1, 2, 3].map((i) => (
+          <div
+            key={i}
+            className="h-32 rounded-2xl bg-[color-mix(in_oklab,var(--primary)_6%,var(--card))] animate-pulse"
+            style={{ animationDelay: `${i * 120}ms` }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------
+// Share & Copy helpers
+// -----------------------------
+function buildTopicShareText(t: MaternityGuide["topics"][number]): string {
+  const tips = t.tips?.length ? "\n\n" + t.tips.map((x) => `• ${x}`).join("\n") : "";
+  return `${t.title}\n\n${t.description}${tips}\n\n— Quem Vai Trocar? (trocafraldas.online)`;
+}
+
+function buildFullShareText(g: MaternityGuide, babyName: string): string {
+  const head = babyName ? `Guia da fase de ${babyName} — ${g.ageLabel}` : `Guia da fase — ${g.ageLabel}`;
+  const body = g.topics.map((t) => {
+    const tips = t.tips?.length ? "\n" + t.tips.map((x) => `• ${x}`).join("\n") : "";
+    return `▸ ${t.title}\n${t.description}${tips}`;
+  }).join("\n\n");
+  return `${head}\n\n${g.intro}\n\n${body}\n\n— Quem Vai Trocar? (trocafraldas.online)`;
+}
+
+function ShareButton({ title, text, compact }: { title: string; text: string; compact?: boolean }) {
+  const [done, setDone] = useState(false);
+  const onClick = async () => {
+    try {
+      const nav = navigator as Navigator & { share?: (d: ShareData) => Promise<void> };
+      if (nav.share) {
+        await nav.share({ title, text });
+      } else {
+        await navigator.clipboard.writeText(text);
+      }
+      setDone(true);
+      setTimeout(() => setDone(false), 1600);
+    } catch { /* user cancelled */ }
+  };
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={
+        "inline-flex items-center gap-1.5 rounded-full border border-border bg-background/70 px-3 py-1.5 text-xs font-semibold transition hover:border-primary hover:text-primary " +
+        (compact ? "" : "sm:text-sm")
+      }
+      aria-label="Compartilhar"
+    >
+      <span aria-hidden>{done ? "✓" : "↗"}</span>
+      {done ? "Compartilhado" : "Compartilhar"}
+    </button>
+  );
+}
+
+function CopyButton({ text, label = "Copiar", compact }: { text: string; label?: string; compact?: boolean }) {
+  const [done, setDone] = useState(false);
+  const onClick = async () => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setDone(true);
+      setTimeout(() => setDone(false), 1600);
+    } catch { /* ignore */ }
+  };
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={
+        "inline-flex items-center gap-1.5 rounded-full border border-border bg-background/70 px-3 py-1.5 text-xs font-semibold transition hover:border-primary hover:text-primary " +
+        (compact ? "" : "sm:text-sm")
+      }
+      aria-label={label}
+    >
+      <span aria-hidden>{done ? "✓" : "⧉"}</span>
+      {done ? "Copiado" : label}
+    </button>
+  );
+}
