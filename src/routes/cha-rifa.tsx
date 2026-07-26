@@ -468,54 +468,78 @@ function RifaArt({
     : "";
 
   return (
-    <div className="relative p-6 sm:p-8">
+    <div className="relative overflow-hidden p-6 sm:p-8">
       {/* Padrão de fundo delicado */}
       <BackgroundPattern palette={palette} />
 
-      {/* Halo suave atrás da ilustração */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 rounded-full blur-2xl"
-        style={{ width: 260, height: 260, background: palette.soft, opacity: 0.7 }}
-      />
-
-      {/* Ilustração grande do tema */}
-      <div className="relative flex justify-center">
-        <ThemeIllustration theme={state.theme} palette={palette} size={200} />
+      {/* Decorações flutuantes de fundo (tema) */}
+      <div aria-hidden className="pointer-events-none absolute -left-8 top-24 opacity-60">
+        <ThemeIllustration theme={state.theme} palette={palette} size={110} />
+      </div>
+      <div aria-hidden className="pointer-events-none absolute -right-6 top-52 rotate-6 opacity-70">
+        <ThemeIllustration theme={state.theme} palette={palette} size={90} />
       </div>
 
-      {/* Título */}
-      <div className="relative -mt-2 text-center">
-        <div className="text-[11px] font-semibold uppercase tracking-[0.35em]" style={{ color: palette.accent }}>
-          Chá Rifa
+      {/* Cabeçalho: ilustrações laterais + nome */}
+      <div className="relative grid grid-cols-[auto,1fr,auto] items-center gap-2">
+        <ThemeIllustration theme={state.theme} palette={palette} size={110} />
+        <div className="text-center">
+          <div
+            className="text-[11px] font-bold uppercase tracking-[0.4em]"
+            style={{ color: palette.accent }}
+          >
+            Chá Rifa
+          </div>
+          <h2
+            className="mt-1 text-4xl leading-[1] sm:text-5xl"
+            style={{ fontFamily: fontCss, color: palette.deep, fontWeight: 700 }}
+          >
+            {state.babyName || "do Bebê"}
+          </h2>
+          <div className="mx-auto mt-2 flex items-center justify-center gap-2" aria-hidden>
+            <span className="h-px w-8" style={{ background: palette.ring }} />
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: palette.accent }} />
+            <span className="h-px w-8" style={{ background: palette.ring }} />
+          </div>
         </div>
-        <h2
-          className="mt-1 text-4xl leading-tight sm:text-5xl"
-          style={{ fontFamily: fontCss, color: palette.text, fontWeight: 700 }}
-        >
-          {state.babyName || "do Bebê"}
-        </h2>
+        <ThemeIllustration theme={state.theme} palette={palette} size={110} />
+      </div>
 
-        {/* linha decorativa */}
-        <div className="mx-auto mt-3 flex items-center justify-center gap-2" aria-hidden>
-          <span className="h-px w-10" style={{ background: palette.ring }} />
-          <span className="h-1.5 w-1.5 rounded-full" style={{ background: palette.accent }} />
-          <span className="h-px w-10" style={{ background: palette.ring }} />
-        </div>
-
-        {/* Prêmio */}
+      {/* Premiação */}
+      <div className="relative mt-5">
         <div
-          className="mx-auto mt-4 inline-flex flex-col items-center rounded-2xl px-6 py-2.5"
-          style={{ background: palette.accent, color: "white" }}
+          className="text-[11px] font-bold uppercase tracking-[0.3em]"
+          style={{ color: palette.accent }}
         >
-          <span className="text-[10px] font-bold uppercase tracking-widest opacity-90">Prêmio</span>
-          <span className="text-lg font-bold leading-tight">{state.prize || "—"}</span>
+          Premiação
+        </div>
+        <div
+          className="mt-2 flex items-center gap-3 rounded-2xl px-4 py-3"
+          style={{ background: palette.card, boxShadow: `inset 0 0 0 2px ${palette.soft}` }}
+        >
+          <div
+            className="grid h-12 w-12 shrink-0 place-items-center rounded-full"
+            style={{ background: palette.soft }}
+          >
+            <ThemeIllustration theme={state.theme} palette={palette} size={38} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: palette.accent }}>
+              Prêmio
+            </div>
+            <div
+              className="truncate text-base font-semibold sm:text-lg"
+              style={{ color: palette.deep }}
+            >
+              {state.prize || "—"}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Grid de números */}
       <div
-        className="relative mx-auto mt-5 rounded-2xl p-3"
+        className="relative mx-auto mt-4 rounded-2xl p-3"
         style={{ background: palette.card, boxShadow: `inset 0 0 0 2px ${palette.soft}` }}
       >
         <div
@@ -525,10 +549,10 @@ function RifaArt({
           {numbers.map(n => (
             <div
               key={n}
-              className="flex aspect-square items-center justify-center rounded-md text-[10px] font-bold sm:text-xs"
+              className="flex aspect-square items-center justify-center rounded-full text-[10px] font-bold sm:text-xs"
               style={{
                 background: palette.soft,
-                color: palette.text,
+                color: palette.deep,
                 border: `1px solid ${palette.ring}`,
               }}
             >
@@ -539,24 +563,77 @@ function RifaArt({
       </div>
 
       {/* Info */}
-      <div className="relative mt-5 grid gap-3 text-center sm:grid-cols-3">
+      <div className="relative mt-4 grid gap-2 text-center sm:grid-cols-3">
         <InfoTile label="Valor" value={state.price ? `R$ ${state.price}` : "—"} palette={palette} />
         <InfoTile label="Números" value={String(state.count)} palette={palette} />
         <InfoTile label="Sorteio" value={drawDatePt || "a definir"} palette={palette} />
       </div>
 
-      {/* Como funciona */}
-      {state.howItWorks && (
-        <p className="relative mt-4 rounded-xl p-3 text-center text-xs leading-relaxed"
-          style={{ background: palette.card, color: palette.text, boxShadow: `inset 0 0 0 1px ${palette.soft}` }}>
-          {state.howItWorks}
-        </p>
-      )}
+      {/* Como Funciona */}
+      <div className="relative mt-5">
+        <div className="mb-2 flex items-center justify-center gap-3">
+          <span className="h-px flex-1" style={{ background: palette.ring }} />
+          <span
+            className="text-sm font-bold uppercase tracking-[0.25em]"
+            style={{ color: palette.deep, fontFamily: fontCss }}
+          >
+            Como Funciona
+          </span>
+          <span className="h-px flex-1" style={{ background: palette.ring }} />
+        </div>
+        <ol className="space-y-2">
+          {[state.rule1, state.rule2, state.rule3].filter(Boolean).map((rule, i) => (
+            <li
+              key={i}
+              className="flex items-start gap-3 rounded-xl p-2.5"
+              style={{ background: palette.card, boxShadow: `inset 0 0 0 1px ${palette.soft}` }}
+            >
+              <span
+                className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-bold"
+                style={{ background: palette.accent, color: "white" }}
+              >
+                {i + 1}
+              </span>
+              <span className="text-[12px] leading-snug" style={{ color: palette.text }}>
+                {rule}
+              </span>
+              <span className="ml-auto shrink-0 opacity-70">
+                <ThemeIllustration theme={state.theme} palette={palette} size={28} />
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* Assinatura + agradecimento */}
+      <div className="relative mt-5 flex items-center gap-3">
+        <ThemeIllustration theme={state.theme} palette={palette} size={80} />
+        <div className="flex-1 text-right">
+          {drawDatePt && (
+            <div
+              className="text-lg leading-tight"
+              style={{ fontFamily: fontCss, color: palette.deep }}
+            >
+              Sorteio: {drawDatePt}
+            </div>
+          )}
+          {state.thanks && (
+            <p
+              className="mt-1 text-[12px] italic leading-snug"
+              style={{ color: palette.text, fontFamily: fontCss }}
+            >
+              {state.thanks}
+            </p>
+          )}
+        </div>
+      </div>
 
       {/* Rodapé */}
       {(state.pix || state.contact) && (
-        <div className="relative mt-3 flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold"
-          style={{ color: palette.text }}>
+        <div
+          className="relative mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold"
+          style={{ color: palette.deep }}
+        >
           {state.pix && (
             <span className="rounded-full px-3 py-1" style={{ background: palette.soft }}>
               PIX: {state.pix}
