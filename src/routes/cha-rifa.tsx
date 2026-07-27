@@ -104,11 +104,13 @@ const COLORS: Record<
 };
 
 const TITLE_FONTS = [
-  { key: "fraunces", label: "Elegante (serifada)", css: "'Fraunces', ui-serif, Georgia, serif" },
-  { key: "sans", label: "Moderno (sem serifa)", css: "system-ui, -apple-system, 'Segoe UI', sans-serif" },
-  { key: "hand", label: "Manuscrito", css: "'Brush Script MT', 'Lucida Handwriting', cursive" },
-  { key: "mono", label: "Máquina de escrever", css: "ui-monospace, 'Courier New', monospace" },
+  { key: "caveat", label: "Manuscrito Caveat", css: "'Caveat', 'Brush Script MT', cursive" },
+  { key: "pacifico", label: "Pacifico Casual", css: "'Pacifico', 'Brush Script MT', cursive" },
+  { key: "sacramento", label: "Sacramento Fino", css: "'Sacramento', 'Lucida Handwriting', cursive" },
+  { key: "amatic", label: "Amatic Rústica", css: "'Amatic SC', ui-sans-serif, sans-serif" },
+  { key: "fraunces", label: "Elegante Serifada", css: "'Fraunces', ui-serif, Georgia, serif" },
 ];
+
 
 const NUMBER_COUNTS = [20, 60, 100, 200];
 
@@ -116,7 +118,7 @@ const DEFAULT_STATE = {
   babyName: "Bebê",
   theme: "ursinho" as ThemeKey,
   color: "rosa" as ColorKey,
-  fontKey: "fraunces",
+  fontKey: "caveat",
   count: 60,
   price: "5",
   prize: "Deliciosa Cesta de Doces",
