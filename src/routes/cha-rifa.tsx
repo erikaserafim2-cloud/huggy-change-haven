@@ -118,7 +118,7 @@ const DEFAULT_STATE = {
   babyName: "Bebê",
   theme: "ursinho" as ThemeKey,
   color: "rosa" as ColorKey,
-  fontKey: "fraunces",
+  fontKey: "caveat",
   count: 60,
   price: "5",
   prize: "Deliciosa Cesta de Doces",
