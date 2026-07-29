@@ -43,6 +43,8 @@ type Template = {
   inset: { top: number; bottom: number; x: number };
   /** cor do "papel" usada para cobrir os textos originais do modelo */
   veil: string;
+  /** retângulos extras (%) para cobrir textos impressos do modelo */
+  patches?: { top: number; right: number; bottom: number; left: number }[];
   palette: Palette;
 };
 
@@ -52,7 +54,7 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     hint: "Laço e balões dourados",
     bg: meninaAsset.url,
     inset: { top: 8, bottom: 20, x: 11 },
-    veil: "#FFFFFF",
+    veil: "rgba(255,255,255,0)",
     palette: {
       accent: "#D98BA6",
       deep: "#9B4E6B",
@@ -81,7 +83,7 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Nuvem Azul",
     hint: "Aquarela azul com corações",
     bg: azulAsset.url,
-    inset: { top: 9, bottom: 9, x: 7 },
+    inset: { top: 6, bottom: 5, x: 7 },
     veil: "#EFF6FD",
     palette: {
       accent: "#5B8AC7",
@@ -96,8 +98,9 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Safári Verde",
     hint: "Bichinhos no jipe e folhagens",
     bg: safariAsset.url,
-    inset: { top: 15, bottom: 12, x: 8 },
+    inset: { top: 21, bottom: 5, x: 8 },
     veil: "#F5FAF2",
+    patches: [{ top: 1, right: 2, bottom: 86, left: 36 }],
     palette: {
       accent: "#7FA277",
       deep: "#41633C",
@@ -436,6 +439,24 @@ function RifaArt({
         className="absolute inset-0 h-full w-full object-cover"
         draggable={false}
       />
+
+      {/* Remendos pontuais sobre textos impressos do modelo */}
+      {template.patches?.map((r, i) => (
+        <div
+          key={i}
+          aria-hidden
+          className="absolute"
+          style={{
+            top: `${r.top}%`,
+            right: `${r.right}%`,
+            bottom: `${r.bottom}%`,
+            left: `${r.left}%`,
+            background: template.veil,
+            borderRadius: 20,
+            boxShadow: `0 0 20px 20px ${template.veil}`,
+          }}
+        />
+      ))}
 
       {/* Camada que cobre os textos originais do modelo */}
       <div
