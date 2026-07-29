@@ -98,7 +98,7 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Safári Verde",
     hint: "Bichinhos no jipe e folhagens",
     bg: safariAsset.url,
-    inset: { top: 21, bottom: 5, x: 8 },
+    inset: { top: 18, bottom: 3.5, x: 8 },
     veil: "#F5FAF2",
     patches: [{ top: 1, right: 2, bottom: 86, left: 36 }],
     palette: {
