@@ -53,8 +53,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Ursinha Rosa",
     hint: "Laço e balões dourados",
     bg: meninaAsset.url,
-    inset: { top: 8, bottom: 20, x: 11 },
-    veil: "rgba(255,255,255,0)",
+    inset: { top: 9, bottom: 16, x: 9 },
+    veil: "rgba(255,252,253,0.86)",
     palette: {
       accent: "#D98BA6",
       deep: "#9B4E6B",
