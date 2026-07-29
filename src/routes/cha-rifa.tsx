@@ -41,6 +41,8 @@ type Template = {
   bg: string;
   /** margens (%) reservadas para as ilustrações do modelo */
   inset: { top: number; bottom: number; x: number };
+  /** cor do "papel" usada para cobrir os textos originais do modelo */
+  veil: string;
   palette: Palette;
 };
 
@@ -49,7 +51,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Ursinha Rosa",
     hint: "Laço e balões dourados",
     bg: meninaAsset.url,
-    inset: { top: 7, bottom: 22, x: 10 },
+    inset: { top: 8, bottom: 20, x: 11 },
+    veil: "#FFFFFF",
     palette: {
       accent: "#D98BA6",
       deep: "#9B4E6B",
@@ -63,7 +66,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Ursinhos Verde",
     hint: "Varal, balões e ursinhos",
     bg: ursinhosAsset.url,
-    inset: { top: 20, bottom: 10, x: 13 },
+    inset: { top: 19, bottom: 11, x: 14 },
+    veil: "#FBF8F1",
     palette: {
       accent: "#8AA97F",
       deep: "#4E6B47",
@@ -77,7 +81,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Nuvem Azul",
     hint: "Aquarela azul com corações",
     bg: azulAsset.url,
-    inset: { top: 9, bottom: 8, x: 6 },
+    inset: { top: 9, bottom: 9, x: 7 },
+    veil: "#EFF6FD",
     palette: {
       accent: "#5B8AC7",
       deep: "#274472",
@@ -91,7 +96,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Safári Verde",
     hint: "Bichinhos no jipe e folhagens",
     bg: safariAsset.url,
-    inset: { top: 16, bottom: 12, x: 7 },
+    inset: { top: 15, bottom: 12, x: 8 },
+    veil: "#F5FAF2",
     palette: {
       accent: "#7FA277",
       deep: "#41633C",
@@ -431,9 +437,24 @@ function RifaArt({
         draggable={false}
       />
 
+      {/* Camada que cobre os textos originais do modelo */}
+      <div
+        aria-hidden
+        className="absolute"
+        style={{
+          top: `${template.inset.top - 1.5}%`,
+          bottom: `${template.inset.bottom - 1.5}%`,
+          left: `${template.inset.x - 2}%`,
+          right: `${template.inset.x - 2}%`,
+          background: template.veil,
+          borderRadius: 28,
+          boxShadow: `0 0 26px 26px ${template.veil}`,
+        }}
+      />
+
       {/* Área de conteúdo, respeitando as ilustrações do modelo */}
       <div
-        className="absolute flex flex-col"
+        className="absolute flex flex-col overflow-hidden"
         style={{
           top: `${template.inset.top}%`,
           bottom: `${template.inset.bottom}%`,
