@@ -52,7 +52,7 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     inset: { top: 7, bottom: 22, x: 10 },
     palette: {
       accent: "#D98BA6",
-      deep: "#9B4E६B".replace("६", "6"),
+      deep: "#9B4E6B",
       text: "#7A4358",
       soft: "#FBE4EC",
       ring: "#EFBACB",
@@ -448,7 +448,7 @@ function RifaArt({
           </div>
           <h2
             className="mt-0.5 leading-[1]"
-            style={{ fontFamily: fontCss, color: p.deep, fontWeight: 700, fontSize: "clamp(26px, 8cqw, 46px)" }}
+            style={{ fontFamily: fontCss, color: p.deep, fontWeight: 700, fontSize: "clamp(24px, 6vw, 42px)" }}
           >
             {state.babyName || "Bebê"}
           </h2>
