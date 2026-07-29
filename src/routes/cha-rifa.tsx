@@ -85,6 +85,10 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     bg: azulAsset.url,
     inset: { top: 6, bottom: 5, x: 7 },
     veil: "#EFF6FD",
+    patches: [
+      { top: 0, right: 16, bottom: 94, left: 16 },
+      { top: 95, right: 18, bottom: 0, left: 18 },
+    ],
     palette: {
       accent: "#5B8AC7",
       deep: "#274472",
