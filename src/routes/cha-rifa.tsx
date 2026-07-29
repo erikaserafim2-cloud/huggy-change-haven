@@ -66,7 +66,7 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     label: "Ursinhos Verde",
     hint: "Varal, balões e ursinhos",
     bg: ursinhosAsset.url,
-    inset: { top: 19, bottom: 11, x: 14 },
+    inset: { top: 19, bottom: 6, x: 14 },
     veil: "#FBF8F1",
     palette: {
       accent: "#8AA97F",
@@ -237,7 +237,7 @@ function ChaRifaPage() {
                     <img
                       src={TEMPLATES[k].bg}
                       alt={TEMPLATES[k].label}
-                      className="h-24 w-full object-cover"
+                      className="h-28 w-full bg-muted object-contain"
                       loading="lazy"
                     />
                     <span className="block px-2 py-1.5">
