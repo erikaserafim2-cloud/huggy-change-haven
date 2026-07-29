@@ -2,27 +2,16 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState, useEffect } from "react";
 import { toPng } from "html-to-image";
 import logoAsset from "@/assets/logo.png.asset.json";
-import ursinhoAsset from "@/assets/temas/ursinho.png.asset.json";
-import safariAsset from "@/assets/temas/safari.png.asset.json";
-import elefanteAsset from "@/assets/temas/elefante.png.asset.json";
-import balaoAsset from "@/assets/temas/balao.png.asset.json";
-import estrelaAsset from "@/assets/temas/estrela.png.asset.json";
-import nuvemAsset from "@/assets/temas/nuvem.png.asset.json";
-
-const THEME_IMAGES: Record<"ursinho" | "safari" | "elefante" | "balao" | "estrela" | "nuvem", string> = {
-  ursinho: ursinhoAsset.url,
-  safari: safariAsset.url,
-  elefante: elefanteAsset.url,
-  balao: balaoAsset.url,
-  estrela: estrelaAsset.url,
-  nuvem: nuvemAsset.url,
-};
+import meninaAsset from "@/assets/temas/menina-3.jpg.asset.json";
+import ursinhosAsset from "@/assets/temas/ursinhos-3.jpg.asset.json";
+import azulAsset from "@/assets/temas/azul-3.jpg.asset.json";
+import safariAsset from "@/assets/temas/safari-3.jpg.asset.json";
 
 export const Route = createFileRoute("/cha-rifa")({
   head: () => ({
     meta: [
       { title: "Criador de Chá-Rifa — Quem vai trocar?" },
-      { name: "description", content: "Monte a arte do seu chá-rifa de fraldas com painel de opções e baixe como imagem PNG." },
+      { name: "description", content: "Monte a arte do seu chá-rifa de fraldas com modelos em aquarela e baixe como imagem PNG." },
       { property: "og:title", content: "Criador de Chá-Rifa" },
       { property: "og:description", content: "Monte a arte do seu chá-rifa e baixe como imagem." },
       { property: "og:type", content: "website" },
@@ -33,73 +22,97 @@ export const Route = createFileRoute("/cha-rifa")({
 });
 
 // -----------------------------
-// Temas & paletas
+// Modelos (baseados nas artes de referência)
 // -----------------------------
-type ThemeKey = "ursinho" | "safari" | "elefante" | "balao" | "estrela" | "nuvem";
-type ColorKey = "rosa" | "azul" | "neutro" | "verde" | "lilas";
+type TemplateKey = "menina" | "ursinhos" | "azul" | "safari";
 
-const THEMES: Record<ThemeKey, { label: string }> = {
-  ursinho: { label: "Ursinho" },
-  safari: { label: "Safári" },
-  elefante: { label: "Elefantinho" },
-  balao: { label: "Balão" },
-  estrela: { label: "Estrelinha" },
-  nuvem: { label: "Nuvenzinha" },
+type Palette = {
+  accent: string;
+  deep: string;
+  text: string;
+  soft: string;
+  ring: string;
+  card: string;
 };
 
-const COLORS: Record<
-  ColorKey,
-  { label: string; bg: string; card: string; accent: string; text: string; soft: string; ring: string; deep: string }
-> = {
-  rosa: {
-    label: "Rosa Bebê",
-    bg: "linear-gradient(160deg, #FFE4EC 0%, #FFF5F7 55%, #FFE9D6 100%)",
-    card: "#ffffff",
-    accent: "#E27196",
-    text: "#7A3B54",
-    soft: "#FBD5E0",
-    ring: "#F1A4BC",
-    deep: "#B24F73",
+type Template = {
+  label: string;
+  hint: string;
+  bg: string;
+  /** margens (%) reservadas para as ilustrações do modelo */
+  inset: { top: number; bottom: number; x: number };
+  /** cor do "papel" usada para cobrir os textos originais do modelo */
+  veil: string;
+  /** retângulos extras (%) para cobrir textos impressos do modelo */
+  patches?: { top: number; right: number; bottom: number; left: number }[];
+  palette: Palette;
+};
+
+const TEMPLATES: Record<TemplateKey, Template> = {
+  menina: {
+    label: "Ursinha Rosa",
+    hint: "Laço e balões dourados",
+    bg: meninaAsset.url,
+    inset: { top: 9, bottom: 16, x: 9 },
+    veil: "rgba(255,252,253,0.86)",
+    palette: {
+      accent: "#D98BA6",
+      deep: "#9B4E6B",
+      text: "#7A4358",
+      soft: "#FBE4EC",
+      ring: "#EFBACB",
+      card: "rgba(255,255,255,0.88)",
+    },
+  },
+  ursinhos: {
+    label: "Ursinhos Verde",
+    hint: "Varal, balões e ursinhos",
+    bg: ursinhosAsset.url,
+    inset: { top: 19, bottom: 6, x: 14 },
+    veil: "#FBF8F1",
+    palette: {
+      accent: "#8AA97F",
+      deep: "#4E6B47",
+      text: "#4A5A44",
+      soft: "#E6EFDF",
+      ring: "#BFD3B4",
+      card: "rgba(255,255,255,0.9)",
+    },
   },
   azul: {
-    label: "Azul Bebê",
-    bg: "linear-gradient(160deg, #DDEBFF 0%, #F1F7FF 55%, #E4F1FF 100%)",
-    card: "#ffffff",
-    accent: "#4E86C6",
-    text: "#2F4C77",
-    soft: "#CFE0F6",
-    ring: "#9BBEE6",
-    deep: "#345F92",
+    label: "Nuvem Azul",
+    hint: "Aquarela azul com corações",
+    bg: azulAsset.url,
+    inset: { top: 6, bottom: 5, x: 7 },
+    veil: "#EFF6FD",
+    patches: [
+      { top: 0, right: 16, bottom: 94, left: 16 },
+      { top: 95, right: 18, bottom: 0, left: 18 },
+    ],
+    palette: {
+      accent: "#5B8AC7",
+      deep: "#274472",
+      text: "#3B5578",
+      soft: "#E4EFFB",
+      ring: "#AFCCEA",
+      card: "rgba(255,255,255,0.86)",
+    },
   },
-  neutro: {
-    label: "Neutro",
-    bg: "linear-gradient(160deg, #F7EFE3 0%, #FBF6EE 55%, #F0E4D3 100%)",
-    card: "#ffffff",
-    accent: "#B98C63",
-    text: "#5A4530",
-    soft: "#EEDDC5",
-    ring: "#D4B896",
-    deep: "#8A6540",
-  },
-  verde: {
-    label: "Verde Sálvia",
-    bg: "linear-gradient(160deg, #E2EEDF 0%, #F1F7EF 55%, #E9F1E1 100%)",
-    card: "#ffffff",
-    accent: "#6B9970",
-    text: "#3C5C40",
-    soft: "#D3E5CE",
-    ring: "#A9C7A7",
-    deep: "#4E7452",
-  },
-  lilas: {
-    label: "Lilás",
-    bg: "linear-gradient(160deg, #ECE1F3 0%, #F6EFFB 55%, #E3D6EE 100%)",
-    card: "#ffffff",
-    accent: "#8B6DAE",
-    text: "#4E3968",
-    soft: "#DDCCE9",
-    ring: "#B79CD1",
-    deep: "#664B87",
+  safari: {
+    label: "Safári Verde",
+    hint: "Bichinhos no jipe e folhagens",
+    bg: safariAsset.url,
+    inset: { top: 18, bottom: 3.5, x: 8 },
+    veil: "#F5FAF2",
+    patches: [{ top: 1, right: 2, bottom: 86, left: 36 }],
+    palette: {
+      accent: "#7FA277",
+      deep: "#41633C",
+      text: "#4C5F48",
+      soft: "#E8F1E3",
+      ring: "#B9D2B0",
+      card: "rgba(255,255,255,0.88)",
+    },
   },
 };
 
@@ -111,27 +124,26 @@ const TITLE_FONTS = [
   { key: "fraunces", label: "Elegante Serifada", css: "'Fraunces', ui-serif, Georgia, serif" },
 ];
 
-
 const NUMBER_COUNTS = [20, 60, 100, 200];
 
 const DEFAULT_STATE = {
   babyName: "Bebê",
-  theme: "ursinho" as ThemeKey,
-  color: "rosa" as ColorKey,
+  template: "ursinhos" as TemplateKey,
   fontKey: "caveat",
-  count: 60,
-  price: "5",
-  prize: "Deliciosa Cesta de Doces",
+  count: 100,
+  price: "15",
+  prize: "R$ 150,00",
   drawDate: "",
-  rule1: "Escolha um ou mais números disponíveis na cartela.",
-  rule2: "Faça o PIX no valor correspondente para a mamãe.",
-  rule3: "Aguarde o sorteio pela Loteria Federal. Boa sorte!",
+  intro: "Mamãe e papai estão super ansiosos com a minha chegada e resolveram comemorar de uma forma diferente. Você está convidado para participar do meu Chá Rifa!",
+  rule1: "Escolha um número e verifique se está disponível.",
+  rule2: "Combine a entrega da fralda ou o Pix com a mamãe.",
+  rule3: "Aguarde o sorteio e boa sorte!",
   thanks: "Agradeço por sua participação no meu Chá Rifa.",
   pix: "",
   contact: "",
 };
 
-const LS_KEY = "cha_rifa_state_v1";
+const LS_KEY = "cha_rifa_state_v2";
 
 function ChaRifaPage() {
   const [state, setState] = useState<typeof DEFAULT_STATE>(DEFAULT_STATE);
@@ -154,8 +166,7 @@ function ChaRifaPage() {
   const update = <K extends keyof typeof DEFAULT_STATE>(key: K, value: (typeof DEFAULT_STATE)[K]) =>
     setState(s => ({ ...s, [key]: value }));
 
-  const palette = COLORS[state.color];
-  const theme = THEMES[state.theme];
+  const template = TEMPLATES[state.template];
   const font = TITLE_FONTS.find(f => f.key === state.fontKey) ?? TITLE_FONTS[0];
 
   const download = async () => {
@@ -194,23 +205,23 @@ function ChaRifaPage() {
         <header className="mt-4 text-center">
           <h1 className="font-display text-3xl font-semibold sm:text-4xl">Criador de Chá-Rifa</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Escolha as opções no painel e baixe a arte pronta para o WhatsApp.
+            Escolha um modelo, preencha os dados e baixe a arte pronta para o WhatsApp.
           </p>
         </header>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[1fr,360px] lg:items-start">
           {/* Preview */}
           <div className="order-2 flex justify-center lg:order-1">
-            <div className="w-full max-w-[640px]">
+            <div className="w-full max-w-[520px]">
               <div className="mb-2 text-center text-xs uppercase tracking-widest text-muted-foreground">
                 Prévia
               </div>
               <div
                 ref={previewRef}
                 className="mx-auto overflow-hidden rounded-3xl shadow-[var(--shadow-lift)]"
-                style={{ background: palette.bg, color: palette.text, width: "100%", maxWidth: 640 }}
+                style={{ width: "100%", maxWidth: 520 }}
               >
-                <RifaArt state={state} palette={palette} fontCss={font.css} />
+                <RifaArt state={state} template={template} fontCss={font.css} />
               </div>
               <p className="mt-3 text-center text-xs text-muted-foreground">
                 A imagem será exportada em alta resolução (2x).
@@ -220,6 +231,30 @@ function ChaRifaPage() {
 
           {/* Painel lateral (direita) */}
           <aside className="card-soft order-1 space-y-5 self-start p-5 sm:p-6 lg:order-2 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
+            <Field label="Modelo">
+              <div className="grid grid-cols-2 gap-2">
+                {(Object.keys(TEMPLATES) as TemplateKey[]).map(k => (
+                  <button
+                    key={k}
+                    onClick={() => update("template", k)}
+                    className={`overflow-hidden rounded-xl border text-left transition ${
+                      state.template === k ? "border-primary ring-2 ring-primary/30" : "border-border hover:bg-muted"
+                    }`}
+                  >
+                    <img
+                      src={TEMPLATES[k].bg}
+                      alt={TEMPLATES[k].label}
+                      className="h-28 w-full bg-muted object-contain"
+                      loading="lazy"
+                    />
+                    <span className="block px-2 py-1.5">
+                      <span className="block truncate text-sm font-semibold">{TEMPLATES[k].label}</span>
+                      <span className="block truncate text-[11px] text-muted-foreground">{TEMPLATES[k].hint}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </Field>
 
             <Field label="Nome do bebê">
               <input
@@ -229,45 +264,6 @@ function ChaRifaPage() {
                 onChange={e => update("babyName", e.target.value)}
                 placeholder="Ex: Helena"
               />
-            </Field>
-
-            <Field label="Tema">
-              <div className="grid grid-cols-2 gap-2">
-                {(Object.keys(THEMES) as ThemeKey[]).map(k => (
-                  <button
-                    key={k}
-                    onClick={() => update("theme", k)}
-                    className={`flex items-center gap-2 rounded-xl border p-2 text-left text-sm transition ${
-                      state.theme === k ? "border-primary ring-2 ring-primary/30" : "border-border hover:bg-muted"
-                    }`}
-                  >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted">
-                      <ThemeIllustration theme={k} palette={COLORS[state.color]} size={26} />
-                    </span>
-                    <span className="truncate font-medium">{THEMES[k].label}</span>
-                  </button>
-                ))}
-              </div>
-            </Field>
-
-            <Field label="Cor">
-              <div className="grid grid-cols-2 gap-2">
-                {(Object.keys(COLORS) as ColorKey[]).map(k => (
-                  <button
-                    key={k}
-                    onClick={() => update("color", k)}
-                    className={`flex items-center gap-2 rounded-xl border p-2 text-left text-sm transition ${
-                      state.color === k ? "border-primary ring-2 ring-primary/30" : "border-border hover:bg-muted"
-                    }`}
-                  >
-                    <span
-                      className="h-6 w-6 shrink-0 rounded-full ring-2 ring-white"
-                      style={{ background: COLORS[k].accent }}
-                    />
-                    <span className="truncate font-medium">{COLORS[k].label}</span>
-                  </button>
-                ))}
-              </div>
             </Field>
 
             <Field label="Fonte do título">
@@ -301,7 +297,7 @@ function ChaRifaPage() {
             </Field>
 
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Valor (R$)">
+              <Field label="Valor por número (R$)">
                 <input
                   className="input-soft"
                   inputMode="decimal"
@@ -326,7 +322,16 @@ function ChaRifaPage() {
                 value={state.prize}
                 maxLength={80}
                 onChange={e => update("prize", e.target.value)}
-                placeholder="Ex: R$ 200 no PIX"
+                placeholder="Ex: R$ 200,00"
+              />
+            </Field>
+
+            <Field label="Texto de convite">
+              <textarea
+                className="input-soft min-h-[80px] resize-none text-sm"
+                value={state.intro}
+                maxLength={260}
+                onChange={e => update("intro", e.target.value)}
               />
             </Field>
 
@@ -334,9 +339,9 @@ function ChaRifaPage() {
               <div className="space-y-2">
                 {(["rule1", "rule2", "rule3"] as const).map((k, i) => (
                   <div key={k} className="flex items-start gap-2">
-                    <span
-                      className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground"
-                    >{i + 1}</span>
+                    <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+                      {i + 1}
+                    </span>
                     <textarea
                       className="input-soft min-h-[52px] resize-none text-sm"
                       value={state[k]}
@@ -379,24 +384,16 @@ function ChaRifaPage() {
               </Field>
             </div>
 
-            <button
-              onClick={download}
-              disabled={exporting}
-              className="btn-primary w-full"
-            >
+            <button onClick={download} disabled={exporting} className="btn-primary w-full">
               {exporting ? "Gerando..." : "Baixar como PNG"}
             </button>
           </aside>
         </div>
-
       </div>
     </div>
   );
 }
 
-// -----------------------------
-// Componentes visuais
-// -----------------------------
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
@@ -409,257 +406,195 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 // -----------------------------
-// Ilustrações SVG por tema
+// Arte da rifa sobre o modelo escolhido
 // -----------------------------
-function ThemeIllustration({
-  theme, size = 200,
-}: { theme: ThemeKey; palette?: (typeof COLORS)[ColorKey]; size?: number }) {
-  return (
-    <img
-      src={THEME_IMAGES[theme]}
-      alt={THEMES[theme].label}
-      width={size}
-      height={size}
-      loading="lazy"
-      crossOrigin="anonymous"
-      style={{ width: size, height: size, objectFit: "contain", display: "block" }}
-      draggable={false}
-    />
-  );
-}
-
-function BackgroundPattern({ palette }: { palette: (typeof COLORS)[ColorKey] }) {
-  // padrão suave e universal: pontinhos + curvas orgânicas
-  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'>
-    <g fill='${palette.accent}' opacity='0.08'>
-      <circle cx='20' cy='20' r='2.5'/>
-      <circle cx='70' cy='40' r='1.8'/>
-      <circle cx='110' cy='25' r='2.2'/>
-      <circle cx='40' cy='80' r='2'/>
-      <circle cx='95' cy='95' r='2.6'/>
-      <circle cx='125' cy='115' r='1.8'/>
-      <circle cx='15' cy='120' r='2.2'/>
-    </g>
-    <g stroke='${palette.accent}' stroke-width='1.2' fill='none' opacity='0.09' stroke-linecap='round'>
-      <path d='M0 60 Q35 45 70 60 T140 60'/>
-      <path d='M0 110 Q35 95 70 110 T140 110'/>
-    </g>
-  </svg>`;
-  const url = `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0"
-      style={{ backgroundImage: url, backgroundRepeat: "repeat", backgroundSize: "140px 140px" }}
-    />
-  );
-}
-
 function RifaArt({
-  state, palette, fontCss,
+  state,
+  template,
+  fontCss,
 }: {
   state: typeof DEFAULT_STATE;
-  palette: (typeof COLORS)[ColorKey];
+  template: Template;
   fontCss: string;
 }) {
+  const p = template.palette;
   const numbers = useMemo(() => Array.from({ length: state.count }, (_, i) => i + 1), [state.count]);
   const cols = state.count <= 20 ? 5 : state.count <= 60 ? 10 : state.count <= 100 ? 10 : 20;
 
   const drawDatePt = state.drawDate
-    ? new Date(state.drawDate + "T00:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })
+    ? new Date(state.drawDate + "T00:00:00").toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      })
     : "";
 
   return (
-    <div className="relative overflow-hidden p-6 sm:p-8">
-      {/* Padrão de fundo delicado */}
-      <BackgroundPattern palette={palette} />
+    <div
+      className="relative w-full"
+      style={{ aspectRatio: "9 / 16", background: "#fff" }}
+    >
+      {/* Fundo do modelo */}
+      <img
+        src={template.bg}
+        alt=""
+        aria-hidden
+        crossOrigin="anonymous"
+        className="absolute inset-0 h-full w-full object-cover"
+        draggable={false}
+      />
 
-      {/* Decorações flutuantes de fundo (tema) */}
-      <div aria-hidden className="pointer-events-none absolute -left-8 top-24 opacity-60">
-        <ThemeIllustration theme={state.theme} palette={palette} size={110} />
-      </div>
-      <div aria-hidden className="pointer-events-none absolute -right-6 top-52 rotate-6 opacity-70">
-        <ThemeIllustration theme={state.theme} palette={palette} size={90} />
-      </div>
+      {/* Remendos pontuais sobre textos impressos do modelo */}
+      {template.patches?.map((r, i) => (
+        <div
+          key={i}
+          aria-hidden
+          className="absolute"
+          style={{
+            top: `${r.top}%`,
+            right: `${r.right}%`,
+            bottom: `${r.bottom}%`,
+            left: `${r.left}%`,
+            background: template.veil,
+            borderRadius: 20,
+            boxShadow: `0 0 20px 20px ${template.veil}`,
+          }}
+        />
+      ))}
 
-      {/* Cabeçalho: ilustrações laterais + nome */}
-      <div className="relative grid grid-cols-[auto,1fr,auto] items-center gap-2">
-        <ThemeIllustration theme={state.theme} palette={palette} size={110} />
+      {/* Camada que cobre os textos originais do modelo */}
+      <div
+        aria-hidden
+        className="absolute"
+        style={{
+          top: `${template.inset.top - 1.5}%`,
+          bottom: `${template.inset.bottom - 1.5}%`,
+          left: `${template.inset.x - 2}%`,
+          right: `${template.inset.x - 2}%`,
+          background: template.veil,
+          borderRadius: 28,
+          boxShadow: `0 0 26px 26px ${template.veil}`,
+        }}
+      />
+
+      {/* Área de conteúdo, respeitando as ilustrações do modelo */}
+      <div
+        className="absolute flex flex-col overflow-hidden"
+        style={{
+          top: `${template.inset.top}%`,
+          bottom: `${template.inset.bottom}%`,
+          left: `${template.inset.x}%`,
+          right: `${template.inset.x}%`,
+        }}
+      >
+        {/* Título */}
         <div className="text-center">
-          <div
-            className="text-[11px] font-bold uppercase tracking-[0.4em]"
-            style={{ color: palette.accent }}
-          >
-            Chá Rifa
+          <div className="text-[9px] font-bold uppercase tracking-[0.45em]" style={{ color: p.accent }}>
+            Chá Rifa do
           </div>
           <h2
-            className="mt-1 text-4xl leading-[1] sm:text-5xl"
-            style={{ fontFamily: fontCss, color: palette.deep, fontWeight: 700 }}
+            className="mt-0.5 leading-[1]"
+            style={{ fontFamily: fontCss, color: p.deep, fontWeight: 700, fontSize: "clamp(24px, 6vw, 42px)" }}
           >
-            {state.babyName || "do Bebê"}
+            {state.babyName || "Bebê"}
           </h2>
-          <div className="mx-auto mt-2 flex items-center justify-center gap-2" aria-hidden>
-            <span className="h-px w-8" style={{ background: palette.ring }} />
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: palette.accent }} />
-            <span className="h-px w-8" style={{ background: palette.ring }} />
-          </div>
         </div>
-        <ThemeIllustration theme={state.theme} palette={palette} size={110} />
-      </div>
 
-      {/* Premiação */}
-      <div className="relative mt-5">
-        <div
-          className="text-[11px] font-bold uppercase tracking-[0.3em]"
-          style={{ color: palette.accent }}
-        >
-          Premiação
-        </div>
-        <div
-          className="mt-2 flex items-center gap-3 rounded-2xl px-4 py-3"
-          style={{ background: palette.card, boxShadow: `inset 0 0 0 2px ${palette.soft}` }}
-        >
-          <div
-            className="grid h-12 w-12 shrink-0 place-items-center rounded-full"
-            style={{ background: palette.soft }}
+        {/* Convite */}
+        {state.intro && (
+          <p
+            className="mt-1.5 text-center text-[9.5px] leading-snug"
+            style={{ color: p.text }}
           >
-            <ThemeIllustration theme={state.theme} palette={palette} size={38} />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: palette.accent }}>
-              Prêmio
-            </div>
-            <div
-              className="truncate text-base font-semibold sm:text-lg"
-              style={{ color: palette.deep }}
-            >
-              {state.prize || "—"}
-            </div>
-          </div>
-        </div>
-      </div>
+            {state.intro}
+          </p>
+        )}
 
-      {/* Grid de números */}
-      <div
-        className="relative mx-auto mt-4 rounded-2xl p-3"
-        style={{ background: palette.card, boxShadow: `inset 0 0 0 2px ${palette.soft}` }}
-      >
+        {/* Prêmio */}
         <div
-          className="grid gap-1"
-          style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+          className="mx-auto mt-2 rounded-full px-4 py-1.5 text-center"
+          style={{ background: p.soft, boxShadow: `inset 0 0 0 1.5px ${p.ring}` }}
         >
-          {numbers.map(n => (
-            <div
-              key={n}
-              className="flex aspect-square items-center justify-center rounded-full text-[10px] font-bold sm:text-xs"
-              style={{
-                background: palette.soft,
-                color: palette.deep,
-                border: `1px solid ${palette.ring}`,
-              }}
-            >
-              {String(n).padStart(2, "0")}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Info */}
-      <div className="relative mt-4 grid gap-2 text-center sm:grid-cols-3">
-        <InfoTile label="Valor" value={state.price ? `R$ ${state.price}` : "—"} palette={palette} />
-        <InfoTile label="Números" value={String(state.count)} palette={palette} />
-        <InfoTile label="Sorteio" value={drawDatePt || "a definir"} palette={palette} />
-      </div>
-
-      {/* Como Funciona */}
-      <div className="relative mt-5">
-        <div className="mb-2 flex items-center justify-center gap-3">
-          <span className="h-px flex-1" style={{ background: palette.ring }} />
-          <span
-            className="text-sm font-bold uppercase tracking-[0.25em]"
-            style={{ color: palette.deep, fontFamily: fontCss }}
-          >
-            Como Funciona
+          <span className="text-[13px] font-bold" style={{ color: p.deep }}>
+            Prêmio: {state.prize || "—"}
           </span>
-          <span className="h-px flex-1" style={{ background: palette.ring }} />
         </div>
-        <ol className="space-y-2">
+
+        <div className="mt-1 text-center text-[9px] font-semibold" style={{ color: p.text }}>
+          Cada número da rifa: 1 pacote de fraldas {state.price ? `ou Pix de R$ ${state.price}` : ""}
+        </div>
+
+        {/* Cartela */}
+        <div
+          className="mt-2 rounded-2xl p-2"
+          style={{ background: p.card, boxShadow: `inset 0 0 0 1.5px ${p.ring}` }}
+        >
+          <div className="grid gap-[3px]" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+            {numbers.map(n => (
+              <div
+                key={n}
+                className="flex aspect-square items-center justify-center rounded-full font-bold"
+                style={{
+                  fontSize: cols > 10 ? 6 : 9,
+                  background: "#fff",
+                  color: p.deep,
+                  border: `1px solid ${p.ring}`,
+                }}
+              >
+                {String(n).padStart(2, "0")}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Como funciona */}
+        <ol className="mt-2 space-y-1">
           {[state.rule1, state.rule2, state.rule3].filter(Boolean).map((rule, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-3 rounded-xl p-2.5"
-              style={{ background: palette.card, boxShadow: `inset 0 0 0 1px ${palette.soft}` }}
-            >
+            <li key={i} className="flex items-start gap-1.5">
               <span
-                className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-bold"
-                style={{ background: palette.accent, color: "white" }}
+                className="mt-[1px] grid h-3.5 w-3.5 shrink-0 place-items-center rounded-full text-[7px] font-bold"
+                style={{ background: p.accent, color: "#fff" }}
               >
                 {i + 1}
               </span>
-              <span className="text-[12px] leading-snug" style={{ color: palette.text }}>
+              <span className="text-[9px] leading-snug" style={{ color: p.text }}>
                 {rule}
-              </span>
-              <span className="ml-auto shrink-0 opacity-70">
-                <ThemeIllustration theme={state.theme} palette={palette} size={28} />
               </span>
             </li>
           ))}
         </ol>
-      </div>
 
-      {/* Assinatura + agradecimento */}
-      <div className="relative mt-5 flex items-center gap-3">
-        <ThemeIllustration theme={state.theme} palette={palette} size={80} />
-        <div className="flex-1 text-right">
-          {drawDatePt && (
-            <div
-              className="text-lg leading-tight"
-              style={{ fontFamily: fontCss, color: palette.deep }}
-            >
-              Sorteio: {drawDatePt}
-            </div>
-          )}
+        {/* Rodapé */}
+        <div className="mt-auto pt-2 text-center">
+          <div
+            className="mx-auto inline-block rounded-full px-4 py-1"
+            style={{ background: p.soft, boxShadow: `inset 0 0 0 1.5px ${p.ring}` }}
+          >
+            <span className="text-[10px] font-bold" style={{ color: p.deep }}>
+              Sorteio: {drawDatePt || "a definir"}
+            </span>
+          </div>
           {state.thanks && (
-            <p
-              className="mt-1 text-[12px] italic leading-snug"
-              style={{ color: palette.text, fontFamily: fontCss }}
-            >
+            <p className="mt-1 text-[10px] italic leading-snug" style={{ color: p.text, fontFamily: fontCss }}>
               {state.thanks}
             </p>
           )}
+          {(state.pix || state.contact) && (
+            <div className="mt-1 flex flex-wrap items-center justify-center gap-1.5 text-[8.5px] font-semibold" style={{ color: p.deep }}>
+              {state.pix && (
+                <span className="rounded-full px-2 py-0.5" style={{ background: p.soft }}>
+                  PIX: {state.pix}
+                </span>
+              )}
+              {state.contact && (
+                <span className="rounded-full px-2 py-0.5" style={{ background: p.soft }}>
+                  {state.contact}
+                </span>
+              )}
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Rodapé */}
-      {(state.pix || state.contact) && (
-        <div
-          className="relative mt-4 flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold"
-          style={{ color: palette.deep }}
-        >
-          {state.pix && (
-            <span className="rounded-full px-3 py-1" style={{ background: palette.soft }}>
-              PIX: {state.pix}
-            </span>
-          )}
-          {state.contact && (
-            <span className="rounded-full px-3 py-1" style={{ background: palette.soft }}>
-              {state.contact}
-            </span>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function InfoTile({ label, value, palette }: { label: string; value: string; palette: (typeof COLORS)[ColorKey] }) {
-  return (
-    <div
-      className="rounded-xl p-2"
-      style={{ background: palette.card, boxShadow: `inset 0 0 0 1px ${palette.soft}` }}
-    >
-      <div className="text-[10px] font-bold uppercase tracking-widest" style={{ color: palette.accent }}>{label}</div>
-      <div className="mt-0.5 text-sm font-semibold" style={{ color: palette.text }}>{value}</div>
     </div>
   );
 }
