@@ -77,6 +77,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "google-site-verification", content: "5vLkx1ovYYgwvUNDNE9S_LGUhehUd82GxUMJ0ycQmqY" },
       { title: "Quem Vai Trocar? — Roleta da Fralda" },
       { name: "description", content: "A roleta divertida e acolhedora para decidir quem troca a fralda do bebê." },
       { property: "og:title", content: "Quem Vai Trocar? — Roleta da Fralda" },
