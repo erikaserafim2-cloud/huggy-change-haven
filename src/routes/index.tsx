@@ -492,6 +492,7 @@ function MemberCard({
       <button
         onClick={onToggle}
         aria-pressed={p.active}
+        aria-label={p.active ? `Desmarcar ${p.name}` : `Selecionar ${p.name}`}
         className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-2xl transition ${
           p.active ? "bg-primary text-primary-foreground shadow" : "bg-muted text-muted-foreground"
         }`}
