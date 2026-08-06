@@ -231,158 +231,175 @@ function ChaRifaPage() {
 
           {/* Painel lateral (direita) */}
           <aside className="card-soft order-1 space-y-5 self-start p-5 sm:p-6 lg:order-2 lg:sticky lg:top-4 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
-            <Field label="Modelo">
-              <div className="grid grid-cols-2 gap-2">
-                {(Object.keys(TEMPLATES) as TemplateKey[]).map(k => (
-                  <button
-                    key={k}
-                    onClick={() => update("template", k)}
-                    className={`overflow-hidden rounded-xl border text-left transition ${
-                      state.template === k ? "border-primary ring-2 ring-primary/30" : "border-border hover:bg-muted"
-                    }`}
-                  >
-                    <img
-                      src={TEMPLATES[k].bg}
-                      alt={TEMPLATES[k].label}
-                      className="h-28 w-full bg-muted object-contain"
-                      loading="lazy"
-                    />
-                    <span className="block px-2 py-1.5">
-                      <span className="block truncate text-sm font-semibold">{TEMPLATES[k].label}</span>
-                      <span className="block truncate text-[11px] text-muted-foreground">{TEMPLATES[k].hint}</span>
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </Field>
+            <h2 className="sr-only font-display text-xl font-semibold">Configurações do chá-rifa</h2>
 
-            <Field label="Nome do bebê">
-              <input
-                className="input-soft"
-                value={state.babyName}
-                maxLength={40}
-                onChange={e => update("babyName", e.target.value)}
-                placeholder="Ex: Helena"
-              />
-            </Field>
-
-            <Field label="Fonte do título">
-              <select
-                className="input-soft"
-                value={state.fontKey}
-                onChange={e => update("fontKey", e.target.value)}
-              >
-                {TITLE_FONTS.map(f => (
-                  <option key={f.key} value={f.key}>{f.label}</option>
-                ))}
-              </select>
-            </Field>
-
-            <Field label="Quantidade de números">
-              <div className="grid grid-cols-4 gap-2">
-                {NUMBER_COUNTS.map(n => (
-                  <button
-                    key={n}
-                    onClick={() => update("count", n)}
-                    className={`rounded-xl border px-2 py-2 text-xs font-semibold transition ${
-                      state.count === n
-                        ? "border-primary bg-primary text-primary-foreground shadow"
-                        : "border-border bg-card hover:bg-muted"
-                    }`}
-                  >
-                    {n}
-                  </button>
-                ))}
-              </div>
-            </Field>
-
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="Valor por número (R$)">
-                <input
-                  className="input-soft"
-                  inputMode="decimal"
-                  value={state.price}
-                  maxLength={10}
-                  onChange={e => update("price", e.target.value.replace(/[^\d.,]/g, ""))}
-                />
+            <section className="space-y-4">
+              <h2 className="font-display text-lg font-semibold">Escolha do modelo</h2>
+              <Field label="Modelo">
+                <div className="grid grid-cols-2 gap-2">
+                  {(Object.keys(TEMPLATES) as TemplateKey[]).map(k => (
+                    <button
+                      key={k}
+                      onClick={() => update("template", k)}
+                      className={`overflow-hidden rounded-xl border text-left transition ${
+                        state.template === k ? "border-primary ring-2 ring-primary/30" : "border-border hover:bg-muted"
+                      }`}
+                    >
+                      <img
+                        src={TEMPLATES[k].bg}
+                        alt={`Modelo de chá-rifa ${TEMPLATES[k].label}`}
+                        className="h-28 w-full bg-muted object-contain"
+                        loading="lazy"
+                      />
+                      <span className="block px-2 py-1.5">
+                        <span className="block truncate text-sm font-semibold">{TEMPLATES[k].label}</span>
+                        <span className="block truncate text-[11px] text-muted-foreground">{TEMPLATES[k].hint}</span>
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </Field>
-              <Field label="Data do sorteio">
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="font-display text-lg font-semibold">Dados do bebê e do evento</h2>
+              <Field label="Nome do bebê">
                 <input
                   className="input-soft"
-                  type="date"
-                  value={state.drawDate}
-                  onChange={e => update("drawDate", e.target.value)}
-                />
-              </Field>
-            </div>
-
-            <Field label="Prêmio">
-              <input
-                className="input-soft"
-                value={state.prize}
-                maxLength={80}
-                onChange={e => update("prize", e.target.value)}
-                placeholder="Ex: R$ 200,00"
-              />
-            </Field>
-
-            <Field label="Texto de convite">
-              <textarea
-                className="input-soft min-h-[80px] resize-none text-sm"
-                value={state.intro}
-                maxLength={260}
-                onChange={e => update("intro", e.target.value)}
-              />
-            </Field>
-
-            <Field label="Regras — Como funciona">
-              <div className="space-y-2">
-                {(["rule1", "rule2", "rule3"] as const).map((k, i) => (
-                  <div key={k} className="flex items-start gap-2">
-                    <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
-                      {i + 1}
-                    </span>
-                    <textarea
-                      className="input-soft min-h-[52px] resize-none text-sm"
-                      value={state[k]}
-                      maxLength={140}
-                      onChange={e => update(k, e.target.value)}
-                    />
-                  </div>
-                ))}
-              </div>
-            </Field>
-
-            <Field label="Mensagem de agradecimento">
-              <input
-                className="input-soft"
-                value={state.thanks}
-                maxLength={120}
-                onChange={e => update("thanks", e.target.value)}
-                placeholder="Ex: Agradeço por sua participação"
-              />
-            </Field>
-
-            <div className="grid grid-cols-2 gap-3">
-              <Field label="PIX">
-                <input
-                  className="input-soft"
-                  value={state.pix}
-                  maxLength={60}
-                  onChange={e => update("pix", e.target.value)}
-                  placeholder="chave PIX"
-                />
-              </Field>
-              <Field label="Contato">
-                <input
-                  className="input-soft"
-                  value={state.contact}
+                  value={state.babyName}
                   maxLength={40}
-                  onChange={e => update("contact", e.target.value)}
-                  placeholder="WhatsApp"
+                  onChange={e => update("babyName", e.target.value)}
+                  placeholder="Ex: Helena"
                 />
               </Field>
-            </div>
+
+              <Field label="Fonte do título">
+                <select
+                  className="input-soft"
+                  value={state.fontKey}
+                  onChange={e => update("fontKey", e.target.value)}
+                >
+                  {TITLE_FONTS.map(f => (
+                    <option key={f.key} value={f.key}>{f.label}</option>
+                  ))}
+                </select>
+              </Field>
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="font-display text-lg font-semibold">Números e valores</h2>
+              <Field label="Quantidade de números">
+                <div className="grid grid-cols-4 gap-2">
+                  {NUMBER_COUNTS.map(n => (
+                    <button
+                      key={n}
+                      onClick={() => update("count", n)}
+                      className={`rounded-xl border px-2 py-2 text-xs font-semibold transition ${
+                        state.count === n
+                          ? "border-primary bg-primary text-primary-foreground shadow"
+                          : "border-border bg-card hover:bg-muted"
+                      }`}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+              </Field>
+
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="Valor por número (R$)">
+                  <input
+                    className="input-soft"
+                    inputMode="decimal"
+                    value={state.price}
+                    maxLength={10}
+                    onChange={e => update("price", e.target.value.replace(/[^\d.,]/g, ""))}
+                  />
+                </Field>
+                <Field label="Data do sorteio">
+                  <input
+                    className="input-soft"
+                    type="date"
+                    value={state.drawDate}
+                    onChange={e => update("drawDate", e.target.value)}
+                  />
+                </Field>
+              </div>
+
+              <Field label="Prêmio">
+                <input
+                  className="input-soft"
+                  value={state.prize}
+                  maxLength={80}
+                  onChange={e => update("prize", e.target.value)}
+                  placeholder="Ex: R$ 200,00"
+                />
+              </Field>
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="font-display text-lg font-semibold">Textos do convite</h2>
+              <Field label="Texto de convite">
+                <textarea
+                  className="input-soft min-h-[80px] resize-none text-sm"
+                  value={state.intro}
+                  maxLength={260}
+                  onChange={e => update("intro", e.target.value)}
+                />
+              </Field>
+
+              <Field label="Regras — Como funciona">
+                <div className="space-y-2">
+                  {(["rule1", "rule2", "rule3"] as const).map((k, i) => (
+                    <div key={k} className="flex items-start gap-2">
+                      <span className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+                        {i + 1}
+                      </span>
+                      <textarea
+                        className="input-soft min-h-[52px] resize-none text-sm"
+                        value={state[k]}
+                        maxLength={140}
+                        onChange={e => update(k, e.target.value)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </Field>
+
+              <Field label="Mensagem de agradecimento">
+                <input
+                  className="input-soft"
+                  value={state.thanks}
+                  maxLength={120}
+                  onChange={e => update("thanks", e.target.value)}
+                  placeholder="Ex: Agradeço por sua participação"
+                />
+              </Field>
+            </section>
+
+            <section className="space-y-4">
+              <h2 className="font-display text-lg font-semibold">Pagamento e contato</h2>
+              <div className="grid grid-cols-2 gap-3">
+                <Field label="PIX">
+                  <input
+                    className="input-soft"
+                    value={state.pix}
+                    maxLength={60}
+                    onChange={e => update("pix", e.target.value)}
+                    placeholder="chave PIX"
+                  />
+                </Field>
+                <Field label="Contato">
+                  <input
+                    className="input-soft"
+                    value={state.contact}
+                    maxLength={40}
+                    onChange={e => update("contact", e.target.value)}
+                    placeholder="WhatsApp"
+                  />
+                </Field>
+              </div>
+            </section>
 
             <button onClick={download} disabled={exporting} className="btn-primary w-full">
               {exporting ? "Gerando..." : "Baixar como PNG"}
