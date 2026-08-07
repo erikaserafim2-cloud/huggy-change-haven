@@ -477,7 +477,7 @@ function build(month: number): MonthContent {
     month,
     slug,
     title: `Bebê de ${label}: desenvolvimento, sono e cuidados`,
-    metaTitle: `Bebê de ${label}: desenvolvimento, sono, alimentação e brincadeiras`,
+    metaTitle: `Bebê de ${label}: desenvolvimento, sono e brincadeiras`,
     metaDescription: `Guia completo sobre o bebê de ${label}: o que esperar do desenvolvimento, habilidades, brincadeiras, rotina, sono, alimentação e dúvidas comuns dos pais.`,
     intro: introByPhase[phase],
     development: development[phase],
