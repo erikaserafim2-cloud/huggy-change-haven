@@ -150,7 +150,13 @@ function App() {
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col px-4 py-8 sm:py-12">
         <Header babyName={babyName} />
 
-        <main className="card-soft mt-8 flex-1 p-6 sm:p-10 animate-pop">
+        <QuickAccess
+          tip={BABY_TIPS[tipIndex]}
+          onNextTip={() => setTipIndex(i => (i + 1) % BABY_TIPS.length)}
+        />
+
+        <main className="card-soft mt-3 flex-1 p-6 sm:p-10 animate-pop">
+
           {step === "setup" && (
             <SetupStep
               babyName={babyName}
@@ -187,37 +193,10 @@ function App() {
           )}
         </main>
 
-        <Link
-          to="/cha-rifa"
-          className="mt-8 flex items-center gap-3 rounded-2xl bg-card/70 p-4 backdrop-blur transition hover:bg-card sm:p-5"
-        >
-          <span className="text-2xl">🎟️</span>
-          <div className="flex-1">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary">Criador de Chá-Rifa</p>
-            <p className="mt-1 text-sm text-foreground/80">Monte a arte da sua rifa em minutos</p>
-          </div>
-          <span aria-hidden className="shrink-0 rounded-full bg-muted p-2 text-muted-foreground">→</span>
-        </Link>
+        <p className="mt-6 text-center text-xs text-muted-foreground">
+          Feito com carinho ❤️ · seus dados ficam somente no seu dispositivo
+        </p>
 
-        <Link
-          to="/maternidade"
-          className="mt-3 flex items-center gap-3 rounded-2xl bg-card/70 p-4 backdrop-blur transition hover:bg-card sm:p-5"
-        >
-          <span className="text-2xl">🌷</span>
-          <div className="flex-1">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary">Universo da Maternidade</p>
-            <p className="mt-1 text-sm text-foreground/80">Acompanhe o desenvolvimento dessa idade</p>
-          </div>
-          <span aria-hidden className="shrink-0 rounded-full bg-muted p-2 text-muted-foreground">→</span>
-        </Link>
-
-
-
-
-        <TipFooter
-          tip={BABY_TIPS[tipIndex]}
-          onNext={() => setTipIndex(i => (i + 1) % BABY_TIPS.length)}
-        />
 
       </div>
     </div>
@@ -825,26 +804,85 @@ function WinnerModal({
 }
 
 // -----------------------------
-// Tip Footer
+// Quick access — acima da roleta
 // -----------------------------
-function TipFooter({ tip, onNext }: { tip: string; onNext: () => void }) {
+function QuickAccess({ tip, onNextTip }: { tip: string; onNextTip: () => void }) {
   return (
-    <footer className="mt-8">
-      <div className="flex items-start gap-3 rounded-2xl bg-card/70 p-4 backdrop-blur sm:p-5">
-        <span className="text-2xl">💡</span>
-        <div className="flex-1">
-          <p className="text-xs font-bold uppercase tracking-widest text-primary">Diquinha do dia</p>
-          <p className="mt-1 text-sm text-foreground/80">{tip}</p>
+    <nav
+      aria-label="Outras ferramentas do site"
+      className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3"
+    >
+      <Link
+        to="/cha-rifa"
+        className="flex items-center gap-2.5 rounded-2xl border border-border/70 bg-card/75 p-3 backdrop-blur transition hover:bg-card"
+      >
+        <span
+          aria-hidden
+          className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--primary)_14%,transparent)] text-base"
+        >
+          🎟️
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-xs font-bold uppercase leading-tight tracking-wide text-primary">
+            <span className="sm:hidden">Chá-Rifa</span>
+            <span className="hidden sm:block">Criador de Chá-Rifa</span>
+          </span>
+          <span className="mt-0.5 hidden text-[11px] leading-snug text-foreground/70 sm:block">
+            Monte a arte da sua rifa
+          </span>
+        </span>
+
+        <span aria-hidden className="shrink-0 rounded-full bg-muted p-1 text-[10px] text-muted-foreground">
+          →
+        </span>
+      </Link>
+
+      <Link
+        to="/maternidade"
+        className="flex items-center gap-2.5 rounded-2xl border border-border/70 bg-card/75 p-3 backdrop-blur transition hover:bg-card"
+      >
+        <span
+          aria-hidden
+          className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--sage)_35%,transparent)] text-base"
+        >
+          🌷
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-xs font-bold uppercase leading-tight tracking-wide text-primary">
+            <span className="sm:hidden">Maternidade</span>
+            <span className="hidden sm:block">Universo da Maternidade</span>
+          </span>
+          <span className="mt-0.5 hidden text-[11px] leading-snug text-foreground/70 sm:block">
+            Desenvolvimento do bebê
+          </span>
+        </span>
+
+        <span aria-hidden className="shrink-0 rounded-full bg-muted p-1 text-[10px] text-muted-foreground">
+          →
+        </span>
+      </Link>
+
+      <div className="col-span-2 flex items-start gap-2.5 rounded-2xl border border-border/70 bg-card/75 p-3 backdrop-blur sm:col-span-1">
+        <span
+          aria-hidden
+          className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[color-mix(in_oklab,var(--butter)_55%,transparent)] text-base"
+        >
+          💡
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-bold uppercase leading-tight tracking-wide text-primary">Diquinha do dia</p>
+          <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-foreground/70 sm:line-clamp-3">{tip}</p>
+
         </div>
         <button
-          onClick={onNext}
-          className="shrink-0 rounded-full bg-muted p-2 text-muted-foreground transition hover:bg-secondary"
+          onClick={onNextTip}
           aria-label="Próxima dica"
-        >🔄</button>
+          className="shrink-0 rounded-full bg-muted p-1.5 text-xs text-muted-foreground transition hover:bg-secondary"
+        >
+          🔄
+        </button>
       </div>
-      <p className="mt-4 text-center text-xs text-muted-foreground">
-        Feito com carinho ❤️ · seus dados ficam somente no seu dispositivo
-      </p>
-    </footer>
+    </nav>
   );
 }
+
