@@ -823,13 +823,15 @@ function QuickAccess({ tip, onNextTip }: { tip: string; onNextTip: () => void })
           🎟️
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-xs font-bold uppercase leading-tight tracking-wider text-primary sm:truncate">
-            Criador de Chá-Rifa
+          <span className="block text-xs font-bold uppercase leading-tight tracking-wide text-primary">
+            <span className="sm:hidden">Chá-Rifa</span>
+            <span className="hidden sm:block">Criador de Chá-Rifa</span>
           </span>
-          <span className="mt-0.5 hidden truncate text-[11px] text-foreground/70 sm:block">
+          <span className="mt-0.5 hidden text-[11px] leading-snug text-foreground/70 sm:block">
             Monte a arte da sua rifa
           </span>
         </span>
+
         <span aria-hidden className="shrink-0 rounded-full bg-muted p-1 text-[10px] text-muted-foreground">
           →
         </span>
@@ -846,13 +848,15 @@ function QuickAccess({ tip, onNextTip }: { tip: string; onNextTip: () => void })
           🌷
         </span>
         <span className="min-w-0 flex-1">
-          <span className="block text-xs font-bold uppercase leading-tight tracking-wider text-primary sm:truncate">
-            Universo da Maternidade
+          <span className="block text-xs font-bold uppercase leading-tight tracking-wide text-primary">
+            <span className="sm:hidden">Maternidade</span>
+            <span className="hidden sm:block">Universo da Maternidade</span>
           </span>
-          <span className="mt-0.5 hidden truncate text-[11px] text-foreground/70 sm:block">
-            Acompanhe essa idade
+          <span className="mt-0.5 hidden text-[11px] leading-snug text-foreground/70 sm:block">
+            Desenvolvimento do bebê
           </span>
         </span>
+
         <span aria-hidden className="shrink-0 rounded-full bg-muted p-1 text-[10px] text-muted-foreground">
           →
         </span>
@@ -866,8 +870,9 @@ function QuickAccess({ tip, onNextTip }: { tip: string; onNextTip: () => void })
           💡
         </span>
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-bold uppercase leading-tight tracking-wider text-primary">Diquinha do dia</p>
-          <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-foreground/70">{tip}</p>
+          <p className="text-xs font-bold uppercase leading-tight tracking-wide text-primary">Diquinha do dia</p>
+          <p className="mt-0.5 line-clamp-2 text-[11px] leading-snug text-foreground/70 sm:line-clamp-3">{tip}</p>
+
         </div>
         <button
           onClick={onNextTip}
