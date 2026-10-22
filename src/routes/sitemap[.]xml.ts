@@ -8,6 +8,11 @@ export const Route = createFileRoute("/sitemap.xml")({
       GET: async () => {
         const staticEntries = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
+          { path: "/blog", changefreq: "weekly", priority: "0.8" },
+          { path: "/sobre", changefreq: "monthly", priority: "0.4" },
+          { path: "/contato", changefreq: "monthly", priority: "0.4" },
+          { path: "/politica-de-privacidade", changefreq: "yearly", priority: "0.2" },
+          { path: "/termos-de-uso", changefreq: "yearly", priority: "0.2" },
           { path: "/maternidade", changefreq: "weekly", priority: "0.8" },
           { path: "/cha-rifa", changefreq: "monthly", priority: "0.6" },
         ];
@@ -17,7 +22,13 @@ export const Route = createFileRoute("/sitemap.xml")({
           priority: "0.8",
         }));
 
-        const urls = [...staticEntries, ...monthEntries]
+        const blogEntries = [
+          "/blog/rotina-de-trocas-de-fralda",
+          "/blog/dicas-para-evitar-assaduras",
+          "/blog/desfralde-sem-estresse",
+        ].map((path) => ({ path, changefreq: "monthly", priority: "0.7" }));
+
+        const urls = [...staticEntries, ...monthEntries, ...blogEntries]
           .map((e) =>
             [
               "  <url>",
