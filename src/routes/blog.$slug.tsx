@@ -21,7 +21,12 @@ function BlogArticle() {
   return <PageShell>
     <article className="article-layout">
       <Link to="/blog" className="text-link">← Voltar ao blog</Link>
-      <header className="article-header"><span className="eyebrow">{post.category} · {post.readMinutes} min de leitura</span><h1>{post.title}</h1><p className="article-excerpt">{post.excerpt}</p><p className="article-date">Publicado em {formatDate(post.date)}</p></header>
+      <header className="article-header">
+        <span className="badge-maternal mb-2">{post.category} · {post.readMinutes} min de leitura</span>
+        <h1 className="mt-2 font-display text-3xl font-bold sm:text-4xl text-foreground">{post.title}</h1>
+        <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">{post.excerpt}</p>
+        <p className="mt-2 text-xs text-muted-foreground">Publicado em {formatDate(post.date)}</p>
+      </header>
       <img className="article-cover" src={post.cover} alt={post.coverAlt} />
       <AdSlot label="Espaço para anúncios" />
       <div className="article-body">{post.body.map((block, index) => {
