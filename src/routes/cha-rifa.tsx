@@ -191,21 +191,24 @@ function ChaRifaPage() {
     <div className="min-h-screen">
       <div className="mx-auto flex max-w-7xl flex-col px-4 py-6 sm:py-8">
         {/* Header */}
-        <div className="relative flex items-center justify-center">
-          <Link to="/" className="btn-ghost absolute left-0 inline-flex items-center gap-2 text-sm">
-            <span aria-hidden>←</span> Voltar
+        <div className="flex items-center justify-between gap-3">
+          <Link to="/" className="btn-ghost inline-flex items-center gap-2 text-xs sm:text-sm py-2 px-3.5">
+            <span aria-hidden>←</span> Voltar ao Início
           </Link>
           <Link to="/" aria-label="Tela inicial" className="rounded-full p-1 transition hover:opacity-90">
-            <span className="flex h-24 w-24 overflow-hidden rounded-full bg-card ring-4 ring-[color-mix(in_oklab,var(--primary)_20%,transparent)] shadow-[var(--shadow-soft)] sm:h-28 sm:w-28">
+            <span className="flex h-16 w-16 sm:h-20 sm:w-20 overflow-hidden rounded-full bg-card ring-2 ring-primary/20 shadow-xs">
               <img src={logoAsset.url} alt="Quem vai trocar?" className="h-full w-full object-cover scale-110" />
             </span>
           </Link>
         </div>
 
         <header className="mt-4 text-center">
-          <h1 className="font-display text-3xl font-semibold sm:text-4xl">Criador de Chá-Rifa</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Escolha um modelo, preencha os dados e baixe a arte pronta para o WhatsApp.
+          <span className="badge-maternal mb-2">🎟️ Criador Especial</span>
+          <h1 className="mt-2 font-display text-3xl font-bold sm:text-4xl text-foreground">
+            Criador de Chá-Rifa de Fraldas
+          </h1>
+          <p className="mt-1.5 text-sm text-muted-foreground max-w-lg mx-auto">
+            Escolha um modelo delicado em aquarela, preencha as informações do seu evento e baixe a arte prontinha para compartilhar no WhatsApp e Instagram!
           </p>
         </header>
 
