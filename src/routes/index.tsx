@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import logoAsset from "@/assets/logo.png.asset.json";
+import { BLOG_POSTS } from "@/lib/blog-posts";
+import { AdSlot, BlogCard } from "@/components/SiteChrome";
 
 
 export const Route = createFileRoute("/")({
@@ -155,7 +157,7 @@ function App() {
           onNextTip={() => setTipIndex(i => (i + 1) % BABY_TIPS.length)}
         />
 
-        <main className="card-soft mt-3 flex-1 p-6 sm:p-10 animate-pop">
+        <main id="roleta" className="card-soft mt-3 flex-1 p-6 sm:p-10 animate-pop">
 
           {step === "setup" && (
             <SetupStep
@@ -196,6 +198,21 @@ function App() {
         <p className="mt-6 text-center text-xs text-muted-foreground">
           Feito com carinho ❤️ · seus dados ficam somente no seu dispositivo
         </p>
+
+        <section className="home-editorial">
+          <div className="section-heading">
+            <div><span className="eyebrow">Conteúdo para a vida real</span><h2>Dicas para cuidar com mais tranquilidade</h2></div>
+            <Link to="/blog" className="text-link">Ver todos os artigos →</Link>
+          </div>
+          <AdSlot />
+          <div className="blog-grid">
+            {BLOG_POSTS.slice(0, 3).map((post) => <BlogCard key={post.slug} post={post} />)}
+          </div>
+          <div className="about-teaser">
+            <div><span className="eyebrow">Sobre o projeto</span><h2>Mais leveza na rotina com o bebê</h2><p>A roleta ajuda a dividir as trocas de fralda de um jeito descontraído. No blog, reunimos orientações práticas sobre rotina, cuidados com a pele e desenvolvimento infantil.</p></div>
+            <Link to="/sobre" className="btn-primary inline-block">Conheça o projeto</Link>
+          </div>
+        </section>
 
 
       </div>
