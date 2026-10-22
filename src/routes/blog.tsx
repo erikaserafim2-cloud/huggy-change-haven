@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BLOG_POSTS, formatDate } from "@/lib/blog-posts";
+import { BLOG_POSTS } from "@/lib/blog-posts";
 import { AdSlot, BlogCard, PageShell } from "@/components/SiteChrome";
 
 export const Route = createFileRoute("/blog")({
