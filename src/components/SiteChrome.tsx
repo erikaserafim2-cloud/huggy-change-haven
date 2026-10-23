@@ -42,15 +42,9 @@ export function SiteHeader() {
           <span className="site-brand-mark transition group-hover:scale-105">
             <Heart className="h-5 w-5 fill-white text-white animate-pulse-gentle" />
           </span>
-          <div className="flex flex-col">
-            <span className="font-display text-lg font-bold tracking-tight text-foreground sm:text-xl">
-              Quem Vai Trocar?
-            </span>
-            <span className="site-brand-badge flex items-center gap-1">
-              <span>Maternidade leve & acolhedora</span>
-              <span className="inline-block text-[10px]">🌸</span>
-            </span>
-          </div>
+          <span className="font-display text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+            Quem Vai Trocar?
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -163,11 +157,6 @@ export function SiteHeader() {
             })}
           </nav>
 
-          <div className="mt-4 pt-4 border-t border-border/80 text-center">
-            <p className="text-xs text-muted-foreground">
-              🌸 Criado com carinho para famílias reais · 100% privado
-            </p>
-          </div>
         </div>
       )}
     </header>
