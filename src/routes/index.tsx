@@ -168,6 +168,12 @@ function App() {
   }, [gender, hydrated]);
 
   useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.dataset.babyTheme = gender || "neutro";
+    }
+  }, [gender]);
+
+  useEffect(() => {
     if (hydrated) saveLS("participants_v3", participants);
   }, [participants, hydrated]);
 
@@ -178,7 +184,7 @@ function App() {
   const activeParticipants = useMemo(() => participants.filter((p) => p.active), [participants]);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden">
+    <div className={`relative min-h-screen overflow-x-clip baby-theme-${gender || "neutro"}`}>
       {/* Elementos decorativos acolhedores de fundo */}
       <FloatingDecorations />
 
@@ -341,8 +347,7 @@ function HeroSection({ babyName }: { babyName: string }) {
       </h1>
 
       <p className="mt-3 max-w-xl mx-auto text-muted-foreground text-sm sm:text-base leading-relaxed">
-        Uma brincadeira leve, justa e divertida para dividir os cuidados com o bebê em família. Menos
-        discussão, mais carinho e cumplicidade!
+        Um jeito leve de dividir as trocas e cuidar em equipe. Porque ninguém precisa dar conta de tudo sozinho — cada gesto de cuidado também aproxima a família.
       </p>
 
       {/* 3 pílulas de tranquilidade */}
@@ -498,10 +503,10 @@ function SetupStep({
       <div className="text-center max-w-md mx-auto">
         <span className="badge-maternal mb-2">Passo 1 de 3</span>
         <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
-          Vamos preparar o cantinho do bebê 💕
+          Vamos deixar tudo com a cara da sua família
         </h2>
         <p className="mt-1.5 text-sm text-muted-foreground">
-          Diga o nome do bebê e escolha as cores carinhosas para a sua roleta.
+          Se quiser, conte como vocês chamam o bebê e escolha uma paleta para personalizar a experiência. Você pode mudar isso quando quiser.
         </p>
       </div>
 
@@ -523,7 +528,7 @@ function SetupStep({
 
         <div>
           <label className="mb-2 block text-sm font-bold text-foreground">
-            Tema de cores da roleta
+            Como você prefere as cores?
           </label>
           <div className="grid grid-cols-3 gap-2.5">
             <button
@@ -536,7 +541,7 @@ function SetupStep({
               }`}
             >
               <span className="text-2xl">👧</span>
-              <span className="text-xs font-bold">Rosa Doce</span>
+              <span className="text-xs font-bold">Rosa suave</span>
             </button>
 
             <button
@@ -549,7 +554,7 @@ function SetupStep({
               }`}
             >
               <span className="text-2xl">👦</span>
-              <span className="text-xs font-bold">Azul Céu</span>
+              <span className="text-xs font-bold">Azul sereno</span>
             </button>
 
             <button
@@ -562,14 +567,14 @@ function SetupStep({
               }`}
             >
               <span className="text-2xl">🧸</span>
-              <span className="text-xs font-bold">Tons Quentes</span>
+              <span className="text-xs font-bold">Neutro natural</span>
             </button>
           </div>
         </div>
 
         <div className="rounded-2xl bg-muted/60 p-4 text-xs text-muted-foreground flex items-center gap-2.5 border border-primary/10">
           <Info className="h-4 w-4 shrink-0 text-primary" />
-          <span>Fique tranquila(o): nenhum dado é enviado para a internet. Tudo fica seguro no seu aparelho.</span>
+          <span>Seu nome, suas escolhas e a pontuação ficam salvos neste aparelho. Nada disso é enviado para nossos servidores.</span>
         </div>
 
         <div className="pt-2 flex justify-end">
@@ -640,10 +645,10 @@ function ParticipantsStep({
         <div>
           <span className="badge-maternal mb-1">Passo 2 de 3</span>
           <h2 className="font-display text-2xl sm:text-3xl font-bold text-foreground">
-            Quem está na rede de apoio de {babyName || "bebê"}? 👨‍👩‍👧
+            Quem faz parte dessa equipe de cuidado?
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Selecione quem vai participar do sorteio da fralda. É preciso no mínimo 2 participantes.
+            Escolha as pessoas que entram na brincadeira. Para a roleta funcionar, precisamos de pelo menos duas.
           </p>
         </div>
         <button
@@ -716,7 +721,7 @@ function ParticipantsStep({
       {/* Adicionar participante extra */}
       <div className="rounded-2xl border border-dashed border-primary/30 bg-card/70 p-4 sm:p-5">
         <p className="mb-2.5 text-xs font-bold uppercase tracking-wider text-primary">
-          + Adicionar mais alguém (Madrinha, Dindo, Cuidador, etc)
+          + Incluir outra pessoa (madrinha, dindo, cuidador...)
         </p>
         <div className="flex flex-col sm:flex-row gap-2">
           <select
