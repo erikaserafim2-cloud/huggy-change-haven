@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from "react";
+import logo from "@/assets/logo.png";
 import { Link, useLocation } from "@tanstack/react-router";
 import {
   Heart,
@@ -36,14 +37,14 @@ export function SiteHeader() {
         <Link
           to="/"
           className="site-brand group"
-          aria-label="Quem Vai Trocar? página inicial"
+          aria-label="Sorteador de Fraldas — página inicial"
           onClick={() => setMobileMenuOpen(false)}
         >
-          <span className="site-brand-mark transition group-hover:scale-105">
-            <Heart className="h-5 w-5 fill-white text-white animate-pulse-gentle" />
+          <span className="site-brand-mark !rounded-full overflow-hidden !bg-transparent !shadow-none p-0 transition group-hover:scale-105">
+            <img src={logo} alt="" className="h-full w-full rounded-full object-cover" />
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-            Quem Vai Trocar?
+            Sorteador de Fraldas
           </span>
         </Link>
 
@@ -172,7 +173,7 @@ export function SiteFooter() {
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-white text-xs">
               ♡
             </span>
-            <strong>Quem Vai Trocar?</strong>
+            <strong>Sorteador de Fraldas</strong>
           </div>
           <p>
             Um portal acolhedor dedicado a trazer leveza, bom humor e colaboração para a rotina diária com o bebê.
@@ -204,7 +205,7 @@ export function SiteFooter() {
 
       <div className="site-shell site-footer-bottom">
         <div>
-          © {new Date().getFullYear()} Quem Vai Trocar? · Feito com carinho para mamães, papais e toda a rede de apoio.
+          © {new Date().getFullYear()} Sorteador de Fraldas · Feito com carinho para mamães, papais e toda a rede de apoio.
         </div>
         <div className="text-xs text-muted-foreground flex items-center gap-1.5">
           <span>Feito para a vida real</span>
