@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import logoAsset from "@/assets/logo.png.asset.json";
 import { BLOG_POSTS } from "@/lib/blog-posts";
 import { AdSlot, BlogCard } from "@/components/SiteChrome";
 import {
@@ -189,9 +188,6 @@ function App() {
       <FloatingDecorations />
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-4xl flex-col px-4 py-6 sm:py-10">
-        {/* Hero Acolhedor */}
-        <HeroSection babyName={babyName} />
-
         {/* Barra de Acesso Rápido às Ferramentas Maternas */}
         <MaternalToolsHub
           tip={BABY_TIPS[tipIndex]}
@@ -321,48 +317,6 @@ function FloatingDecorations() {
         ⭐
       </div>
     </div>
-  );
-}
-
-// -----------------------------
-// Hero Section
-// -----------------------------
-function HeroSection({ babyName }: { babyName: string }) {
-  return (
-    <header className="text-center pt-2 sm:pt-4">
-      <div className="inline-flex items-center gap-2 rounded-full bg-white/80 border border-primary/20 px-3.5 py-1 text-xs font-semibold text-primary shadow-xs backdrop-blur-md mb-4">
-        <Sparkles className="h-3.5 w-3.5 text-primary" />
-        <span>O cantinho acolhedor da sua rotina familiar</span>
-      </div>
-
-      <div className="relative mx-auto h-36 w-36 sm:h-44 sm:w-44">
-        <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl animate-pulse-gentle" />
-        <div className="relative h-full w-full overflow-hidden rounded-full bg-card ring-4 ring-primary/25 shadow-[var(--shadow-soft)]">
-          <img src={logoAsset.url} alt="Quem vai trocar?" className="h-full w-full object-cover scale-110" />
-        </div>
-      </div>
-
-      <h1 className="mt-5 font-display text-3xl sm:text-5xl font-bold text-foreground tracking-tight leading-tight">
-        Quem vai trocar {babyName ? <span className="text-primary">{babyName}</span> : "a fraldinha"} hoje?
-      </h1>
-
-      <p className="mt-3 max-w-xl mx-auto text-muted-foreground text-sm sm:text-base leading-relaxed">
-        Um jeito leve de dividir as trocas e cuidar em equipe. Porque ninguém precisa dar conta de tudo sozinho — cada gesto de cuidado também aproxima a família.
-      </p>
-
-      {/* 3 pílulas de tranquilidade */}
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs font-semibold text-foreground/80">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-card/80 border border-primary/15 px-3 py-1 shadow-xs">
-          <span>👶</span> 100% Gratuito
-        </span>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-card/80 border border-primary/15 px-3 py-1 shadow-xs">
-          <span>🔒</span> Sem cadastro
-        </span>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-card/80 border border-primary/15 px-3 py-1 shadow-xs">
-          <span>💛</span> Salva no seu celular
-        </span>
-      </div>
-    </header>
   );
 }
 

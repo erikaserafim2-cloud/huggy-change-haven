@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap');
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -1022,5 +1023,120 @@ button:not(:disabled), [role="button"], a {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
+  }
+}
+
+
+/* Typography + palette refinement: warm, expressive, still calm. */
+
+@theme inline {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --background: #faf7f1;
+  --foreground: #3d3934;
+  --card: #fffdf9;
+  --card-foreground: #3d3934;
+  --muted: #f0ece4;
+  --muted-foreground: #777067;
+  --primary: #98715c;
+  --primary-foreground: #fffdf9;
+  --secondary: #e9eee5;
+  --secondary-foreground: #435344;
+  --accent: #eee4d7;
+  --accent-foreground: #514338;
+  --border: #e7ded2;
+  --ring: #98715c55;
+  --sage: #dce5d6;
+  --blush: #f0e0dc;
+  --butter: #f4ebd4;
+  --lavender: #e9e4ed;
+  --sky: #e0e9e9;
+  --gradient-warm:
+    radial-gradient(ellipse at 12% 5%, #f3e4d366 0%, transparent 38%),
+    radial-gradient(ellipse at 88% 22%, #dce5d866 0%, transparent 42%),
+    linear-gradient(160deg, #fcfaf5 0%, #f4f0e8 100%);
+  --gradient-primary: linear-gradient(135deg, #aa846c 0%, #87614e 100%);
+  --gradient-card: linear-gradient(180deg, #fffefa 0%, #fbf8f1 100%);
+  --gradient-pill: linear-gradient(135deg, #f7f2e8 0%, #e9eee5 100%);
+  --shadow-soft: 0 16px 40px -18px #735b4930;
+  --shadow-lift: 0 22px 50px -20px #735b4945;
+  --shadow-card: 0 10px 30px -12px #735b491c;
+  --shadow-glow: 0 0 28px -8px #aa846c35;
+}
+
+:root[data-baby-theme="neutro"] {
+  --primary: #71866d;
+  --primary-foreground: #fffefa;
+  --secondary: #e7ede2;
+  --secondary-foreground: #3e5140;
+  --accent: #e2e8da;
+  --accent-foreground: #3e5140;
+  --border: #dfe5d8;
+  --ring: #71866d55;
+  --gradient-primary: linear-gradient(135deg, #8da087 0%, #667c62 100%);
+  --shadow-soft: 0 16px 40px -18px #71866d30;
+  --shadow-lift: 0 22px 50px -20px #71866d45;
+}
+
+:root[data-baby-theme="menina"] {
+  --primary: #ad7c83;
+  --primary-foreground: #fffaf8;
+  --secondary: #f1e5e4;
+  --secondary-foreground: #594044;
+  --accent: #eededc;
+  --accent-foreground: #594044;
+  --border: #e8d8d6;
+  --ring: #ad7c8355;
+  --gradient-primary: linear-gradient(135deg, #c18f94 0%, #9d6c73 100%);
+  --shadow-soft: 0 16px 40px -18px #ad7c8330;
+  --shadow-lift: 0 22px 50px -20px #ad7c8345;
+}
+
+:root[data-baby-theme="menino"] {
+  --primary: #6d8b9a;
+  --primary-foreground: #fbfdff;
+  --secondary: #e3ecef;
+  --secondary-foreground: #394e59;
+  --accent: #dce8ec;
+  --accent-foreground: #394e59;
+  --border: #d4e1e6;
+  --ring: #6d8b9a55;
+  --gradient-primary: linear-gradient(135deg, #89a6b1 0%, #5e7f8d 100%);
+  --shadow-soft: 0 16px 40px -18px #6d8b9a30;
+  --shadow-lift: 0 22px 50px -20px #6d8b9a45;
+}
+
+html, body {
+  font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: "Fraunces", Georgia, serif;
+  letter-spacing: -0.025em;
+}
+
+.site-brand {
+  gap: 0.65rem;
+}
+
+.site-brand .font-display {
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  letter-spacing: -0.035em;
+}
+
+.site-brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 15px;
+}
+
+@media (max-width: 480px) {
+  .site-brand-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 13px;
   }
 }
