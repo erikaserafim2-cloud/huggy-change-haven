@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
-import logo from "@/assets/logo.png";
+import logoAsset from "@/assets/logo.png.asset.json";
+const logo = logoAsset.url;
 import { Link, useLocation } from "@tanstack/react-router";
 import {
   Heart,
