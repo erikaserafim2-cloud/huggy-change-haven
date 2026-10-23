@@ -247,7 +247,7 @@ export function BlogCard({
 }) {
   return (
     <article className="blog-card group">
-      <Link to={`/blog/${post.slug}`} className="blog-card-image">
+      <Link to="/blog/$slug" params={{ slug: post.slug }} className="blog-card-image">
         <img src={post.cover} alt={post.coverAlt} loading="lazy" />
         <span className="absolute bottom-3 left-3 rounded-full bg-white/90 backdrop-blur-md px-3 py-1 text-xs font-bold text-primary shadow-xs">
           {post.category}
@@ -261,10 +261,10 @@ export function BlogCard({
           </span>
         </div>
         <h2 className="group-hover:text-primary transition">
-          <Link to={`/blog/${post.slug}`}>{post.title}</Link>
+          <Link to="/blog/$slug" params={{ slug: post.slug }}>{post.title}</Link>
         </h2>
         <p>{post.excerpt}</p>
-        <Link className="text-link mt-auto pt-2" to={`/blog/${post.slug}`}>
+        <Link className="text-link mt-auto pt-2" to="/blog/$slug" params={{ slug: post.slug }}>
           <span>Ler artigo com carinho</span>
           <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
         </Link>

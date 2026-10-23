@@ -1142,7 +1142,7 @@ function BabyMonthsNavigator() {
         {months.map((m) => (
           <Link
             key={m}
-            to={`/bebe-${m}-${m === 1 ? "mes" : "meses"}`}
+            to={`/bebe-${m}-${m === 1 ? "mes" : "meses"}` as never}
             className="rounded-full border border-primary/20 bg-card px-3 py-1.5 text-xs font-bold text-foreground/85 transition hover:bg-primary hover:text-white hover:border-primary shadow-xs"
           >
             {m} {m === 1 ? "mês" : "meses"}
