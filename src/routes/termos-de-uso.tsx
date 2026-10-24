@@ -1,11 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { pageHead } from "@/lib/page-head";
 import { PageShell } from "@/components/SiteChrome";
 
 export const Route = createFileRoute("/termos-de-uso")({
-  head: () => ({ meta: [
-    { title: "Termos de Uso | Quem Vai Trocar?" },
-    { name: "description", content: "Condições para usar a roleta e os conteúdos do Quem Vai Trocar?." },
-  ]}),
+  head: () => pageHead("Termos de Uso | Troca Fraldas Online", "Condições para utilizar a roleta, os artigos e as ferramentas do Troca Fraldas Online.", "/termos-de-uso"),
   component: TermsPage,
 });
 
@@ -14,7 +12,7 @@ function TermsPage() {
     <span className="badge-maternal mb-2">📄 Uso responsável</span>
     <h1 className="mt-2 font-display text-3xl font-bold sm:text-4xl text-foreground">Termos de Uso</h1>
     <p className="mt-2 text-sm sm:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
-      <strong>Última atualização: 22 de outubro de 2026.</strong>
+      <strong>Última atualização: 24 de outubro de 2026.</strong>
     </p>
     <h2 className="mt-6 font-display text-2xl font-bold text-foreground">Sobre o serviço</h2>
     <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
@@ -38,7 +36,7 @@ function TermsPage() {
     </p>
     <h2 className="mt-6 font-display text-2xl font-bold text-foreground">Contato</h2>
     <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
-      Para dúvidas sobre estes termos, consulte a página de contato após a configuração do canal de atendimento.
+      Para dúvidas sobre estes termos, envie um e-mail para pamelacrisribeiro71@gmail.com ou acesse a página de contacto.
     </p>
   </article></PageShell>;
 }

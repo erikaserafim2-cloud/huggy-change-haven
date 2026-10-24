@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
+import { BLOG_POSTS } from "@/lib/blog-posts";
 import { MONTHS_CONTENT, SITE_URL } from "@/lib/baby-months-data";
 
 export const Route = createFileRoute("/sitemap.xml")({
@@ -9,6 +10,8 @@ export const Route = createFileRoute("/sitemap.xml")({
         const staticEntries = [
           { path: "/", changefreq: "weekly", priority: "1.0" },
           { path: "/blog", changefreq: "weekly", priority: "0.8" },
+          { path: "/universo-da-maternidade", changefreq: "weekly", priority: "0.8" },
+          { path: "/contacto", changefreq: "monthly", priority: "0.4" },
           { path: "/sobre", changefreq: "monthly", priority: "0.4" },
           { path: "/contato", changefreq: "monthly", priority: "0.4" },
           { path: "/politica-de-privacidade", changefreq: "yearly", priority: "0.2" },
@@ -22,11 +25,7 @@ export const Route = createFileRoute("/sitemap.xml")({
           priority: "0.8",
         }));
 
-        const blogEntries = [
-          "/blog/rotina-de-trocas-de-fralda",
-          "/blog/dicas-para-evitar-assaduras",
-          "/blog/desfralde-sem-estresse",
-        ].map((path) => ({ path, changefreq: "monthly", priority: "0.7" }));
+        const blogEntries = BLOG_POSTS.map(post => ({ path: `/blog/${post.slug}`, changefreq: "monthly", priority: "0.7" }));
 
         const urls = [...staticEntries, ...monthEntries, ...blogEntries]
           .map((e) =>
