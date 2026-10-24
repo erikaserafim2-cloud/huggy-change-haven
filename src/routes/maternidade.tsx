@@ -12,7 +12,7 @@ export const Route = createFileRoute("/maternidade")({
       { name: "description", content: "Tópicos personalizados sobre desenvolvimento, sono, alimentação e cuidados baseados na idade do seu bebê." },
       { property: "og:title", content: "Universo da Maternidade" },
       { property: "og:description", content: "Um guia acolhedor e personalizado para a fase do seu bebê." },
-      { property: "og:type", content: "article" },
+      { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
@@ -71,7 +71,7 @@ function MaternityPage() {
 
   const mutation = useMutation({
     mutationFn: async (input: { birthDate: string; babyName: string }) =>
-      await getMaternityGuide({ data: input }),
+      await getMaternityGuide({ data: { birthDate: input.birthDate, babyName: "" } }),
     onSuccess: (data, vars) => {
       setGuide(data);
       const cacheKey = `${vars.birthDate}|${new Date().toDateString()}`;

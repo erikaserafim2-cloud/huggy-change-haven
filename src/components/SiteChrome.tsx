@@ -2,6 +2,7 @@ import { useState, type ReactNode } from "react";
 import logoAsset from "@/assets/logo.png.asset.json";
 const logo = logoAsset.url;
 import { Link, useLocation } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 import {
   Heart,
   Menu,
@@ -25,10 +26,10 @@ export function SiteHeader() {
     { to: "/", label: "Início", icon: Baby },
     { to: "/#roleta", label: "Roleta", icon: Sparkles, hash: true },
     { to: "/cha-rifa", label: "Chá-Rifa", badge: "Novo", icon: Ticket },
-    { to: "/maternidade", label: "Maternidade", icon: Heart },
-    { to: "/blog", label: "Blog & Dicas", icon: BookOpen },
+    { to: "/universo-da-maternidade", label: "Blog / Maternidade", icon: BookOpen },
+    { to: "/maternidade", label: "Guia por idade", icon: Heart },
     { to: "/sobre", label: "Sobre", icon: HelpCircle },
-    { to: "/contato", label: "Contato", icon: Mail },
+    { to: "/contacto", label: "Contacto", icon: Mail },
   ];
 
   return (
@@ -98,7 +99,7 @@ export function SiteHeader() {
           >
             Roleta 🎡
           </a>
-          <button
+          <Button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="flex h-11 w-11 items-center justify-center rounded-full border border-primary/20 bg-card text-foreground transition hover:bg-primary/10"
@@ -106,7 +107,7 @@ export function SiteHeader() {
             aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="h-5 w-5 text-primary" /> : <Menu className="h-5 w-5" />}
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -190,17 +191,20 @@ export function SiteFooter() {
           <strong>Ferramentas Amorosas</strong>
           <a href="/#roleta">🎡 Roleta da Fralda</a>
           <Link to="/cha-rifa">🎟️ Criador de Chá-Rifa</Link>
-          <Link to="/maternidade">🌷 Universo da Maternidade</Link>
+          <Link to="/universo-da-maternidade">🌷 Universo da Maternidade</Link>
+          <Link to="/maternidade">🌱 Desenvolvimento por idade</Link>
           <Link to="/blog">📖 Blog & Guia de Cuidados</Link>
           <Link to="/bebe-1-mes">🍼 Fases mês a mês (1 a 24)</Link>
         </div>
 
         <div>
           <strong>Informações & Apoio</strong>
-          <Link to="/sobre">Sobre o projeto</Link>
-          <Link to="/contato">Fale conosco</Link>
-          <Link to="/politica-de-privacidade">Política de privacidade</Link>
-          <Link to="/termos-de-uso">Termos de uso</Link>
+          <nav aria-label="Páginas institucionais">
+            <Link to="/sobre">Sobre Nós</Link>
+            <Link to="/contacto">Contacto</Link>
+            <Link to="/politica-de-privacidade">Política de Privacidade</Link>
+            <Link to="/termos-de-uso">Termos de Uso</Link>
+          </nav>
         </div>
       </div>
 

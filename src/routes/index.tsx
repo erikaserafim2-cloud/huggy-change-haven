@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BLOG_POSTS } from "@/lib/blog-posts";
 import { AdSlot, BlogCard } from "@/components/SiteChrome";
+import { pageHead } from "@/lib/page-head";
 import {
   Sparkles,
   Heart,
@@ -23,6 +24,7 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
+  head: () => pageHead("Roleta da Fralda | Troca Fraldas Online", "Divida as trocas de fralda com uma roleta divertida para a família. Encontre também artigos de cuidados, desenvolvimento por idade e criador de chá-rifa.", "/"),
   component: App,
 });
 
@@ -236,6 +238,11 @@ function App() {
           )}
         </main>
 
+        <section className="mt-8 text-center" aria-labelledby="roulette-intro">
+          <h1 id="roulette-intro" className="font-display text-2xl font-bold text-foreground">Roleta da Fralda</h1>
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">Dividir os cuidados pode deixar a rotina mais leve. A Roleta da Fralda sorteia quem assume a próxima troca entre os cuidadores disponíveis, como uma brincadeira em família. O bem-estar do bebê vem primeiro: não adie uma troca necessária e combine a divisão das tarefas com carinho.</p>
+        </section>
+
         {/* Badge de segurança e privacidade amorosa */}
         <div className="mt-6 flex items-center justify-center gap-2 text-center text-xs text-muted-foreground font-medium">
           <ShieldCheck className="h-4 w-4 text-primary" />
@@ -350,7 +357,7 @@ function MaternalToolsHub({ tip, onNextTip }: { tip: string; onNextTip: () => vo
 
       {/* Card 2: Universo da Maternidade */}
       <Link
-        to="/maternidade"
+        to="/universo-da-maternidade"
         className="group flex items-start gap-3 rounded-2xl border border-primary/15 bg-card/85 p-4 backdrop-blur-md shadow-xs transition hover:border-primary/40 hover:bg-card hover:shadow-md"
       >
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-[color-mix(in_oklab,var(--sage)_35%,transparent)] text-xl group-hover:scale-105 transition">
@@ -362,7 +369,7 @@ function MaternalToolsHub({ tip, onNextTip }: { tip: string; onNextTip: () => vo
             Universo da Maternidade
           </h3>
           <p className="mt-0.5 text-xs text-muted-foreground line-clamp-2">
-            Guia personalizado por idade do bebê com sono, saltos e rotina.
+            Artigos sobre cuidados, rotina de trocas e desfralde.
           </p>
         </div>
       </Link>
