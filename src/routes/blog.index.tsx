@@ -3,7 +3,7 @@ import { BLOG_POSTS } from "@/lib/blog-posts";
 import { pageHead } from "@/lib/page-head";
 import { AdSlot, BlogCard, PageShell } from "@/components/SiteChrome";
 
-export const Route = createFileRoute("/blog")({
+export const Route = createFileRoute("/blog/")({
   head: () => pageHead("Blog e Dicas | Troca Fraldas Online", "Orientações práticas sobre trocas de fralda, cuidados com a pele, rotina e desenvolvimento infantil.", "/blog"),
   component: BlogIndex,
 });
