@@ -440,6 +440,14 @@ function RifaArt({
   const p = template.palette;
   const numbers = useMemo(() => Array.from({ length: state.count }, (_, i) => i + 1), [state.count]);
   const cols = state.count <= 20 ? 5 : state.count <= 60 ? 10 : state.count <= 100 ? 10 : 20;
+  const visibleRules = [state.rule1, state.rule2, state.rule3].filter(Boolean);
+  const longestRule = Math.max(0, ...visibleRules.map(rule => rule.length));
+  // Keep instructions readable while allowing dense number boards and long custom copy.
+  const ruleFontSize = state.count >= 150
+    ? (longestRule > 90 ? 9 : 10.5)
+    : state.count >= 80
+      ? (longestRule > 90 ? 10 : 11.5)
+      : (longestRule > 110 ? 11 : 12.5);
 
   const drawDatePt = state.drawDate
     ? new Date(state.drawDate + "T00:00:00").toLocaleDateString("pt-BR", {
@@ -567,25 +575,33 @@ function RifaArt({
           </div>
         </div>
 
-        {/* Como funciona */}
-        <ol className="mt-2 space-y-1">
-          {[state.rule1, state.rule2, state.rule3].filter(Boolean).map((rule, i) => (
-            <li key={i} className="flex items-start gap-1.5">
-              <span
-                className="mt-[1px] grid h-3.5 w-3.5 shrink-0 place-items-center rounded-full text-[7px] font-bold"
-                style={{ background: p.accent, color: "#fff" }}
-              >
-                {i + 1}
-              </span>
-              <span className="text-[9px] leading-snug" style={{ color: p.text }}>
-                {rule}
-              </span>
-            </li>
-          ))}
-        </ol>
+        {/* Como funciona: usa o espaço flexível para dar destaque às instruções sem empurrar o rodapé */}
+        {visibleRules.length > 0 && (
+          <ol
+            className="mt-2 flex min-h-0 flex-1 flex-col justify-evenly gap-2 py-2"
+            style={{ overflowWrap: "anywhere" }}
+          >
+            {visibleRules.map((rule, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span
+                  className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full font-bold"
+                  style={{ background: p.accent, color: "#fff", fontSize: 10 }}
+                >
+                  {i + 1}
+                </span>
+                <span
+                  className="min-w-0 font-medium"
+                  style={{ color: p.text, fontSize: ruleFontSize, lineHeight: 1.3 }}
+                >
+                  {rule}
+                </span>
+              </li>
+            ))}
+          </ol>
+        )}
 
         {/* Rodapé */}
-        <div className="mt-auto pt-2 text-center">
+        <div className="mt-2 shrink-0 pt-2 text-center">
           <div
             className="mx-auto inline-block rounded-full px-4 py-1"
             style={{ background: p.soft, boxShadow: `inset 0 0 0 1.5px ${p.ring}` }}
