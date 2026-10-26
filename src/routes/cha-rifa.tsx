@@ -41,8 +41,10 @@ type Template = {
   bg: string;
   /** margens (%) reservadas para as ilustrações do modelo */
   inset: { top: number; bottom: number; x: number };
-  /** cor do "papel" usada para cobrir os textos originais do modelo */
+  /** camada translúcida central para preservar as ilustrações */
   veil: string;
+  /** cobertura opaca apenas para áreas pequenas com texto impresso */
+  patchVeil?: string;
   /** retângulos extras (%) para cobrir textos impressos do modelo */
   patches?: { top: number; right: number; bottom: number; left: number }[];
   palette: Palette;
@@ -54,7 +56,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     hint: "Laço e balões dourados",
     bg: meninaAsset.url,
     inset: { top: 9, bottom: 16, x: 9 },
-    veil: "rgba(255,252,253,0.86)",
+    veil: "rgba(255,252,253,0.34)",
+    patchVeil: "rgba(255,252,253,0.94)",
     palette: {
       accent: "#D98BA6",
       deep: "#9B4E6B",
@@ -69,7 +72,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     hint: "Varal, balões e ursinhos",
     bg: ursinhosAsset.url,
     inset: { top: 19, bottom: 6, x: 14 },
-    veil: "#FBF8F1",
+    veil: "rgba(251,248,241,0.34)",
+    patchVeil: "rgba(251,248,241,0.94)",
     palette: {
       accent: "#8AA97F",
       deep: "#4E6B47",
@@ -84,7 +88,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     hint: "Aquarela azul com corações",
     bg: azulAsset.url,
     inset: { top: 6, bottom: 5, x: 7 },
-    veil: "#EFF6FD",
+    veil: "rgba(239,246,253,0.36)",
+    patchVeil: "rgba(239,246,253,0.94)",
     patches: [
       { top: 0, right: 16, bottom: 94, left: 16 },
       { top: 95, right: 18, bottom: 0, left: 18 },
@@ -103,7 +108,8 @@ const TEMPLATES: Record<TemplateKey, Template> = {
     hint: "Bichinhos no jipe e folhagens",
     bg: safariAsset.url,
     inset: { top: 18, bottom: 3.5, x: 8 },
-    veil: "#F5FAF2",
+    veil: "rgba(245,250,242,0.34)",
+    patchVeil: "rgba(245,250,242,0.94)",
     patches: [{ top: 1, right: 2, bottom: 86, left: 36 }],
     palette: {
       accent: "#7FA277",
@@ -135,6 +141,8 @@ const DEFAULT_STATE = {
   prize: "R$ 150,00",
   drawDate: "",
   intro: "Mamãe e papai estão super ansiosos com a minha chegada e resolveram comemorar de uma forma diferente. Você está convidado para participar do meu Chá Rifa!",
+  introFontSize: 12,
+  ruleFontSize: 12,
   rule1: "Escolha um número e verifique se está disponível.",
   rule2: "Combine a entrega da fralda ou o Pix com a mamãe.",
   rule3: "Aguarde o sorteio e boa sorte!",
@@ -351,6 +359,23 @@ function ChaRifaPage() {
                 />
               </Field>
 
+              <div className="grid grid-cols-2 gap-3">
+                <Field label={`Fonte do convite: ${state.introFontSize ?? 12}px`}>
+                  <div className="flex items-center gap-2">
+                    <button type="button" className="btn-ghost px-3" aria-label="Diminuir fonte do convite" onClick={() => update("introFontSize", Math.max(9, (state.introFontSize ?? 12) - 1))}>−</button>
+                    <input className="w-full accent-primary" type="range" min={9} max={18} value={state.introFontSize ?? 12} onChange={e => update("introFontSize", Number(e.target.value))} aria-label="Tamanho da fonte do convite" />
+                    <button type="button" className="btn-ghost px-3" aria-label="Aumentar fonte do convite" onClick={() => update("introFontSize", Math.min(18, (state.introFontSize ?? 12) + 1))}>+</button>
+                  </div>
+                </Field>
+                <Field label={`Fonte das regras: ${state.ruleFontSize ?? 12}px`}>
+                  <div className="flex items-center gap-2">
+                    <button type="button" className="btn-ghost px-3" aria-label="Diminuir fonte das regras" onClick={() => update("ruleFontSize", Math.max(9, (state.ruleFontSize ?? 12) - 1))}>−</button>
+                    <input className="w-full accent-primary" type="range" min={9} max={18} value={state.ruleFontSize ?? 12} onChange={e => update("ruleFontSize", Number(e.target.value))} aria-label="Tamanho da fonte das regras" />
+                    <button type="button" className="btn-ghost px-3" aria-label="Aumentar fonte das regras" onClick={() => update("ruleFontSize", Math.min(18, (state.ruleFontSize ?? 12) + 1))}>+</button>
+                  </div>
+                </Field>
+              </div>
+
               <Field label="Regras — Como funciona">
                 <div className="space-y-2">
                   {(["rule1", "rule2", "rule3"] as const).map((k, i) => (
@@ -387,18 +412,20 @@ function ChaRifaPage() {
                   <input
                     className="input-soft"
                     value={state.pix}
-                    maxLength={60}
-                    onChange={e => update("pix", e.target.value)}
-                    placeholder="chave PIX"
+                    maxLength={77}
+                    onChange={e => update("pix", e.target.value.slice(0, 77))}
+                    placeholder="CPF, telefone, e-mail ou chave aleatória"
                   />
                 </Field>
                 <Field label="Contato">
                   <input
                     className="input-soft"
+                    type="tel"
+                    inputMode="tel"
                     value={state.contact}
-                    maxLength={40}
-                    onChange={e => update("contact", e.target.value)}
-                    placeholder="WhatsApp"
+                    maxLength={20}
+                    onChange={e => update("contact", e.target.value.replace(/[^0-9+()\s.-]/g, "").slice(0, 20))}
+                    placeholder="(00) 00000-0000"
                   />
                 </Field>
               </div>
@@ -441,13 +468,8 @@ function RifaArt({
   const numbers = useMemo(() => Array.from({ length: state.count }, (_, i) => i + 1), [state.count]);
   const cols = state.count <= 20 ? 5 : state.count <= 60 ? 10 : state.count <= 100 ? 10 : 20;
   const visibleRules = [state.rule1, state.rule2, state.rule3].filter(Boolean);
-  const longestRule = Math.max(0, ...visibleRules.map(rule => rule.length));
-  // Keep instructions readable while allowing dense number boards and long custom copy.
-  const ruleFontSize = state.count >= 150
-    ? (longestRule > 90 ? 9 : 10.5)
-    : state.count >= 80
-      ? (longestRule > 90 ? 10 : 11.5)
-      : (longestRule > 110 ? 11 : 12.5);
+  const ruleFontSize = state.ruleFontSize ?? 12;
+  const introFontSize = state.introFontSize ?? 12;
 
   const drawDatePt = state.drawDate
     ? new Date(state.drawDate + "T00:00:00").toLocaleDateString("pt-BR", {
@@ -483,7 +505,7 @@ function RifaArt({
             right: `${r.right}%`,
             bottom: `${r.bottom}%`,
             left: `${r.left}%`,
-            background: template.veil,
+            background: template.patchVeil ?? template.veil,
             borderRadius: 20,
             boxShadow: `0 0 20px 20px ${template.veil}`,
           }}
@@ -501,7 +523,7 @@ function RifaArt({
           right: `${template.inset.x - 2}%`,
           background: template.veil,
           borderRadius: 28,
-          boxShadow: `0 0 26px 26px ${template.veil}`,
+          boxShadow: "none",
         }}
       />
 
@@ -531,8 +553,8 @@ function RifaArt({
         {/* Convite */}
         {state.intro && (
           <p
-            className="mt-1.5 text-center text-[9.5px] leading-snug"
-            style={{ color: p.text }}
+            className="mt-1.5 text-center leading-snug"
+            style={{ color: p.text, fontSize: introFontSize }}
           >
             {state.intro}
           </p>
