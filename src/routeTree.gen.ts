@@ -35,7 +35,6 @@ import { Route as Bebe6MesesRouteImport } from './routes/bebe-6-meses'
 import { Route as Bebe7MesesRouteImport } from './routes/bebe-7-meses'
 import { Route as Bebe8MesesRouteImport } from './routes/bebe-8-meses'
 import { Route as Bebe9MesesRouteImport } from './routes/bebe-9-meses'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ChaRifaRouteImport } from './routes/cha-rifa'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as ContatoRouteImport } from './routes/contato'
@@ -45,6 +44,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TermosDeUsoRouteImport } from './routes/termos-de-uso'
 import { Route as UniversoDaMaternidadeRouteImport } from './routes/universo-da-maternidade'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -177,11 +177,6 @@ const Bebe9MesesRoute = Bebe9MesesRouteImport.update({
   path: '/bebe-9-meses',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ChaRifaRoute = ChaRifaRouteImport.update({
   id: '/cha-rifa',
   path: '/cha-rifa',
@@ -227,6 +222,11 @@ const UniversoDaMaternidadeRoute = UniversoDaMaternidadeRouteImport.update({
   path: '/universo-da-maternidade',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -260,7 +260,6 @@ export interface FileRoutesByFullPath {
   '/bebe-7-meses': typeof Bebe7MesesRoute
   '/bebe-8-meses': typeof Bebe8MesesRoute
   '/bebe-9-meses': typeof Bebe9MesesRoute
-  '/blog': typeof BlogRouteWithChildren
   '/cha-rifa': typeof ChaRifaRoute
   '/contacto': typeof ContactoRoute
   '/contato': typeof ContatoRoute
@@ -271,6 +270,7 @@ export interface FileRoutesByFullPath {
   '/termos-de-uso': typeof TermosDeUsoRoute
   '/universo-da-maternidade': typeof UniversoDaMaternidadeRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -299,7 +299,6 @@ export interface FileRoutesByTo {
   '/bebe-7-meses': typeof Bebe7MesesRoute
   '/bebe-8-meses': typeof Bebe8MesesRoute
   '/bebe-9-meses': typeof Bebe9MesesRoute
-  '/blog': typeof BlogRouteWithChildren
   '/cha-rifa': typeof ChaRifaRoute
   '/contacto': typeof ContactoRoute
   '/contato': typeof ContatoRoute
@@ -310,6 +309,7 @@ export interface FileRoutesByTo {
   '/termos-de-uso': typeof TermosDeUsoRoute
   '/universo-da-maternidade': typeof UniversoDaMaternidadeRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -339,7 +339,6 @@ export interface FileRoutesById {
   '/bebe-7-meses': typeof Bebe7MesesRoute
   '/bebe-8-meses': typeof Bebe8MesesRoute
   '/bebe-9-meses': typeof Bebe9MesesRoute
-  '/blog': typeof BlogRouteWithChildren
   '/cha-rifa': typeof ChaRifaRoute
   '/contacto': typeof ContactoRoute
   '/contato': typeof ContatoRoute
@@ -350,6 +349,7 @@ export interface FileRoutesById {
   '/termos-de-uso': typeof TermosDeUsoRoute
   '/universo-da-maternidade': typeof UniversoDaMaternidadeRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -380,7 +380,6 @@ export interface FileRouteTypes {
     | '/bebe-7-meses'
     | '/bebe-8-meses'
     | '/bebe-9-meses'
-    | '/blog'
     | '/cha-rifa'
     | '/contacto'
     | '/contato'
@@ -391,6 +390,7 @@ export interface FileRouteTypes {
     | '/termos-de-uso'
     | '/universo-da-maternidade'
     | '/blog/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -419,7 +419,6 @@ export interface FileRouteTypes {
     | '/bebe-7-meses'
     | '/bebe-8-meses'
     | '/bebe-9-meses'
-    | '/blog'
     | '/cha-rifa'
     | '/contacto'
     | '/contato'
@@ -430,6 +429,7 @@ export interface FileRouteTypes {
     | '/termos-de-uso'
     | '/universo-da-maternidade'
     | '/blog/$slug'
+    | '/blog'
   id:
     | '__root__'
     | '/'
@@ -458,7 +458,6 @@ export interface FileRouteTypes {
     | '/bebe-7-meses'
     | '/bebe-8-meses'
     | '/bebe-9-meses'
-    | '/blog'
     | '/cha-rifa'
     | '/contacto'
     | '/contato'
@@ -469,6 +468,7 @@ export interface FileRouteTypes {
     | '/termos-de-uso'
     | '/universo-da-maternidade'
     | '/blog/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -498,7 +498,6 @@ export interface RootRouteChildren {
   Bebe7MesesRoute: typeof Bebe7MesesRoute
   Bebe8MesesRoute: typeof Bebe8MesesRoute
   Bebe9MesesRoute: typeof Bebe9MesesRoute
-  BlogRoute: typeof BlogRouteWithChildren
   ChaRifaRoute: typeof ChaRifaRoute
   ContactoRoute: typeof ContactoRoute
   ContatoRoute: typeof ContatoRoute
@@ -508,6 +507,7 @@ export interface RootRouteChildren {
   SobreRoute: typeof SobreRoute
   TermosDeUsoRoute: typeof TermosDeUsoRoute
   UniversoDaMaternidadeRoute: typeof UniversoDaMaternidadeRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -694,13 +694,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Bebe9MesesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/cha-rifa': {
       id: '/cha-rifa'
       path: '/cha-rifa'
@@ -764,6 +757,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UniversoDaMaternidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/$slug'
@@ -773,16 +773,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-
-interface BlogRouteChildren {
-  BlogSlugRoute: typeof BlogSlugRoute
-}
-
-const BlogRouteChildren: BlogRouteChildren = {
-  BlogSlugRoute: BlogSlugRoute,
-}
-
-const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -811,7 +801,6 @@ const rootRouteChildren: RootRouteChildren = {
   Bebe7MesesRoute: Bebe7MesesRoute,
   Bebe8MesesRoute: Bebe8MesesRoute,
   Bebe9MesesRoute: Bebe9MesesRoute,
-  BlogRoute: BlogRouteWithChildren,
   ChaRifaRoute: ChaRifaRoute,
   ContactoRoute: ContactoRoute,
   ContatoRoute: ContatoRoute,
@@ -821,6 +810,7 @@ const rootRouteChildren: RootRouteChildren = {
   SobreRoute: SobreRoute,
   TermosDeUsoRoute: TermosDeUsoRoute,
   UniversoDaMaternidadeRoute: UniversoDaMaternidadeRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
