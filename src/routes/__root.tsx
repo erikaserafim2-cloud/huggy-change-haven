@@ -107,6 +107,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
     ],
   }),
+  scripts: [
+    {
+      "data-cfasync": "false",
+      src: "https://bauval.org/14/4861ee9968a8bb8c6a26b657e6def28d",
+    },
+  ],
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
