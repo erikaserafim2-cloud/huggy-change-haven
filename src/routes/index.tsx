@@ -238,6 +238,9 @@ function App() {
           )}
         </main>
 
+        {/* Native Banner — abaixo da roleta, antes do rodapé */}
+        <NativeBanner />
+
         <section className="mt-8 text-center" aria-labelledby="roulette-intro">
           <h1 id="roulette-intro" className="font-display text-2xl font-bold text-foreground">Roleta da Fralda</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">Dividir os cuidados pode deixar a rotina mais leve. A Roleta da Fralda sorteia quem assume a próxima troca entre os cuidadores disponíveis, como uma brincadeira em família. O bem-estar do bebê vem primeiro: não adie uma troca necessária e combine a divisão das tarefas com carinho.</p>
@@ -1175,5 +1178,24 @@ function MotherhoodInspiration() {
         um trabalho incrível!
       </p>
     </section>
+  );
+}
+
+function NativeBanner() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.async = true;
+    script.setAttribute("data-cfasync", "false");
+    script.src = "https://bauval.org/21/b7e3363eb5e78bd0faaac40915f3ac93";
+    document.body.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, []);
+
+  return (
+    <div className="mx-auto mt-8 flex w-full max-w-3xl justify-center px-4">
+      <div id="container-b7e3363eb5e78bd0faaac40915f3ac93" className="w-full" />
+    </div>
   );
 }
