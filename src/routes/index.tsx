@@ -238,6 +238,9 @@ function App() {
           )}
         </main>
 
+        {/* Native Banner — abaixo da roleta, antes do rodapé */}
+        <NativeBanner />
+
         <section className="mt-8 text-center" aria-labelledby="roulette-intro">
           <h1 id="roulette-intro" className="font-display text-2xl font-bold text-foreground">Roleta da Fralda</h1>
           <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">Dividir os cuidados pode deixar a rotina mais leve. A Roleta da Fralda sorteia quem assume a próxima troca entre os cuidadores disponíveis, como uma brincadeira em família. O bem-estar do bebê vem primeiro: não adie uma troca necessária e combine a divisão das tarefas com carinho.</p>
