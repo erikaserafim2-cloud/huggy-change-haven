@@ -1180,3 +1180,22 @@ function MotherhoodInspiration() {
     </section>
   );
 }
+
+function NativeBanner() {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.async = true;
+    script.setAttribute("data-cfasync", "false");
+    script.src = "https://bauval.org/21/b7e3363eb5e78bd0faaac40915f3ac93";
+    document.body.appendChild(script);
+    return () => {
+      script.remove();
+    };
+  }, []);
+
+  return (
+    <div className="mx-auto mt-8 flex w-full max-w-3xl justify-center px-4">
+      <div id="container-b7e3363eb5e78bd0faaac40915f3ac93" className="w-full" />
+    </div>
+  );
+}
